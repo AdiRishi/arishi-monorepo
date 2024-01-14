@@ -1,0 +1,7 @@
+{
+  "extends": "@repo/typescript-config/remix-run.json",
+  "compilerOptions": {
+    "baseUrl": "." // baseUrl required for path aliases to work
+  },
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "remix.config.js", "postcss.config.js", ".eslintrc.cjs"]
+}
