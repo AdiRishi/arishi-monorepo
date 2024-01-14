@@ -3,23 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "files": [
-    "base.js"
+    "base.js",
+    "remix-run.js"
   ],
   "scripts": {
     "lint": "prettier --check ."
   },
   "dependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.2.2",
+    "prettier-plugin-tailwindcss": "^0.5.11",
     "typescript": "^5.3.3"
-  },
-  "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "prettier": "^3.2.1",
-    "prettier-plugin-tailwindcss": "^0.5.11"
   },
   "publishConfig": {
     "access": "public"
