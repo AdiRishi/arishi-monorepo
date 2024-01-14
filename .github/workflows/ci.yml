@@ -27,5 +27,5 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm build
 
-      - name: Coveralls Coverage Report
-        uses: coverallsapp/github-action@v2
+      # - name: Coveralls Coverage Report
+      #   uses: coverallsapp/github-action@v2
