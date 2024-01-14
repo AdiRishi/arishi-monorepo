@@ -1,3 +1,4 @@
 {
-  "extends": "@repo/typescript-config/remix-run.json"
+  "extends": "@repo/typescript-config/remix-run.json",
+  "include": [".eslintrc.cjs", "postcss.config.js", "remix.config.js", "remix.env.d.ts", "**/*.ts", "**/*.tsx"],
 }

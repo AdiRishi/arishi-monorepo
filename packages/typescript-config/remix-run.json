@@ -19,7 +19,5 @@
     "skipLibCheck": true,
 
     "noEmit": true
-  },
-  "include": [".eslintrc.cjs", "postcss.config.js", "remix.config.js", "remix.env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  }
 }
