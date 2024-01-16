@@ -1,0 +1,31 @@
+{
+  "name": "{{ workerName }}",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "dev": "wrangler dev",
+    "typecheck": "tsc --noEmit",
+    "test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 vitest run --coverage",
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 vitest",
+    "lint": "eslint . --ext .ts,.js,.cjs,.mjs --fix",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@vitest/coverage-v8": "1.2.0",
+    "miniflare": "^3.20231218.1",
+    "typescript": "^5.3.3",
+    "vitest": "1.2.0",
+    "vitest-environment-miniflare": "^2.14.1",
+    "wrangler": "^3.22.4"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.1.11",
+    "hono": "3.12.5",
+    "zod": "^3.22.4"
+  }
+}

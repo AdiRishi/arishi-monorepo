@@ -1,0 +1,22 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "pipeline": {
+    "build": {
+      "outputs": ["dist/**"]
+    },
+    "typecheck": {
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": ["typecheck"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["build"]
+    },
+    "test:watch": {
+      "dependsOn": ["build"]
+    }
+  }
+}

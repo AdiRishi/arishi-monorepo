@@ -59,6 +59,94 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     },
   });
 
+  plop.setGenerator('new-api-worker', {
+    description: 'Create a new Cloudflare worker using Hono.js.',
+    prompts: [
+      {
+        type: 'input',
+        name: 'workerName',
+        message: 'What is the name of the worker? Use dash-case. E.g rest-api',
+      },
+    ],
+    actions: function (data) {
+      void data;
+      const actions: PlopTypes.ActionType[] = [];
+      actions.push(
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/package.json',
+          templateFile: 'templates/worker-templates/package.json.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/tsconfig.json',
+          templateFile: 'templates/worker-templates/tsconfig.json.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.eslintignore',
+          templateFile: 'templates/worker-templates/.eslintignore',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.prettierrc.json',
+          templateFile: 'templates/worker-templates/.prettierrc.json',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.prettierignore',
+          templateFile: 'templates/worker-templates/.prettierignore',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.eslintrc.cjs',
+          templateFile: 'templates/worker-templates/.eslintrc.cjs.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.gitignore',
+          templateFile: 'templates/worker-templates/.gitignore.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/turbo.json',
+          templateFile: 'templates/worker-templates/turbo.json.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/vitest.config.ts',
+          templateFile: 'templates/worker-templates/vitest.config.ts.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/wrangler.toml',
+          templateFile: 'templates/worker-templates/wrangler.toml.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.dev.vars',
+          template: 'ENVIRONMENT=development\n',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/src/index.ts',
+          templateFile: 'templates/worker-templates/src/index.ts.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/src/index.test.ts',
+          templateFile: 'templates/worker-templates/src/index.test.ts.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/src/routes/index.ts',
+          templateFile: 'templates/worker-templates/src/routes/index.ts.hbs',
+        }
+      );
+      return actions;
+    },
+  });
+
   plop.setGenerator('new-remix-app', {
     description: 'Create a new Remix app hosted using Cloudflare Pages.',
     prompts: [
