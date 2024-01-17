@@ -75,52 +75,52 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/package.json',
-          templateFile: 'templates/worker-templates/package.json.hbs',
+          templateFile: 'templates/worker-template/package.json.hbs',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/tsconfig.json',
-          templateFile: 'templates/worker-templates/tsconfig.json.hbs',
+          templateFile: 'templates/worker-template/tsconfig.json.hbs',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.eslintignore',
-          templateFile: 'templates/worker-templates/.eslintignore',
+          templateFile: 'templates/worker-template/.eslintignore',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.prettierrc.json',
-          templateFile: 'templates/worker-templates/.prettierrc.json',
+          templateFile: 'templates/worker-template/.prettierrc.json',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.prettierignore',
-          templateFile: 'templates/worker-templates/.prettierignore',
+          templateFile: 'templates/worker-template/.prettierignore',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.eslintrc.cjs',
-          templateFile: 'templates/worker-templates/.eslintrc.cjs.hbs',
+          templateFile: 'templates/worker-template/.eslintrc.cjs.hbs',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.gitignore',
-          templateFile: 'templates/worker-templates/.gitignore.hbs',
+          templateFile: 'templates/worker-template/.gitignore.hbs',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/turbo.json',
-          templateFile: 'templates/worker-templates/turbo.json.hbs',
+          templateFile: 'templates/worker-template/turbo.json.hbs',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/vitest.config.ts',
-          templateFile: 'templates/worker-templates/vitest.config.ts.hbs',
+          templateFile: 'templates/worker-template/vitest.config.ts.hbs',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/wrangler.toml',
-          templateFile: 'templates/worker-templates/wrangler.toml.hbs',
+          templateFile: 'templates/worker-template/wrangler.toml.hbs',
         },
         {
           type: 'add',
@@ -130,17 +130,17 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/src/index.ts',
-          templateFile: 'templates/worker-templates/src/index.ts.hbs',
+          templateFile: 'templates/worker-template/src/index.ts.hbs',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/src/index.test.ts',
-          templateFile: 'templates/worker-templates/src/index.test.ts.hbs',
+          templateFile: 'templates/worker-template/src/index.test.ts.hbs',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/src/routes/index.ts',
-          templateFile: 'templates/worker-templates/src/routes/index.ts.hbs',
+          templateFile: 'templates/worker-template/src/routes/index.ts.hbs',
         }
       );
       return actions;
