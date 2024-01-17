@@ -4,7 +4,6 @@
 
 I'm always on the lookout for security vulnerabilities in our project. If you've found something that looks like a security issue, I'd really appreciate it if you let me know.
 
-
 ## Reporting a Vulnerability
 
 If you have discovered a security vulnerability, we appreciate your help in disclosing it to us in a responsible manner.
