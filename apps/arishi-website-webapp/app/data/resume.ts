@@ -21,7 +21,7 @@ export const RESUME_DATA: ResumeData = {
       { name: 'GitHub', url: 'https://github.com/AdiRishi', icon: GithubIcon },
       {
         name: 'LinkedIn',
-        url: 'www.linkedin.com/in/adishwar-rishi-8a832498',
+        url: 'https://www.linkedin.com/in/adishwar-rishi-8a832498',
         icon: LinkedinIcon as unknown as FunctionComponent<React.SVGProps<SVGSVGElement>>,
       },
       { name: 'X', url: 'https://twitter.com/AdishwarR', icon: XIcon },
