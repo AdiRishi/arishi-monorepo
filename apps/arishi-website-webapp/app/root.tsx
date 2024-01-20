@@ -3,6 +3,7 @@ import { cssBundleHref } from '@remix-run/css-bundle';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from 'remix-themes';
+import { Layout } from '~/components/layouts/root-layout';
 import tailwindStyles from '~/global-styles/tailwind.css';
 import { themeSessionResolver } from '~/lib/theme.server';
 
@@ -32,7 +33,9 @@ function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <Layout>
+          <Outlet />
+        </Layout>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

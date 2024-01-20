@@ -1,11 +1,13 @@
-import { GithubIcon } from 'lucide-react';
+import { LinkedinIcon, type LucideIcon } from 'lucide-react';
 import { FunctionComponent } from 'react';
+import { GithubIcon } from '~/components/icons/GithubIcon';
+import { XIcon } from '~/components/icons/XIcon';
 
 export const RESUME_DATA: ResumeData = {
   name: 'Adishwar Rishi',
   initials: 'AR',
   location: 'Greater Sydney Area',
-  locationLink: 'https://www.google.com/maps/place/Greater+Sydney+Area',
+  locationLink: 'https://www.google.com/maps/place/Sydney',
   about:
     'Graduated from UNSW Software Engineering in 2018. Currently working as an Engineering Manager at Freelancer.com.',
   summary:
@@ -16,8 +18,9 @@ export const RESUME_DATA: ResumeData = {
     email: 'adiswa123@gmail.com',
     tel: '+61422359391',
     social: [
-      { name: 'LinkedIn', url: 'www.linkedin.com/in/adishwar-rishi-8a832498', icon: GithubIcon },
-      { name: 'GitHub', url: 'github.com/AdiRishi', icon: GithubIcon },
+      { name: 'LinkedIn', url: 'www.linkedin.com/in/adishwar-rishi-8a832498', icon: LinkedinIcon },
+      { name: 'GitHub', url: 'github.com/AdiRishi', icon: GithubIcon as unknown as LucideIcon },
+      { name: 'Twitter', url: 'twitter.com/AdiRishi_', icon: XIcon as unknown as LucideIcon },
     ],
   },
   education: [
@@ -67,7 +70,7 @@ export const RESUME_DATA: ResumeData = {
 type SocialLink = {
   name: string;
   url: string;
-  icon: FunctionComponent;
+  icon: LucideIcon;
 };
 
 type Education = {
