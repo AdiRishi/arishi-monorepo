@@ -45,7 +45,7 @@ export const RESUME_DATA: ResumeData = {
     {
       company: 'Freelancer.com',
       link: 'https://www.freelancer.com',
-      badges: ['Full-time', 'Promotion ↑'],
+      badges: ['Full Time', 'Promotion'],
       title: 'Engineering Manager',
       start: 'Sep 2019',
       end: 'Present',
@@ -55,7 +55,7 @@ export const RESUME_DATA: ResumeData = {
     {
       company: 'Freelancer.com',
       link: 'https://www.freelancer.com',
-      badges: ['Full-time', 'Promotion ↑'],
+      badges: ['Full time', 'Promotion'],
       title: 'Engineering Team Lead',
       start: 'Feb 2019',
       end: 'Sep 2019',
@@ -65,7 +65,7 @@ export const RESUME_DATA: ResumeData = {
     {
       company: 'Freelancer.com',
       link: 'https://www.freelancer.com',
-      badges: ['Full-time', 'Promotion ↑'],
+      badges: ['Full time', 'Promotion'],
       title: 'Software Engineer',
       start: 'Nov 2017',
       end: 'Feb 2019',
