@@ -1,3 +1,4 @@
+import { CommandMenu } from './command-menu';
 import { Section } from './section';
 import type { MetaFunction } from '@remix-run/cloudflare';
 import { GlobeIcon, MailIcon, PhoneIcon } from 'lucide-react';
@@ -22,6 +23,18 @@ export default function Index() {
         <EducationSection />
         <SkillsSection />
         <ProjectsSection />
+        <CommandMenu
+          links={[
+            {
+              url: RESUME_DATA.personalWebsiteUrl,
+              title: 'Personal Website',
+            },
+            ...RESUME_DATA.contact.social.map((socialMediaLink) => ({
+              url: socialMediaLink.url,
+              title: socialMediaLink.name,
+            })),
+          ]}
+        />
       </section>
     </div>
   );
