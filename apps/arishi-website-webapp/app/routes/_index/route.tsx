@@ -1,6 +1,7 @@
 import { IntroSection } from './intro-section';
 import { Section } from './section';
 import type { MetaFunction } from '@remix-run/cloudflare';
+import { ProjectCard } from '~/components/project-card';
 import { Badge } from '~/components/ui/badge';
 import { Card, CardContent, CardHeader } from '~/components/ui/card';
 import { RESUME_DATA } from '~/data/resume';
@@ -22,8 +23,8 @@ export default function Index() {
           <h2 className="text-xl font-bold">Work Experience</h2>
           {RESUME_DATA.work.map((work) => {
             return (
-              <Card key={work.company}>
-                <CardHeader>
+              <Card key={work.company} className="border-0 shadow-none">
+                <CardHeader className="p-0">
                   <div className="flex items-center justify-between gap-x-2 text-base">
                     <h3 className="inline-flex items-center justify-center gap-x-1 font-semibold leading-none">
                       <a className="hover:underline" href={work.link}>
@@ -45,10 +46,56 @@ export default function Index() {
 
                   <h4 className="font-mono text-sm leading-none">{work.title}</h4>
                 </CardHeader>
-                <CardContent className="mt-2 text-xs">{work.description}</CardContent>
+                <CardContent className="mt-2 text-xs text-pretty font-mono text-muted-foreground p-0">
+                  {work.description}
+                </CardContent>
               </Card>
             );
           })}
+        </Section>
+        <Section>
+          <h2 className="text-xl font-bold">Education</h2>
+          {RESUME_DATA.education.map((education) => {
+            return (
+              <Card key={education.school} className="border-0 shadow-none">
+                <CardHeader className="p-0">
+                  <div className="flex items-center justify-between gap-x-2 text-base">
+                    <h3 className="font-semibold leading-none">{education.school}</h3>
+                    <div className="text-sm tabular-nums text-gray-500">
+                      {education.start} - {education.end}
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="mt-2 text-xs text-pretty font-mono text-muted-foreground p-0">
+                  {education.degree}
+                </CardContent>
+              </Card>
+            );
+          })}
+        </Section>
+        <Section>
+          <h2 className="text-xl font-bold">Skills</h2>
+          <div className="flex flex-wrap gap-1">
+            {RESUME_DATA.skills.map((skill) => {
+              return <Badge key={skill}>{skill}</Badge>;
+            })}
+          </div>
+        </Section>
+        <Section className="print-force-new-page scroll-mb-16">
+          <h2 className="text-xl font-bold">Projects</h2>
+          <div className="-mx-3 grid grid-cols-1 gap-3 print:grid-cols-3 print:gap-2 md:grid-cols-2 lg:grid-cols-3">
+            {RESUME_DATA.projects.map((project) => {
+              return (
+                <ProjectCard
+                  key={project.title}
+                  title={project.title}
+                  description={project.description}
+                  tags={project.techStack}
+                  link={'link' in project ? project.link.href : undefined}
+                />
+              );
+            })}
+          </div>
         </Section>
       </section>
     </div>
