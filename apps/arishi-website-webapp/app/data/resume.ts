@@ -1,200 +1,104 @@
+import { LinkedinIcon } from 'lucide-react';
 import { FunctionComponent } from 'react';
 import { GithubIcon } from '~/components/icons/GithubIcon';
+import { XIcon } from '~/components/icons/XIcon';
 
 export const RESUME_DATA: ResumeData = {
-  name: 'Bartosz Jarocki',
-  initials: 'BJ',
-  location: 'Wrocław, Poland, CET',
-  locationLink: 'https://www.google.com/maps/place/Wrocław',
-  about: 'Full Stack Engineer focused on building products with extra attention to detail',
+  name: 'Adishwar Rishi',
+  initials: 'AR',
+  location: 'Greater Sydney Area',
+  locationLink: 'https://www.google.com/maps/place/Sydney',
+  about:
+    'A senior full stack developer with 7+ years of experience. Currently working as an Engineering Manager at Freelancer.com.',
   summary:
-    'As a Full Stack Engineer, I have successfully taken multiple products from 0 to 1. I lead teams effectively, ensuring an environment where people can do their best work. Currently, I work mostly with TypeScript, React, Node.js, and GraphQL. I have over 8 years of experience in working remotely with companies all around the world.',
-  avatarUrl: 'https://avatars.githubusercontent.com/u/1017620?v=4',
-  personalWebsiteUrl: 'https://jarocki.me',
+    'Experienced engineer focused on full stack development with knowledge in devops/syseng. Engages in activities like kickboxing, game development, and playing TTRPG games.',
+  avatarUrl: 'https://public-assets.adishwar-rishi.com/images/cartoon-headshot.png',
+  personalWebsiteUrl: 'https://adishwar-rishi.com',
   contact: {
-    email: 'bartosz.jarocki@hey.com',
-    tel: '+48530213401',
+    email: 'adiswa123@gmail.com',
+    tel: '+61422359391',
     social: [
-      { name: 'GitHub', url: 'https://github.com/BartoszJarocki', icon: GithubIcon },
-      { name: 'LinkedIn', url: 'https://www.linkedin.com/in/bjarocki/', icon: GithubIcon },
-      { name: 'X', url: 'https://x.com/BartoszJarocki', icon: GithubIcon },
+      { name: 'GitHub', url: 'https://github.com/AdiRishi', icon: GithubIcon },
+      {
+        name: 'LinkedIn',
+        url: 'www.linkedin.com/in/adishwar-rishi-8a832498',
+        icon: LinkedinIcon as unknown as FunctionComponent<React.SVGProps<SVGSVGElement>>,
+      },
+      { name: 'X', url: 'https://twitter.com/AdishwarR', icon: XIcon },
     ],
   },
   education: [
     {
-      school: 'Wrocław University of Technology',
-      degree: "Bachelor's Degree in Control systems engineering and Robotics",
-      start: '2007',
-      end: '2010',
+      school: 'UNSW',
+      degree: 'Bachelor of Engineering (B.E.) Computer Software Engineering',
+      start: '2014',
+      end: '2017',
+    },
+    {
+      school: 'Cherrybrook Technology High School',
+      degree: 'High School Certificate (HSC)',
+      start: '2010',
+      end: '2013',
     },
   ],
   work: [
     {
-      company: 'Parabol',
-      link: 'https://parabol.co',
-      badges: ['Remote'],
-      title: 'Senior Full Stack Developer',
-      start: '2021',
-      end: '2024',
+      company: 'Freelancer.com',
+      link: 'https://www.freelancer.com',
+      badges: ['Full-time', 'Promotion ↑'],
+      title: 'Engineering Manager',
+      start: 'Sep 2019',
+      end: 'Present',
       description:
-        'Implemented new features, led squad, worked on improving the way developers ship the code, started migration from Emotion to Tailwind CSS and more. Technologies: React, TypeScript, GraphQL',
+        'Responsible for the output and quality of product teams, providing technical and managerial coaching, overseeing technical architecture, and ensuring alignment with the Engineering Roadmap. Manages and develops engineering teams and leads, fostering a culture of feedback and continuous improvement.',
     },
     {
-      company: 'Clevertech',
-      link: 'https://clevertech.biz',
-      badges: ['Remote'],
-      title: 'Lead Android Developer → Full Stack Developer',
-      start: '2015',
-      end: '2021',
+      company: 'Freelancer.com',
+      link: 'https://www.freelancer.com',
+      badges: ['Full-time', 'Promotion ↑'],
+      title: 'Engineering Team Lead',
+      start: 'Feb 2019',
+      end: 'Sep 2019',
       description:
-        'Created Android mobile apps and led teams for companies like Vision Media, DKMS, or AAA. Built live streaming application for Evercast from scratch. Technologies: Android, Kotlin, React, TypeScript, GraphQL',
+        'Ensured team execution aligned with PM vision, made technical decisions in line with platform and Engineering Roadmap, managed product technical health, and provided coaching and feedback to engineers and QAs.',
     },
     {
-      company: 'Jojo Mobile',
-      link: 'https://bsgroup.eu/',
-      badges: [],
-      title: 'Android Developer → Lead Android Developer',
-      start: '2012',
-      end: '2015',
+      company: 'Freelancer.com',
+      link: 'https://www.freelancer.com',
+      badges: ['Full-time', 'Promotion ↑'],
+      title: 'Software Engineer',
+      start: 'Nov 2017',
+      end: 'Feb 2019',
       description:
-        'Built an Android team, created Android apps for biggest Polish companies like LOT, Polskie Radio, Agora, PolskaPress',
+        'Involved in the Escrow.com team, focusing on software design, system analysis, and improvement of platform usability and performance, while maintaining and documenting software systems.',
     },
     {
-      company: 'Nokia Siemens Networks',
-      link: 'https://www.nokia.com',
-      badges: [],
-      title: 'C/C++ Developer',
-      start: '2010',
-      end: '2012',
-      description: 'Creating and testing software for LTE base stations',
+      company: 'Freelancer.com',
+      link: 'https://www.freelancer.com',
+      badges: ['Internship'],
+      title: 'Software Engineering Intern',
+      start: 'Nov 2016',
+      end: 'Nov 2017',
+      description:
+        'Participated in software development lifecycle, engaged with various teams to enhance platform capabilities, and assisted in technical documentation and system maintenance.',
     },
   ],
-  skills: ['JavaScript', 'TypeScript', 'React/Next.js/Remix', 'Node.js', 'GraphQL', 'Relay', 'WebRTC'],
+  skills: ['JS/TS', 'Python/Node/Golang/Rust', 'React/Vue', 'GraphQL', 'AWS', 'Docker'],
   projects: [
     {
-      title: 'Consultly',
-      techStack: ['Side Project', 'TypeScript', 'Next.js', 'Vite', 'GraphQL', 'WebRTC'],
-      description: 'A platform to build and grow your online business',
+      title: 'Turborepo Remote Cache',
+      techStack: ['OSS'],
+      description: 'An implementation of the turborepo-remote-cache server custom made for Cloudflare Workers',
       link: {
-        label: 'consultly.com',
-        href: 'https://consultly.com/',
+        href: 'https://github.com/AdiRishi/turborepo-remote-cache-cloudflare',
       },
     },
     {
-      title: 'Monito',
-      techStack: ['Side Project', 'TypeScript', 'Next.js', 'Browser Extension'],
-      description: 'Browser extension that records everything happening in a web application',
+      title: 'Cacified adapter for Cloudflare KV',
+      techStack: ['OSS'],
+      description: 'The official Cloudflare KV adapter for @epic-web/cachified',
       link: {
-        label: 'monito.dev',
-        href: 'https://monito.dev/',
-      },
-    },
-    {
-      title: 'Jarocki.me',
-      techStack: ['Side Project', 'Next.js', 'MDX'],
-      description: 'My personal website and blog. Built with Next.js and Notion API',
-      link: {
-        label: 'github.com',
-        href: 'https://jarocki.me/',
-      },
-    },
-    {
-      title: 'Minimal',
-      techStack: ['Side Project', 'Next.js', 'Puppeteer'],
-      description: 'Minimalist calendars, habit trackers and planners generator',
-      link: {
-        label: 'useminimal.com',
-        href: 'https://useminimal.com/',
-      },
-    },
-    {
-      title: 'Barepapers',
-      techStack: ['Side Project', 'Next.js', 'Puppeteer'],
-      description: 'Generates beautiful wallpapers using random shapes and gradients',
-      link: {
-        label: 'barepapers.com',
-        href: 'https://barepapers.com/',
-      },
-    },
-    {
-      title: 'Year progress',
-      techStack: ['Side Project', 'TypeScript', 'Next.js'],
-      description: 'Tracks current year progress and displays a countdown',
-      link: {
-        label: 'getyearprogress.com',
-        href: 'https://getyearprogress.com/',
-      },
-    },
-    {
-      title: 'Parabol',
-      techStack: ['Full Stack Developer', 'TypeScript', 'React', 'Node.js', 'GraphQL'],
-      description: 'The Agile meeting co-pilot that delivers better meetings with less effort',
-      link: {
-        label: 'github.com',
-        href: 'https://parabol.co/',
-      },
-    },
-    {
-      title: 'Evercast',
-      techStack: ['Lead Frontend Developer', 'TypeScript', 'React', 'Node.js', 'GraphQL'],
-      description: 'Creative collaboration platform that combines video conferencing and HD media streaming',
-      link: {
-        label: 'evercast.us',
-        href: 'https://www.evercast.us/',
-      },
-    },
-    {
-      title: 'Mobile Vikings',
-      techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-      description: 'Android application for leading virtual mobile operator in Poland',
-      link: {
-        label: 'mobilevikings.pl',
-        href: 'https://mobilevikings.pl/',
-      },
-    },
-    {
-      title: 'Howdy',
-      techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-      description: 'Howdy is a place for you to join communities you care about',
-      link: {
-        label: 'play.google.com',
-        href: 'https://howdy.co/',
-      },
-    },
-    {
-      title: 'Tastycloud',
-      techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-      description: 'Android application for managing and displaying restaurant menus in kiosk mode',
-      link: {
-        label: 'tastycloud.fr',
-        href: 'https://www.tastycloud.fr/',
-      },
-    },
-    {
-      title: 'Ambit',
-      techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-      description: 'Android application that helps with sharing your contact details',
-      link: {
-        label: 'tastycloud.fr',
-        href: 'https://www.tastycloud.fr/',
-      },
-    },
-    {
-      title: 'Bim',
-      techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-      description: 'Android application that helps with booking a table in a restaurants',
-      link: {
-        label: 'tastycloud.fr',
-        href: 'https://www.tastycloud.fr/',
-      },
-    },
-    {
-      title: 'Canal Digital GO',
-      techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-      description: 'Video streaming mobile application for Canal Digital subscribers',
-      link: {
-        label: 'tastycloud.fr',
-        href: 'https://www.tastycloud.fr/',
+        href: 'https://www.npmjs.com/package/cachified-adapter-cloudflare-kv',
       },
     },
   ],
@@ -230,7 +134,6 @@ type Project = {
   techStack: string[];
   description: string;
   link?: {
-    label: string;
     href: string;
   };
 };
