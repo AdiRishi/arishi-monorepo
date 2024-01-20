@@ -1,7 +1,8 @@
 'use client';
 
 import { CommandIcon } from 'lucide-react';
-import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { Theme, useTheme } from 'remix-themes';
 import { Button } from '~/components/ui/button';
 import {
   CommandDialog,
@@ -18,9 +19,10 @@ interface Props {
 }
 
 export const CommandMenu = ({ links }: Props) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useTheme();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
@@ -34,7 +36,7 @@ export const CommandMenu = ({ links }: Props) => {
 
   return (
     <>
-      <p className="fixed bottom-0 left-0 right-0 hidden border-t border-t-muted bg-white p-1 text-center text-sm text-muted-foreground print:hidden xl:block">
+      <p className="fixed bottom-0 left-0 right-0 hidden border-t border-t-muted p-1 text-center text-sm text-muted-foreground print:hidden xl:block">
         Press{' '}
         <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
           <span className="text-xs">⌘</span>K
@@ -61,6 +63,14 @@ export const CommandMenu = ({ links }: Props) => {
               }}
             >
               <span>Print</span>
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                setOpen(false);
+                setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT);
+              }}
+            >
+              <span>Toggle Theme</span>
             </CommandItem>
           </CommandGroup>
           <CommandGroup heading="Links">
