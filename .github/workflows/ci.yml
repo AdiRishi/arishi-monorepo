@@ -26,6 +26,7 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm build
+      - run: pnpm test
 
       # - name: Coveralls Coverage Report
       #   uses: coverallsapp/github-action@v2

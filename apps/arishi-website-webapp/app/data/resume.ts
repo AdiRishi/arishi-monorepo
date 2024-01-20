@@ -50,7 +50,7 @@ export const RESUME_DATA: ResumeData = {
       start: 'Sep 2019',
       end: 'Present',
       description:
-        'Responsible for the output and quality of product teams, providing technical and managerial coaching, overseeing technical architecture, and ensuring alignment with the Engineering Roadmap. Manages and develops engineering teams and leads, fostering a culture of feedback and continuous improvement.',
+        'Responsible for the output and quality of product teams, providing technical and managerial coaching, overseeing technical architecture, and ensuring alignment with the Engineering Roadmap. Manage and develop engineering teams and leads, fostering a culture of feedback and continuous improvement.',
     },
     {
       company: 'Freelancer.com',
