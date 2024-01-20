@@ -24,7 +24,7 @@ export const RESUME_DATA: ResumeData = {
         url: 'https://www.linkedin.com/in/adishwar-rishi-8a832498',
         icon: LinkedinIcon as unknown as FunctionComponent<React.SVGProps<SVGSVGElement>>,
       },
-      { name: 'X', url: 'https://twitter.com/AdishwarR', icon: XIcon },
+      { name: 'X (Formerly known as Twitter)', url: 'https://twitter.com/AdishwarR', icon: XIcon },
     ],
   },
   education: [
