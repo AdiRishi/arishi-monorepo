@@ -3,9 +3,8 @@ name: Deploy Cloudflare Pages
 on:
   workflow_run:
     workflows: ['CI']
+    types: [completed]
     branches: [main]
-    types:
-      - completed
 
 jobs:
   check:
@@ -33,6 +32,6 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           command: pages deploy --project-name=adishwar-rishi-website
-          workingDirectory: 'apps/adishwar-rishi-webapp'
+          workingDirectory: 'apps/arishi-website-webapp'
           packageManager: 'pnpm'
           wranglerVersion: '3.23.0'
