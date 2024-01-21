@@ -14,8 +14,10 @@ export const links: LinksFunction = () => [
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const themeStorage = await themeSessionResolver(args.request);
+  const shouldRenderGA = process.env.NODE_ENV === 'production';
   return {
     theme: themeStorage.getTheme(),
+    shouldRenderGA,
   };
 };
 
@@ -31,6 +33,21 @@ function App() {
         <Meta />
         <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <Links />
+        {data.shouldRenderGA && <script async src="https://www.googletagmanager.com/gtag/js?id=G-905KM3LRN9" />}
+        {data.shouldRenderGA && (
+          <script
+            id="gtag-init"
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-905KM3LRN9');
+        `,
+            }}
+          />
+        )}
       </head>
       <body>
         <Layout>
