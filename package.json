@@ -16,7 +16,7 @@
     "prettier": "^3.2.4",
     "turbo": "^1.11.3"
   },
-  "packageManager": "pnpm@8.15.0",
+  "packageManager": "pnpm@8.15.1",
   "pnpm": {
     "overrides": {
       "@types/node": "20.8.3"
