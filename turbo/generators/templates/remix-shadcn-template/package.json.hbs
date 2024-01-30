@@ -6,7 +6,7 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual -c \"npm run start\"",
-    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint . && prettier --check .",
+    "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "start": "wrangler pages dev --compatibility-date=2024-01-14 ./public",
     "typecheck": "tsc"
@@ -19,14 +19,14 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "isbot": "^4.4.0",
-    "lucide-react": "^0.312.0",
+    "lucide-react": "^0.319.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^2.2.0",
+    "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240117.0",
+    "@cloudflare/workers-types": "^4.20240129.0",
     "@remix-run/dev": "^2.5.1",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
@@ -36,7 +36,7 @@
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
-    "wrangler": "3.23.0"
+    "wrangler": "^3.25.0"
   },
   "engines": {
     "node": ">=20",
