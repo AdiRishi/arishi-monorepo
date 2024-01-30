@@ -12,7 +12,8 @@ export const RESUME_DATA: ResumeData = {
     'A senior full stack developer with 7+ years of experience. Currently working as an Engineering Manager at Freelancer.com.',
   summary:
     'Experienced engineer focused on full stack development with knowledge in devops/syseng. Engages in activities like kickboxing, game development, and playing TTRPG games.',
-  avatarUrl: 'https://public-assets.adishwar-rishi.com/images/cartoon-headshot.png',
+  avatarUrl:
+    'https://public-assets.adishwar-rishi.com/cdn-cgi/image/width=200,quality=75,format=auto/images/cartoon-headshot.png',
   personalWebsiteUrl: 'https://adishwar-rishi.com',
   contact: {
     email: 'adiswa123@gmail.com',

@@ -115,9 +115,9 @@ function WorkExperienceSection() {
   return (
     <Section>
       <h2 className="text-xl font-bold">Work Experience</h2>
-      {RESUME_DATA.work.map((work) => {
+      {RESUME_DATA.work.map((work, i) => {
         return (
-          <Card key={work.company} className="border-0 shadow-none">
+          <Card key={`${work.company}-${i}`} className="border-0 shadow-none">
             <CardHeader className="p-0">
               <div className="flex items-center justify-between gap-x-2 text-base">
                 <h3 className="inline-flex items-center justify-center gap-x-1 font-semibold leading-none">
