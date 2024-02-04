@@ -13,7 +13,7 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@turbo/gen": "^1.12.2",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "turbo": "^1.12.2"
   },
   "packageManager": "pnpm@8.15.1",
