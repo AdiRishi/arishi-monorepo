@@ -14,4 +14,9 @@ export default {
   // publicPath: "/build/",
   tailwind: true,
   postcss: true,
+  future: {
+    v3_fetcherPersist: true,
+    v3_throwAbortReason: true,
+    v3_relativeSplatPath: true,
+  },
 };
