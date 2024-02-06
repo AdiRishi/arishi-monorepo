@@ -34,4 +34,4 @@ jobs:
           command: pages deploy public/ --project-name=adishwar-rishi-website
           workingDirectory: 'apps/arishi-website-webapp'
           packageManager: 'pnpm'
-          wranglerVersion: '3.23.0'
+          wranglerVersion: '3.27.0'
