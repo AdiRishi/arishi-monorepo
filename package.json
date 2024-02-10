@@ -2,17 +2,18 @@
   "name": "arishi-monorepo",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "typecheck": "turbo typecheck",
+    "build": "dotenv -- turbo build",
+    "dev": "dotenv -- turbo dev",
+    "lint": "dotenv -- turbo lint",
+    "test": "dotenv -- turbo test",
+    "typecheck": "dotenv -- turbo typecheck",
     "format": "prettier --write ."
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@turbo/gen": "^1.12.3",
+    "dotenv-cli": "^7.3.0",
     "prettier": "^3.2.5",
     "turbo": "^1.12.3"
   },

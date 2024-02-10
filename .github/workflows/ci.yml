@@ -6,6 +6,15 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+  GITHUB_SHA: ${{ github.sha }}
+  TURBO_TOKEN: ${{ secrets.TURBOREPO_REMOTE_CACHE_AUTH_SECRET }}
+  TURBO_API: 'https://turborepo-remote-cache.arishi.workers.dev'
+  TURBO_TEAM: 'team_arishi_monorepo'
+  TURBO_REMOTE_CACHE_SIGNATURE_KEY: ${{ secrets.TURBOREPO_REMOTE_CACHE_SIGNATURE_KEY }}
+
 jobs:
   check:
     name: Check correctness
