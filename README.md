@@ -2,4 +2,6 @@
 
 A collection of public projects hosted under my public website all housed under one monorepo
 
-> :warning: **This repository is still under development**
+Projects within this repository
+- Website code for https://adishwar-rishi.com/
+- A simple domain redirect worker
