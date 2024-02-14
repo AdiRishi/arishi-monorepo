@@ -3,7 +3,7 @@ import { Section } from './section';
 import type { MetaFunction } from '@remix-run/cloudflare';
 import { GlobeIcon, MailIcon, PhoneIcon } from 'lucide-react';
 import { ProjectCard } from '~/components/project-card';
-import { Avatar } from '~/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardHeader } from '~/components/ui/card';
@@ -95,7 +95,8 @@ function IntroSection() {
       </div>
 
       <Avatar className="size-28">
-        <img src={RESUME_DATA.avatarUrl} alt={RESUME_DATA.name} className="aspect-square h-full w-full" />
+        <AvatarImage alt={RESUME_DATA.name} src={RESUME_DATA.avatarUrl} />
+        <AvatarFallback>{RESUME_DATA.initials}</AvatarFallback>
       </Avatar>
     </div>
   );
