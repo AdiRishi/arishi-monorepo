@@ -3,15 +3,16 @@ import { FunctionComponent } from 'react';
 import { GithubIcon } from '~/components/icons/GithubIcon';
 import { XIcon } from '~/components/icons/XIcon';
 
+const yearsOfExperience = new Date().getFullYear() - 2017;
+
 export const RESUME_DATA: ResumeData = {
   name: 'Adishwar Rishi',
   initials: 'AR',
   location: 'Greater Sydney Area',
   locationLink: 'https://www.google.com/maps/place/Sydney',
-  about:
-    'A senior full stack developer with 7+ years of experience. Currently working as an Engineering Manager at Freelancer.com.',
+  about: `A senior full stack developer with ${yearsOfExperience}+ years of experience. Currently working as an Engineering Manager at Freelancer.com.`,
   summary:
-    'Experienced engineer focused on full stack development with knowledge in devops/syseng. Engages in activities like kickboxing, game development, and playing TTRPG games.',
+    'An experienced engineer focused on full stack development with knowledge in devops/syseng. In my spare time I contribute to open source projects and volunteer my time to help development of yoga and wellness projects. Also a big fan of TTRPGs and enjoy playing them with friends.',
   avatarUrl:
     'https://public-assets.adishwar-rishi.com/cdn-cgi/image/width=200,quality=75,format=auto/images/cartoon-headshot.png',
   personalWebsiteUrl: 'https://adishwar-rishi.com',
@@ -84,7 +85,7 @@ export const RESUME_DATA: ResumeData = {
         'Participated in software development lifecycle, engaged with various teams to enhance platform capabilities, and assisted in technical documentation and system maintenance.',
     },
   ],
-  skills: ['JS/TS', 'Python/Node/Golang/Rust', 'React/Vue', 'GraphQL', 'AWS', 'Docker'],
+  skills: ['JS/TS', 'Python/Node/Golang/Rust', 'React/Vue', 'GraphQL', 'AWS', 'Docker', 'Serverless'],
   projects: [
     {
       title: 'Turborepo Remote Cache',
