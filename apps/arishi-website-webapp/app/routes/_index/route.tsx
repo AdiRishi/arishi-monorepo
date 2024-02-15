@@ -44,6 +44,7 @@ function IntroSection() {
   return (
     <div className="flex items-center justify-between">
       <div className="flex-1 space-y-1.5">
+        Hello does this even work?
         <h1 className="text-2xl font-bold">{RESUME_DATA.name}</h1>
         <p className="max-w-md text-pretty font-mono text-sm text-muted-foreground">{RESUME_DATA.about}</p>
         <p className="max-w-md items-center text-pretty font-mono text-xs text-muted-foreground">
