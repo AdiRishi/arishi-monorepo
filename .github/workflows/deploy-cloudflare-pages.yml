@@ -5,12 +5,14 @@ on:
     workflows: ['CI']
     types: [completed]
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   check:
     name: Build and deploy CF Pages
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
+    if: github.event.workflow_run.conclusion == 'success' || github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +29,7 @@ jobs:
       - run: pnpm build
 
       - name: Deploy arishi-website-webapp
+        id: deploy-arishi-website-webapp
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
@@ -35,3 +38,33 @@ jobs:
           workingDirectory: 'apps/arishi-website-webapp'
           packageManager: 'pnpm'
           wranglerVersion: '3.27.0'
+
+      - name: Comment with deploy link
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const apps = [
+              { name: 'arishi-website-webapp', url: process.env.ARISHI_WEBSITE_WEBAPP_DEPLOYMENT_URL },
+              // Add more apps here
+            ];
+            const commitHash = context.payload.pull_request.head.sha;
+            const status = '✅  Deploy successful!';
+
+            let tableHeader = '| App Name | Last Commit | Preview URL | Status |';
+            let tableDivider = '| --------- | ----------- | ----------- | ------ |';
+            let tableRows = apps.map(app => `| ${app.name} | \`${commitHash.substring(0, 7)}\` | ${app.url} | ${status} |`).join('\n');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+              # 🌩 Deploying with Cloudflare Pages
+              ${tableHeader}
+              ${tableDivider}
+              ${tableRows}
+              `
+            });
+        env:
+          ARISHI_WEBSITE_WEBAPP_DEPLOYMENT_URL: ${{ steps.deploy-arishi-website-webapp.outputs.deployment-url }}
