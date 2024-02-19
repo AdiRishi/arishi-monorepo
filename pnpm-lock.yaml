@@ -66,8 +66,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       lucide-react:
-        specifier: ^0.331.0
-        version: 0.331.0(react@18.2.0)
+        specifier: ^0.333.0
+        version: 0.333.0(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -2894,7 +2894,7 @@ packages:
       '@babel/plugin-syntax-typescript': 7.23.3(@babel/core@7.23.9)
       '@vanilla-extract/babel-plugin-debug-ids': 1.0.4
       '@vanilla-extract/css': 1.14.1
-      esbuild: 0.17.6
+      esbuild: 0.19.12
       eval: 0.1.8
       find-up: 5.0.0
       javascript-stringify: 2.1.0
@@ -5921,8 +5921,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /lucide-react@0.331.0(react@18.2.0):
-    resolution: {integrity: sha512-CHFJ0ve9vaZ7bB2VRAl27SlX1ELh6pfNC0jS96qGpPEEzLkLDGq4pDBFU8RhOoRMqsjXqTzLm9U6bZ1OcIHq7Q==}
+  /lucide-react@0.333.0(react@18.2.0):
+    resolution: {integrity: sha512-K/TIOTaLy5qAZBlhIBIY16MVPXchlFOeOtz2GE3/hXvKRffl5QjX9USkFKSSc8oSGXglbftSBzs2s0zkLHknaw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
