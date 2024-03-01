@@ -34,4 +34,4 @@ jobs:
           command: deploy
           workingDirectory: 'workers/domain-redirect'
           packageManager: 'pnpm'
-          wranglerVersion: '3.27.0'
+          wranglerVersion: '3.30.1'
