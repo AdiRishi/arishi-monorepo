@@ -63,8 +63,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(@types/react-dom@18.2.22)(@types/react@18.2.66)(react-dom@18.2.0)(react@18.2.0)
       isbot:
-        specifier: ^5.1.1
-        version: 5.1.1
+        specifier: ^5.1.2
+        version: 5.1.2
       lucide-react:
         specifier: ^0.358.0
         version: 0.358.0(react@18.2.0)
@@ -5478,8 +5478,8 @@ packages:
     engines: {node: '>= 8.0.0'}
     dev: true
 
-  /isbot@5.1.1:
-    resolution: {integrity: sha512-l4ArJhXWgEahbPEY5nVNh3Ojr0s4Eg2evSAmEQ6QkiFIwdsHg2wThzCMs/kcqgNc1D4HxwEg3+FEYP+bgAiplA==}
+  /isbot@5.1.2:
+    resolution: {integrity: sha512-Yk2X9QhmhzyxKx4JYfeanqxODxDc2CoU38/uymjkvW/CYww6GPH8e65sOuLz0SIkFjW6pCg/iM6vLdohzA4WOQ==}
     engines: {node: '>=18'}
     dev: false
 
