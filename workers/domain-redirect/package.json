@@ -17,7 +17,7 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@vitest/coverage-v8": "^1.4.0",
-    "miniflare": "^3.20240304.2",
+    "miniflare": "^3.20240314.0",
     "typescript": "^5.4.2",
     "vitest": "^1.4.0",
     "vitest-environment-miniflare": "^2.14.2",
