@@ -43,7 +43,7 @@
     "remix-sitemap": "^3.2.0",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.3",
-    "wrangler": "^3.39.0"
+    "wrangler": "^3.40.0"
   },
   "engines": {
     "node": ">=20",
