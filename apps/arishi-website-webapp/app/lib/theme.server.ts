@@ -1,7 +1,7 @@
 import { createCookieSessionStorage } from '@remix-run/cloudflare';
 import { createThemeSessionResolver } from 'remix-themes';
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = import.meta.env.PROD;
 
 const themeSessionStorage = createCookieSessionStorage({
   cookie: {
