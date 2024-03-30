@@ -11,8 +11,7 @@ export const RESUME_DATA: ResumeData = {
   location: 'Greater Sydney Area',
   locationLink: 'https://www.google.com/maps/place/Sydney',
   about: `A senior full stack developer with ${yearsOfExperience}+ years of experience. Currently working as an Engineering Manager at Freelancer.com.`,
-  summary:
-    'An experienced engineer focused on full stack development with knowledge in devops/syseng. In my spare time I contribute to open source projects and volunteer my time to help development of yoga and wellness projects. Also a big fan of TTRPGs and enjoy playing them with friends.',
+  summary: `An experienced Senior Engineer with over ${yearsOfExperience} years of experience in end-to-end product development. Adept at everything from building complex UI to developing and managing servers on both AWS and on the edge using Cloudflare. Shown a proven track record of leading teams to deliver innovative solutions on time and with excellence, while actively contributing to system architecture and engineering best practices`,
   avatarUrl:
     'https://public-assets.adishwar-rishi.com/cdn-cgi/image/width=200,quality=75,format=auto/images/cartoon-headshot.png',
   personalWebsiteUrl: 'https://adishwar-rishi.com',
