@@ -16,7 +16,7 @@ export const RESUME_DATA: ResumeData = {
     'https://public-assets.adishwar-rishi.com/cdn-cgi/image/width=200,quality=75,format=auto/images/cartoon-headshot.png',
   personalWebsiteUrl: 'https://adishwar-rishi.com',
   contact: {
-    email: 'adiswa123@gmail.com',
+    email: 'adishwar.rishi@gmail.com',
     tel: '+61422359391',
     social: [
       { name: 'GitHub', url: 'https://github.com/AdiRishi', icon: GithubIcon },
