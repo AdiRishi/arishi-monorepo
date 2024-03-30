@@ -43,10 +43,10 @@ importers:
         version: 1.0.2(@types/react@18.2.73)(react@18.2.0)
       '@remix-run/cloudflare':
         specifier: ^2.8.1
-        version: 2.8.1(@cloudflare/workers-types@4.20240320.1)(typescript@5.4.3)
+        version: 2.8.1(@cloudflare/workers-types@4.20240329.0)(typescript@5.4.3)
       '@remix-run/cloudflare-pages':
         specifier: ^2.8.1
-        version: 2.8.1(@cloudflare/workers-types@4.20240320.1)(typescript@5.4.3)
+        version: 2.8.1(@cloudflare/workers-types@4.20240329.0)(typescript@5.4.3)
       '@remix-run/css-bundle':
         specifier: ^2.8.1
         version: 2.8.1
@@ -85,8 +85,8 @@ importers:
         version: 1.0.7(tailwindcss@3.4.3)
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20240320.1
-        version: 4.20240320.1
+        specifier: ^4.20240329.0
+        version: 4.20240329.0
       '@remix-run/dev':
         specifier: ^2.8.1
         version: 2.8.1(@types/node@20.8.3)(typescript@5.4.3)(wrangler@3.41.0)
@@ -119,7 +119,7 @@ importers:
         version: 5.4.3
       wrangler:
         specifier: ^3.41.0
-        version: 3.41.0(@cloudflare/workers-types@4.20240320.1)
+        version: 3.41.0(@cloudflare/workers-types@4.20240329.0)
 
   packages/eslint-config:
     dependencies:
@@ -185,8 +185,8 @@ importers:
         version: 3.22.4
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20240320.1
-        version: 4.20240320.1
+        specifier: ^4.20240329.0
+        version: 4.20240329.0
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
@@ -210,7 +210,7 @@ importers:
         version: 2.14.2(vitest@1.4.0)
       wrangler:
         specifier: ^3.41.0
-        version: 3.41.0(@cloudflare/workers-types@4.20240320.1)
+        version: 3.41.0(@cloudflare/workers-types@4.20240329.0)
 
 packages:
 
@@ -659,8 +659,8 @@ packages:
     dev: true
     optional: true
 
-  /@cloudflare/workers-types@4.20240320.1:
-    resolution: {integrity: sha512-CiYtVpQURPgQqtBKkmOAnfPElVZuD7Xyf1IxKtKp2B4aB9gnooapwJhzeY8c4Ls4u17SgMS0MprOkrgYwzZ6xg==}
+  /@cloudflare/workers-types@4.20240329.0:
+    resolution: {integrity: sha512-AbzgvSQjG8Nci4xxQEcjTTVjiWXgOQnFIbIHtEZXteHiMGDXMWGegjWBo5JHGsZCq+U5V/SD5EnlypQnUQEoig==}
 
   /@cspotcode/source-map-support@0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1556,7 +1556,7 @@ packages:
     resolution: {integrity: sha512-97y/95EzDC86jM2bKYacKk4n59miFC+WXueRdW5TeVzBw2UTL2Alvy36AZuyMUgBqxZdJSv88/q0jHTw7LvyMA==}
     engines: {node: '>=16.13'}
     dependencies:
-      '@cloudflare/workers-types': 4.20240320.1
+      '@cloudflare/workers-types': 4.20240329.0
       '@miniflare/cache': 2.14.2
       '@miniflare/core': 2.14.2
       '@miniflare/d1': 2.14.2
@@ -2008,7 +2008,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@remix-run/cloudflare-pages@2.8.1(@cloudflare/workers-types@4.20240320.1)(typescript@5.4.3):
+  /@remix-run/cloudflare-pages@2.8.1(@cloudflare/workers-types@4.20240329.0)(typescript@5.4.3):
     resolution: {integrity: sha512-VigmjkawtEzIgjeyv4MZa3S2sIxXJBMEr4Ol1bsxW8d3uHjcB83Fh/Ywe4phot/SsUzuYHccKbIMT/YY9ly2zg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
@@ -2018,12 +2018,12 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@cloudflare/workers-types': 4.20240320.1
-      '@remix-run/cloudflare': 2.8.1(@cloudflare/workers-types@4.20240320.1)(typescript@5.4.3)
+      '@cloudflare/workers-types': 4.20240329.0
+      '@remix-run/cloudflare': 2.8.1(@cloudflare/workers-types@4.20240329.0)(typescript@5.4.3)
       typescript: 5.4.3
     dev: false
 
-  /@remix-run/cloudflare@2.8.1(@cloudflare/workers-types@4.20240320.1)(typescript@5.4.3):
+  /@remix-run/cloudflare@2.8.1(@cloudflare/workers-types@4.20240329.0)(typescript@5.4.3):
     resolution: {integrity: sha512-/JTFIjRcT8DhQuHa0i1TKBO9q1NeVteYgxi6w4fCf6pS+HoQ3+1UXVqOQflUfuChCCn5R3mzPJywDq0RyH3ctw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
@@ -2034,7 +2034,7 @@ packages:
         optional: true
     dependencies:
       '@cloudflare/kv-asset-handler': 0.1.3
-      '@cloudflare/workers-types': 4.20240320.1
+      '@cloudflare/workers-types': 4.20240329.0
       '@remix-run/server-runtime': 2.8.1(typescript@5.4.3)
       typescript: 5.4.3
     dev: false
@@ -2116,7 +2116,7 @@ packages:
       tar-fs: 2.1.1
       tsconfig-paths: 4.2.0
       typescript: 5.4.3
-      wrangler: 3.41.0(@cloudflare/workers-types@4.20240320.1)
+      wrangler: 3.41.0(@cloudflare/workers-types@4.20240329.0)
       ws: 7.5.9
     transitivePeerDependencies:
       - '@types/node'
@@ -9078,7 +9078,7 @@ packages:
       '@cloudflare/workerd-windows-64': 1.20240320.1
     dev: true
 
-  /wrangler@3.41.0(@cloudflare/workers-types@4.20240320.1):
+  /wrangler@3.41.0(@cloudflare/workers-types@4.20240329.0):
     resolution: {integrity: sha512-iPFHF+88ZchnoZaQnq69Qkcpt0/LwkD44FzTxHWGzuBiNFwWwaNZ5zJ1G7Ga4nyipwcgtj+ykGlB/Amdgmut7w==}
     engines: {node: '>=16.17.0'}
     hasBin: true
@@ -9089,7 +9089,7 @@ packages:
         optional: true
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.1
-      '@cloudflare/workers-types': 4.20240320.1
+      '@cloudflare/workers-types': 4.20240329.0
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
       '@esbuild-plugins/node-modules-polyfill': 0.2.2(esbuild@0.17.19)
       blake3-wasm: 2.1.5
