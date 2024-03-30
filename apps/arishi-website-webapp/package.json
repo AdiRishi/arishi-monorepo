@@ -4,12 +4,12 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build",
+    "build": "remix vite:build",
     "build:sitemap": "remix-sitemap",
-    "dev": "remix dev --manual -c \"npm run start\"",
+    "dev": "remix vite:dev",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "start": "wrangler pages dev --compatibility-date=2024-01-14 ./public",
+    "preview": "wrangler pages dev --compatibility-date=2024-01-14 ./build/client",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -40,9 +40,13 @@
     "@types/react-dom": "^18.2.23",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
+    "remix-development-tools": "^4.1.4",
     "remix-sitemap": "^3.2.0",
+    "rollup-plugin-visualizer": "^5.12.0",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.3",
+    "vite": "^5.2.7",
+    "vite-tsconfig-paths": "^4.3.2",
     "wrangler": "^3.41.0"
   },
   "engines": {

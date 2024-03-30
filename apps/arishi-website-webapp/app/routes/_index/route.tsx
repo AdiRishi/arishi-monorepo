@@ -1,5 +1,3 @@
-import { CommandMenu } from './command-menu';
-import { Section } from './section';
 import type { MetaFunction } from '@remix-run/cloudflare';
 import { GlobeIcon, MailIcon, PhoneIcon } from 'lucide-react';
 import { ProjectCard } from '~/components/project-card';
@@ -8,6 +6,8 @@ import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardHeader } from '~/components/ui/card';
 import { RESUME_DATA } from '~/data/resume';
+import { CommandMenu } from './command-menu';
+import { Section } from './section';
 
 export const meta: MetaFunction = () => {
   return [{ title: RESUME_DATA.name }, { name: 'description', content: RESUME_DATA.about }];

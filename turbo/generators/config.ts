@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { PlopTypes } from '@turbo/gen';
+import path from 'path';
 import { addCustomActions } from './customActions';
 import { addCustomHelpers } from './helpers';
 import { getRelativePath } from './helpers';
-import { PlopTypes } from '@turbo/gen';
-import path from 'path';
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   addCustomActions(plop);

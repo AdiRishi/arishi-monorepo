@@ -34,10 +34,10 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          command: pages deploy public/ --project-name=adishwar-rishi-website
+          command: pages deploy ./build/client --project-name=adishwar-rishi-website
           workingDirectory: 'apps/arishi-website-webapp'
           packageManager: 'pnpm'
-          wranglerVersion: '3.30.1'
+          wranglerVersion: '3.41.0'
 
       - name: Comment with deploy link
         if: github.event_name == 'pull_request'

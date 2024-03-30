@@ -1,7 +1,7 @@
-import { handleRequest } from '.';
 import { expect, test, beforeAll, afterAll } from 'vitest';
 import { unstable_dev } from 'wrangler';
 import type { UnstableDevWorker } from 'wrangler';
+import { handleRequest } from '.';
 
 const describe = setupMiniflareIsolatedStorage();
 

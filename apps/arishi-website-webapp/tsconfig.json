@@ -1,18 +1,22 @@
 {
   "extends": "@repo/typescript-config/remix-run.json",
   "compilerOptions": {
+    "module": "ESNext",
+    "types": ["@remix-run/cloudflare", "vite/client"],
     "baseUrl": ".", // baseUrl required for path aliases to work
     "paths": {
       "~/*": ["./app/*"]
     }
   },
   "include": [
-    "remix.env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "remix.config.js",
+    "remix-sitemap.config.js",
     "postcss.config.js",
     ".eslintrc.cjs",
-    "remix-sitemap.config.js"
+    "**/*.ts",
+    "**/*.tsx",
+    "**/.server/**/*.ts",
+    "**/.server/**/*.tsx",
+    "**/.client/**/*.ts",
+    "**/.client/**/*.tsx"
   ]
 }

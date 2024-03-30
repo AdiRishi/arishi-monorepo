@@ -15,3 +15,4 @@ turbo/generators/templates
 **/*.generated.ts
 coverage
 remix-sitemap.config.js
+build

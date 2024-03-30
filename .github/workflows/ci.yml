@@ -32,9 +32,9 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install
+      - run: pnpm build
       - run: pnpm lint
       - run: pnpm typecheck
-      - run: pnpm build
       - run: pnpm test
 
       # - name: Coveralls Coverage Report
