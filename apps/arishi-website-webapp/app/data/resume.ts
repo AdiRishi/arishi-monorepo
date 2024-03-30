@@ -3,15 +3,13 @@ import { FunctionComponent } from 'react';
 import { GithubIcon } from '~/components/icons/GithubIcon';
 import { XIcon } from '~/components/icons/XIcon';
 
-const yearsOfExperience = new Date().getFullYear() - 2017;
-
 export const RESUME_DATA: ResumeData = {
   name: 'Adishwar Rishi',
   initials: 'AR',
   location: 'Greater Sydney Area',
   locationLink: 'https://www.google.com/maps/place/Sydney',
-  about: `A senior full stack developer with ${yearsOfExperience}+ years of experience. Currently working as an Engineering Manager at Freelancer.com.`,
-  summary: `An experienced Senior Engineer with over ${yearsOfExperience} years of experience in end-to-end product development. Adept at everything from building complex UI to developing and managing servers on both AWS and on the edge using Cloudflare. Shown a proven track record of leading teams to deliver innovative solutions on time and with excellence, while actively contributing to system architecture and engineering best practices`,
+  about: `A senior full stack developer with 7+ years of experience. Currently working as an Engineering Manager at Freelancer.com.`,
+  summary: `An experienced Senior Engineer with over 7 years of experience in end-to-end product development. Adept at everything from building complex UI to developing and managing servers on both AWS and on the edge using Cloudflare. Shown a proven track record of leading teams to deliver innovative solutions on time and with excellence, while actively contributing to system architecture and engineering best practices`,
   avatarUrl:
     'https://public-assets.adishwar-rishi.com/cdn-cgi/image/width=200,quality=75,format=auto/images/cartoon-headshot.png',
   personalWebsiteUrl: 'https://adishwar-rishi.com',
