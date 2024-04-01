@@ -12,10 +12,10 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@turbo/gen": "^1.13.0",
+    "@turbo/gen": "^1.13.1",
     "dotenv-cli": "^7.4.1",
     "prettier": "^3.2.5",
-    "turbo": "^1.13.0"
+    "turbo": "^1.13.1"
   },
   "packageManager": "pnpm@8.15.6",
   "pnpm": {
