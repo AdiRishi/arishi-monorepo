@@ -89,7 +89,7 @@ importers:
         version: 4.20240329.0
       '@remix-run/dev':
         specifier: ^2.8.1
-        version: 2.8.1(@types/node@20.8.3)(typescript@5.4.3)(vite@5.2.7)(wrangler@3.42.0)
+        version: 2.8.1(@types/node@20.8.3)(typescript@5.4.3)(vite@5.2.7)(wrangler@3.43.0)
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
@@ -130,8 +130,8 @@ importers:
         specifier: ^4.3.2
         version: 4.3.2(typescript@5.4.3)(vite@5.2.7)
       wrangler:
-        specifier: ^3.42.0
-        version: 3.42.0(@cloudflare/workers-types@4.20240329.0)
+        specifier: ^3.43.0
+        version: 3.43.0(@cloudflare/workers-types@4.20240329.0)
 
   packages/eslint-config:
     dependencies:
@@ -221,8 +221,8 @@ importers:
         specifier: ^2.14.2
         version: 2.14.2(vitest@1.4.0)
       wrangler:
-        specifier: ^3.42.0
-        version: 3.42.0(@cloudflare/workers-types@4.20240329.0)
+        specifier: ^3.43.0
+        version: 3.43.0(@cloudflare/workers-types@4.20240329.0)
 
 packages:
 
@@ -2469,7 +2469,7 @@ packages:
     engines: {node: '>=18.0.0'}
     dev: false
 
-  /@remix-run/dev@2.8.1(@types/node@20.8.3)(typescript@5.4.3)(vite@5.2.7)(wrangler@3.42.0):
+  /@remix-run/dev@2.8.1(@types/node@20.8.3)(typescript@5.4.3)(vite@5.2.7)(wrangler@3.43.0):
     resolution: {integrity: sha512-qFt4jAsAJeIOyg6ngeSnTG/9Z5N9QJfeThP/8wRHc1crqYgTiEtcI3DZ8WlAXjVSF5emgn/ZZKqzLAI02OgMfQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
@@ -2542,7 +2542,7 @@ packages:
       tsconfig-paths: 4.2.0
       typescript: 5.4.3
       vite: 5.2.7(@types/node@20.8.3)
-      wrangler: 3.42.0(@cloudflare/workers-types@4.20240329.0)
+      wrangler: 3.43.0(@cloudflare/workers-types@4.20240329.0)
       ws: 7.5.9
     transitivePeerDependencies:
       - '@types/node'
@@ -9951,8 +9951,8 @@ packages:
       '@cloudflare/workerd-windows-64': 1.20240329.0
     dev: true
 
-  /wrangler@3.42.0(@cloudflare/workers-types@4.20240329.0):
-    resolution: {integrity: sha512-t/Fq80aG5RrCyN118aV9oG1Tt66QEatz0tarKzpy0cuUMUf3T3yJAuYb6kmYIy6+beQJNoGWSAjjhAQnOn2MCQ==}
+  /wrangler@3.43.0(@cloudflare/workers-types@4.20240329.0):
+    resolution: {integrity: sha512-v+uJmSVmxdv3aVRQsJLPHXgI5nhOBvJaZ5yUcSO8rJ+m5X2l9HzFQzFlUi1GtYIOejFSr8kcCuLm3YY6JbQruQ==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
