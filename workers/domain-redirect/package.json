@@ -18,7 +18,7 @@
     "@repo/typescript-config": "workspace:*",
     "@vitest/coverage-v8": "^1.4.0",
     "miniflare": "^3.20240404.0",
-    "typescript": "^5.4.4",
+    "typescript": "^5.4.5",
     "vitest": "^1.4.0",
     "vitest-environment-miniflare": "^2.14.2",
     "wrangler": "^3.48.0"

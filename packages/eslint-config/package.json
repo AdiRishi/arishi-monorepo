@@ -24,7 +24,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.13",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   },
   "publishConfig": {
     "access": "public"
