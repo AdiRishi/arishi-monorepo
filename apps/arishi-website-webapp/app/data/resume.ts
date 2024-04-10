@@ -8,8 +8,8 @@ export const RESUME_DATA: ResumeData = {
   initials: 'AR',
   location: 'Greater Sydney Area',
   locationLink: 'https://www.google.com/maps/place/Sydney',
-  about: `A senior full stack developer with 7+ years of experience. Currently working as an Engineering Manager at Freelancer.com.`,
-  summary: `An experienced Senior Engineer with over 7 years of experience in end-to-end product development. Adept at everything from building complex UI to developing and managing servers on both AWS and on the edge using Cloudflare. Shown a proven track record of leading teams to deliver innovative solutions on time and with excellence, while actively contributing to system architecture and engineering best practices`,
+  about: `A senior full stack developer with 7+ years of experience. Currently working as a Technical Lead at Freelancer.com.`,
+  summary: `A seasoned Senior Engineer with over 7 years of expertise in comprehensive product development, I am deeply passionate about architecting cost-effective and highly scalable systems. My skills extend from constructing intricate UIs to developing and managing servers on AWS and Cloudflare, with a particular enthusiasm for serverless technology. I have consistently led teams to deliver innovative solutions on schedule and to the highest standards, while actively shaping system architecture and engineering best practices. I am committed to enhancing developer experience, driving me to create systems that are not only robust and efficient, but also intuitive and seamless to use.`,
   avatarUrl:
     'https://public-assets.adishwar-rishi.com/cdn-cgi/image/width=200,quality=75,format=auto/images/cartoon-headshot.png',
   personalWebsiteUrl: 'https://adishwar-rishi.com',
@@ -45,11 +45,11 @@ export const RESUME_DATA: ResumeData = {
       company: 'Freelancer.com',
       link: 'https://www.freelancer.com',
       badges: ['Promotion'],
-      title: 'Engineering Manager',
+      title: 'Senior Software Engineer - Technical Lead',
       start: 'Sep 2019',
       end: 'Present',
       description:
-        'Responsible for the output and quality of product teams, providing technical and managerial coaching, overseeing technical architecture, and ensuring alignment with the Engineering Roadmap. Manage and develop engineering teams and leads, fostering a culture of feedback and continuous improvement.',
+        'Tech Lead for Escrow.com, steering technical direction and ensuring quality and timely delivery. Managed a tech stack with 20+ Python services, databases, and React.js front-end. Architected new features, maintained system integrity, and managed AWS infrastructure to achieve a 99.9% uptime SLA.',
     },
     {
       company: 'Freelancer.com',
@@ -59,7 +59,7 @@ export const RESUME_DATA: ResumeData = {
       start: 'Feb 2019',
       end: 'Sep 2019',
       description:
-        'Ensured team execution aligned with PM vision, made technical decisions in line with platform and Engineering Roadmap, managed product technical health, and provided coaching and feedback to engineers and QAs.',
+        "Guided a cross-regional team of 10 engineers, ensuring alignment with the Product Manager's vision and maintaining high-quality standards. Mentored junior staff, leading to significant pay raises for three team members, and served as the primary on-call for critical production issues.",
     },
     {
       company: 'Freelancer.com',
@@ -69,7 +69,7 @@ export const RESUME_DATA: ResumeData = {
       start: 'Nov 2017',
       end: 'Feb 2019',
       description:
-        'Involved in the Escrow.com team, focusing on software design, system analysis, and improvement of platform usability and performance, while maintaining and documenting software systems.',
+        'Led the full-stack redevelopment of the internal escalation system, incorporating complex SQL queries, backend logic, and front-end interfaces, which significantly improved response efficiency and team productivity. Engineered, tested, and maintained robust software systems, and facilitated cross-team collaboration to align technical solutions with business objectives.',
     },
     {
       company: 'Freelancer.com',
