@@ -53,9 +53,6 @@ importers:
       '@remix-run/cloudflare-pages':
         specifier: ^2.8.1
         version: 2.8.1(@cloudflare/workers-types@4.20240405.0)(typescript@5.4.5)
-      '@remix-run/css-bundle':
-        specifier: ^2.8.1
-        version: 2.8.1
       '@remix-run/react':
         specifier: ^2.8.1
         version: 2.8.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.5)
@@ -2486,11 +2483,6 @@ packages:
       '@cloudflare/workers-types': 4.20240405.0
       '@remix-run/server-runtime': 2.8.1(typescript@5.4.5)
       typescript: 5.4.5
-    dev: false
-
-  /@remix-run/css-bundle@2.8.1:
-    resolution: {integrity: sha512-rn72xyUJ+rR5I0IxjlDWPPBddV1kpLvOT2FY9SMIUTFqyxq3ZK2W7FCtFzBt2JZQGZ9oDYidXYMWkW6tXY//rg==}
-    engines: {node: '>=18.0.0'}
     dev: false
 
   /@remix-run/dev@2.8.1(@types/node@20.8.3)(typescript@5.4.5)(vite@5.2.8)(wrangler@3.49.0):

@@ -1,5 +1,4 @@
 import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/cloudflare';
-import { cssBundleHref } from '@remix-run/css-bundle';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
 import clsx from 'clsx';
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from 'remix-themes';
@@ -7,10 +6,7 @@ import { Layout } from '~/components/layouts/root-layout';
 import tailwindStyles from '~/global-styles/tailwind.css?url';
 import { themeSessionResolver } from '~/lib/theme.server';
 
-export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
-  { rel: 'stylesheet', href: tailwindStyles },
-];
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindStyles }];
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const themeStorage = await themeSessionResolver(args.request);
