@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="container relative mx-auto scroll-my-12 overflow-auto p-4 print:p-12 md:p-16">
+    <div className="container relative mx-auto scroll-my-12 overflow-auto p-4 md:p-16 print:p-12">
       <section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
         <IntroSection />
         <AboutSection />
@@ -140,7 +140,7 @@ function WorkExperienceSection() {
 
               <h4 className="font-mono text-sm leading-none">{work.title}</h4>
             </CardHeader>
-            <CardContent className="mt-2 text-xs text-pretty font-mono text-muted-foreground p-0">
+            <CardContent className="mt-2 text-pretty p-0 font-mono text-xs text-muted-foreground">
               {work.description}
             </CardContent>
           </Card>
@@ -165,7 +165,7 @@ function EducationSection() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="mt-2 text-xs text-pretty font-mono text-muted-foreground p-0">
+            <CardContent className="mt-2 text-pretty p-0 font-mono text-xs text-muted-foreground">
               {education.degree}
             </CardContent>
           </Card>
@@ -192,7 +192,7 @@ function ProjectsSection() {
   return (
     <Section className="scroll-mb-16">
       <h2 className="text-xl font-bold">Projects</h2>
-      <div className="-mx-3 grid grid-cols-1 gap-3 print:grid-cols-3 print:gap-2 md:grid-cols-2 lg:grid-cols-3">
+      <div className="-mx-3 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 print:grid-cols-3 print:gap-2">
         {RESUME_DATA.projects.map((project) => {
           return (
             <ProjectCard

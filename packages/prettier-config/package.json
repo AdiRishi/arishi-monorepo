@@ -1,0 +1,23 @@
+{
+  "name": "@repo/prettier-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "default-config.js"
+  ],
+  "exports": {
+    "./default": "./default-config.js"
+  },
+  "scripts": {
+    "lint": "prettier --check ."
+  },
+  "dependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.13"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

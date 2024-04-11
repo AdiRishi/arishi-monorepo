@@ -1,6 +1,7 @@
 {
   "name": "arishi-monorepo",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "dotenv -- turbo build",
     "dev": "dotenv -- turbo dev",
@@ -11,6 +12,7 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@turbo/gen": "^1.13.2",
     "dotenv-cli": "^7.4.1",

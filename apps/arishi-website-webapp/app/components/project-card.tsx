@@ -33,7 +33,7 @@ export function ProjectCard({ title, description, tags, link }: Props) {
           <CardDescription className="font-mono text-xs">{description}</CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="mt-auto flex text-xs text-pretty font-mono text-muted-foreground p-0">
+      <CardContent className="mt-auto flex text-pretty p-0 font-mono text-xs text-muted-foreground">
         <div className="mt-2 flex flex-wrap gap-1">
           {tags.map((tag) => (
             <Badge className="px-1 py-0 text-[10px]" variant="secondary" key={tag}>
