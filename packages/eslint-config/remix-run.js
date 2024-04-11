@@ -2,7 +2,7 @@ const { resolve } = require('node:path');
 
 const project = resolve(process.cwd(), 'tsconfig.json');
 
-/** @type {import("eslint").Linter.Config} */
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
   parserOptions: {
@@ -17,6 +17,7 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
+  ignorePatterns: ['!**/.server', '!**/.client'],
 
   extends: ['@repo/eslint-config/base.js'],
 
@@ -41,9 +42,7 @@ module.exports = {
           { name: 'NavLink', linkAttribute: 'to' },
         ],
         'import/resolver': {
-          typescript: {
-            project,
-          },
+          typescript: {},
         },
       },
     },
@@ -60,7 +59,6 @@ module.exports = {
             extensions: ['.ts', '.tsx'],
           },
           typescript: {
-            project,
             alwaysTryTypes: true,
           },
         },

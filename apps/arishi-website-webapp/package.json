@@ -10,7 +10,8 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "preview": "wrangler pages dev --compatibility-date=2024-01-14 ./build/client",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "typegen": "wrangler types"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.4",

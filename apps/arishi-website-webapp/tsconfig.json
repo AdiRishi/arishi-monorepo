@@ -1,8 +1,7 @@
 {
   "extends": "@repo/typescript-config/remix-run.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "types": ["@remix-run/cloudflare", "vite/client"],
+    "types": ["@remix-run/cloudflare", "vite/client", "@cloudflare/workers-types/2023-07-01"],
     "baseUrl": ".", // baseUrl required for path aliases to work
     "paths": {
       "~/*": ["./app/*"]
