@@ -89,8 +89,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         },
         {
           type: 'add',
-          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.prettierrc.json',
-          templateFile: 'templates/worker-template/.prettierrc.json',
+          path: '{{ turbo.paths.workspace }}/workers/{{ dashCase workerName }}/.prettierrc.js',
+          templateFile: 'templates/worker-template/.prettierrc.js',
         },
         {
           type: 'add',
@@ -176,8 +176,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         },
         {
           type: 'add',
-          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/.prettierrc.json',
-          templateFile: 'templates/remix-template/.prettierrc.json',
+          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/.prettierrc.js',
+          templateFile: 'templates/remix-template/.prettierrc.js',
         },
         {
           type: 'add',
@@ -196,13 +196,18 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         },
         {
           type: 'add',
-          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/remix.config.js',
-          templateFile: 'templates/remix-template/remix.config.js',
+          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/vite.config.ts',
+          templateFile: 'templates/remix-template/vite.config.ts',
         },
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/tsconfig.json',
           templateFile: 'templates/remix-template/tsconfig.json',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/functions/[[path]].ts',
+          templateFile: 'templates/remix-template/functions/[[path]].ts',
         },
         {
           type: 'add',
@@ -221,8 +226,13 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         },
         {
           type: 'add',
-          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/server.ts',
-          templateFile: 'templates/remix-template/server.ts',
+          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/wrangler.toml',
+          templateFile: 'templates/remix-template/wrangler.toml.hbs',
+        },
+        {
+          type: 'add',
+          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/load-context.ts',
+          templateFile: 'templates/remix-template/load-context.ts',
         },
         {
           type: 'add',
@@ -261,8 +271,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         },
         {
           type: 'add',
-          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/remix.env.d.ts',
-          templateFile: 'templates/remix-template/remix.env.d.ts',
+          path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/worker-configuration.d.ts',
+          templateFile: 'templates/remix-template/worker-configuration.d.ts',
         },
         {
           type: 'add',

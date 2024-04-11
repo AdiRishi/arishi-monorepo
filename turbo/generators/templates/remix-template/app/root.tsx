@@ -1,14 +1,10 @@
 import type { LinksFunction } from '@remix-run/cloudflare';
-import { cssBundleHref } from '@remix-run/css-bundle';
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import tailwindStyles from '~/global-styles/tailwind.css';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import tailwindStyles from '~/global-styles/tailwind.css?url';
 
-export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
-  { rel: 'stylesheet', href: tailwindStyles },
-];
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindStyles }];
 
-export default function App() {
+export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -18,11 +14,14 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        {children}
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );
+}
+
+export default function App() {
+  return <Outlet />;
 }

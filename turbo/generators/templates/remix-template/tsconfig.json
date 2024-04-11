@@ -1,7 +1,21 @@
 {
   "extends": "@repo/typescript-config/remix-run.json",
   "compilerOptions": {
-    "baseUrl": "." // baseUrl required for path aliases to work
+    "types": ["@remix-run/cloudflare", "vite/client", "@cloudflare/workers-types/2023-07-01"],
+    "baseUrl": ".", // baseUrl required for path aliases to work
+    "paths": {
+      "~/*": ["./app/*"]
+    }
   },
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "remix.config.js", "postcss.config.js", ".eslintrc.cjs"]
+  "include": [
+    "remix-sitemap.config.js",
+    "postcss.config.js",
+    ".eslintrc.cjs",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/.server/**/*.ts",
+    "**/.server/**/*.tsx",
+    "**/.client/**/*.ts",
+    "**/.client/**/*.tsx"
+  ]
 }
