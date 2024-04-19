@@ -22,7 +22,7 @@
     "typescript": "^5.4.5",
     "vitest": "^1.5.0",
     "vitest-environment-miniflare": "^2.14.2",
-    "wrangler": "^3.51.0"
+    "wrangler": "^3.51.2"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.1",
