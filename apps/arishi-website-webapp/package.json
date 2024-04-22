@@ -9,7 +9,7 @@
     "dev": "remix vite:dev",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "preview": "wrangler pages dev --compatibility-date=2024-01-14 ./build/client",
+    "preview": "wrangler pages dev --compatibility-date=2024-04-05 ./build/client",
     "typecheck": "tsc",
     "typegen": "wrangler types"
   },
