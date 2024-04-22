@@ -1,7 +1,8 @@
 import type { LoaderFunctionArgs, LinksFunction } from '@remix-run/cloudflare';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, useRouteError } from '@remix-run/react';
 import tailwindStyles from '~/global-styles/tailwind.css?url';
 import { themeSessionResolver } from '~/lib/theme.server';
+import { UnhandledError } from './components/page-section/unhandled-error';
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindStyles }];
 
@@ -44,6 +45,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </body>
     </html>
   );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  console.error(error);
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <UnhandledError title={error.statusText} statusCode={error.status} description={JSON.stringify(error.data)} />
+    );
+  } else if (error instanceof Error) {
+    return <UnhandledError title="Something unexpected happened" statusCode={500} description={error.message} />;
+  } else {
+    return (
+      <UnhandledError title="Something unexpected happened" statusCode={500} description={JSON.stringify(error)} />
+    );
+  }
 }
 
 export default function App() {
