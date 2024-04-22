@@ -1,8 +1,5 @@
-import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/cloudflare';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
-import clsx from 'clsx';
-import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from 'remix-themes';
-import { Layout } from '~/components/layouts/root-layout';
+import type { LoaderFunctionArgs, LinksFunction } from '@remix-run/cloudflare';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import tailwindStyles from '~/global-styles/tailwind.css?url';
 import { themeSessionResolver } from '~/lib/theme.server';
 
@@ -10,27 +7,22 @@ export const links: LinksFunction = () => [{ rel: 'stylesheet', href: tailwindSt
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const themeStorage = await themeSessionResolver(args.request);
-  const shouldRenderGA = process.env.NODE_ENV === 'production';
   return {
     theme: themeStorage.getTheme(),
-    shouldRenderGA,
   };
 };
 
-function App() {
-  const data = useLoaderData<typeof loader>();
-  const [theme] = useTheme();
-
+export function Layout({ children }: { children: React.ReactNode }) {
+  const shouldRenderGA = import.meta.env.PROD;
   return (
-    <html lang="en" className={clsx(theme)}>
+    <html lang="en" className="light">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
-        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <Links />
-        {data.shouldRenderGA && <script async src="https://www.googletagmanager.com/gtag/js?id=G-905KM3LRN9" />}
-        {data.shouldRenderGA && (
+        {shouldRenderGA && <script async src="https://www.googletagmanager.com/gtag/js?id=G-905KM3LRN9" />}
+        {shouldRenderGA && (
           <script
             id="gtag-init"
             dangerouslySetInnerHTML={{
@@ -46,9 +38,7 @@ function App() {
         )}
       </head>
       <body>
-        <Layout>
-          <Outlet />
-        </Layout>
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -56,11 +46,6 @@ function App() {
   );
 }
 
-export default function AppWithProviders() {
-  const data = useLoaderData<typeof loader>();
-  return (
-    <ThemeProvider specifiedTheme={data.theme} themeAction="/session-actions/set-theme">
-      <App />
-    </ThemeProvider>
-  );
+export default function App() {
+  return <Outlet />;
 }

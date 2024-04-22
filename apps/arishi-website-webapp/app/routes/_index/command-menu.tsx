@@ -2,7 +2,7 @@
 
 import { CommandIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { Theme, useTheme } from 'remix-themes';
+// import { Theme, useTheme } from 'remix-themes';
 import { Button } from '~/components/ui/button';
 import {
   CommandDialog,
@@ -20,7 +20,7 @@ interface Props {
 
 export const CommandMenu = ({ links }: Props) => {
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useTheme();
+  // const [theme, setTheme] = useTheme();
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -64,14 +64,14 @@ export const CommandMenu = ({ links }: Props) => {
             >
               <span>Print</span>
             </CommandItem>
-            <CommandItem
+            {/* <CommandItem
               onSelect={() => {
                 setOpen(false);
                 setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT);
               }}
             >
               <span>Toggle Theme</span>
-            </CommandItem>
+            </CommandItem> */}
           </CommandGroup>
           <CommandGroup heading="Links">
             {links.map(({ url, title }) => (
