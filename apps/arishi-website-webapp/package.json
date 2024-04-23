@@ -19,7 +19,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@remix-run/cloudflare": "^2.9.0",
     "@remix-run/cloudflare-pages": "^2.9.0",
-    "@remix-run/react": "^2.8.1",
+    "@remix-run/react": "^2.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
