@@ -207,13 +207,13 @@ importers:
     dependencies:
       '@hono/zod-validator':
         specifier: ^0.2.1
-        version: 0.2.1(hono@4.2.6)(zod@3.23.0)
+        version: 0.2.1(hono@4.2.6)(zod@3.23.3)
       hono:
         specifier: 4.2.6
         version: 4.2.6
       zod:
-        specifier: ^3.23.0
-        version: 3.23.0
+        specifier: ^3.23.3
+        version: 3.23.3
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20240419.0
@@ -5544,6 +5544,9 @@ packages:
   zod@3.23.0:
     resolution: {integrity: sha512-OFLT+LTocvabn6q76BTwVB0hExEBS0IduTr3cqZyMqEDbOnYmcU+y0tUAYbND4uwclpBGi4I4UUBGzylWpjLGA==}
 
+  zod@3.23.3:
+    resolution: {integrity: sha512-tPvq1B/2Yu/dh2uAIH2/BhUlUeLIUvAjr6dpL/75I0pCYefHgjhXk1o1Kob3kTU8C7yU1j396jFHlsVWFi9ogg==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -6140,10 +6143,10 @@ snapshots:
 
   '@floating-ui/utils@0.2.1': {}
 
-  '@hono/zod-validator@0.2.1(hono@4.2.6)(zod@3.23.0)':
+  '@hono/zod-validator@0.2.1(hono@4.2.6)(zod@3.23.3)':
     dependencies:
       hono: 4.2.6
-      zod: 3.23.0
+      zod: 3.23.3
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
@@ -9717,7 +9720,7 @@ snapshots:
       workerd: 1.20240405.0
       ws: 8.16.0
       youch: 3.3.3
-      zod: 3.23.0
+      zod: 3.23.3
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -11590,5 +11593,7 @@ snapshots:
       stacktracey: 2.1.8
 
   zod@3.23.0: {}
+
+  zod@3.23.3: {}
 
   zwitch@2.0.4: {}
