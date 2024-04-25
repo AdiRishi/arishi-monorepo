@@ -66,8 +66,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       isbot:
-        specifier: ^5.1.4
-        version: 5.1.4
+        specifier: ^5.1.5
+        version: 5.1.5
       lucide-react:
         specifier: ^0.373.0
         version: 0.373.0(react@18.2.0)
@@ -85,14 +85,14 @@ importers:
         version: 2.3.0
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5)))
+        version: 1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5)))
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20240423.0
         version: 4.20240423.0
       '@remix-run/dev':
         specifier: ^2.9.1
-        version: 2.9.1(@remix-run/react@2.9.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(@types/node@20.8.3)(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@20.8.3))(wrangler@3.52.0(@cloudflare/workers-types@4.20240423.0))
+        version: 2.9.1(@remix-run/react@2.9.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(@types/node@20.12.7)(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@20.12.7))(wrangler@3.52.0(@cloudflare/workers-types@4.20240423.0))
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
@@ -116,7 +116,7 @@ importers:
         version: 8.4.38
       remix-development-tools:
         specifier: ^4.1.4
-        version: 4.1.4(@remix-run/react@2.9.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vite@5.2.10(@types/node@20.8.3))
+        version: 4.1.4(@remix-run/react@2.9.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vite@5.2.10(@types/node@20.12.7))
       remix-sitemap:
         specifier: ^3.2.0
         version: 3.2.0(@remix-run/server-runtime@2.9.1(typescript@5.4.5))(typescript@5.4.5)
@@ -125,16 +125,16 @@ importers:
         version: 5.12.0(rollup@4.16.2)
       tailwindcss:
         specifier: ^3.4.3
-        version: 3.4.3(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5))
+        version: 3.4.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
       vite:
         specifier: ^5.2.10
-        version: 5.2.10(@types/node@20.8.3)
+        version: 5.2.10(@types/node@20.12.7)
       vite-tsconfig-paths:
         specifier: ^4.3.2
-        version: 4.3.2(typescript@5.4.5)(vite@5.2.10(@types/node@20.8.3))
+        version: 4.3.2(typescript@5.4.5)(vite@5.2.10(@types/node@20.12.7))
       wrangler:
         specifier: ^3.52.0
         version: 3.52.0(@cloudflare/workers-types@4.20240423.0)
@@ -228,7 +228,7 @@ importers:
         version: link:../../packages/typescript-config
       '@vitest/coverage-v8':
         specifier: ^1.5.1
-        version: 1.5.1(vitest@1.5.1(@types/node@20.8.3))
+        version: 1.5.1(vitest@1.5.1(@types/node@20.12.7))
       miniflare:
         specifier: ^3.20240419.0
         version: 3.20240419.0
@@ -237,10 +237,10 @@ importers:
         version: 5.4.5
       vitest:
         specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.8.3)
+        version: 1.5.1(@types/node@20.12.7)
       vitest-environment-miniflare:
         specifier: ^2.14.2
-        version: 2.14.2(vitest@1.5.1(@types/node@20.8.3))
+        version: 2.14.2(vitest@1.5.1(@types/node@20.12.7))
       wrangler:
         specifier: ^3.52.0
         version: 3.52.0(@cloudflare/workers-types@4.20240423.0)
@@ -1729,9 +1729,6 @@ packages:
 
   '@types/node@20.12.7':
     resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
-
-  '@types/node@20.8.3':
-    resolution: {integrity: sha512-jxiZQFpb+NlH5kjW49vXxvxTjeeqlbsnTAdBTKpzEdPs9itay7MscYXz3Fo9VYFEsfQ6LJFitHad3faerLAjCw==}
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
@@ -3405,8 +3402,8 @@ packages:
     resolution: {integrity: sha512-iHrqe5shvBUcFbmZq9zOQHBoeOhZJu6RQGrDpBgenUm/Am+F3JM2MgQj+rK3Z601fzrL5gLZWtAPH2OBaSVcyw==}
     engines: {node: '>= 8.0.0'}
 
-  isbot@5.1.4:
-    resolution: {integrity: sha512-KuqD/TAG/qtgCDnO8Ab1v5rGRK3jl9hb+2KfJt+roIPE7R4Hiq99VinR0qrLGFptdUNIkClYjuXEpVTGkD9V/A==}
+  isbot@5.1.5:
+    resolution: {integrity: sha512-l7o5pR7MAkbQl+JGgmeIFtni1F3RLsXDjDybR3t7VIVnsmYuz+Bd6PSgeXBswC7haWzGGNlw2wRdmh9Q0a2RWQ==}
     engines: {node: '>=18'}
 
   isexe@2.0.0:
@@ -6746,7 +6743,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  '@remix-run/dev@2.9.1(@remix-run/react@2.9.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(@types/node@20.8.3)(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@20.8.3))(wrangler@3.52.0(@cloudflare/workers-types@4.20240423.0))':
+  '@remix-run/dev@2.9.1(@remix-run/react@2.9.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(@types/node@20.12.7)(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)(vite@5.2.10(@types/node@20.12.7))(wrangler@3.52.0(@cloudflare/workers-types@4.20240423.0))':
     dependencies:
       '@babel/core': 7.24.4
       '@babel/generator': 7.24.4
@@ -6763,7 +6760,7 @@ snapshots:
       '@remix-run/router': 1.16.0
       '@remix-run/server-runtime': 2.9.1(typescript@5.4.5)
       '@types/mdx': 2.0.13
-      '@vanilla-extract/integration': 6.5.0(@types/node@20.8.3)
+      '@vanilla-extract/integration': 6.5.0(@types/node@20.12.7)
       arg: 5.0.2
       cacache: 17.1.4
       chalk: 4.1.2
@@ -6790,7 +6787,7 @@ snapshots:
       pidtree: 0.6.0
       postcss: 8.4.38
       postcss-discard-duplicates: 5.1.0(postcss@8.4.38)
-      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5))
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))
       postcss-modules: 6.0.0(postcss@8.4.38)
       prettier: 2.8.8
       pretty-ms: 7.0.1
@@ -6804,7 +6801,7 @@ snapshots:
       ws: 7.5.9
     optionalDependencies:
       typescript: 5.4.5
-      vite: 5.2.10(@types/node@20.8.3)
+      vite: 5.2.10(@types/node@20.12.7)
       wrangler: 3.52.0(@cloudflare/workers-types@4.20240423.0)
     transitivePeerDependencies:
       - '@types/node'
@@ -7049,9 +7046,6 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@20.8.3':
-    optional: true
-
   '@types/parse-json@4.0.2': {}
 
   '@types/prop-types@15.7.12': {}
@@ -7183,7 +7177,7 @@ snapshots:
       modern-ahocorasick: 1.0.1
       outdent: 0.8.0
 
-  '@vanilla-extract/integration@6.5.0(@types/node@20.8.3)':
+  '@vanilla-extract/integration@6.5.0(@types/node@20.12.7)':
     dependencies:
       '@babel/core': 7.24.4
       '@babel/plugin-syntax-typescript': 7.24.1(@babel/core@7.24.4)
@@ -7196,8 +7190,8 @@ snapshots:
       lodash: 4.17.21
       mlly: 1.6.1
       outdent: 0.8.0
-      vite: 5.2.10(@types/node@20.8.3)
-      vite-node: 1.5.1(@types/node@20.8.3)
+      vite: 5.2.10(@types/node@20.12.7)
+      vite-node: 1.5.1(@types/node@20.12.7)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -7210,7 +7204,7 @@ snapshots:
 
   '@vanilla-extract/private@1.0.4': {}
 
-  '@vitest/coverage-v8@1.5.1(vitest@1.5.1(@types/node@20.8.3))':
+  '@vitest/coverage-v8@1.5.1(vitest@1.5.1(@types/node@20.12.7))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -7225,7 +7219,7 @@ snapshots:
       std-env: 3.7.0
       strip-literal: 2.1.0
       test-exclude: 6.0.0
-      vitest: 1.5.1(@types/node@20.8.3)
+      vitest: 1.5.1(@types/node@20.12.7)
     transitivePeerDependencies:
       - supports-color
 
@@ -9122,7 +9116,7 @@ snapshots:
 
   isbinaryfile@4.0.10: {}
 
-  isbot@5.1.4: {}
+  isbot@5.1.5: {}
 
   isexe@2.0.0: {}
 
@@ -10128,13 +10122,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.38
 
-  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5)):
+  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5)):
     dependencies:
       lilconfig: 3.1.1
       yaml: 2.4.1
     optionalDependencies:
       postcss: 8.4.38
-      ts-node: 10.9.2(@types/node@20.8.3)(typescript@5.4.5)
+      ts-node: 10.9.2(@types/node@20.12.7)(typescript@5.4.5)
 
   postcss-modules-extract-imports@3.1.0(postcss@8.4.38):
     dependencies:
@@ -10450,7 +10444,7 @@ snapshots:
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
 
-  remix-development-tools@4.1.4(@remix-run/react@2.9.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vite@5.2.10(@types/node@20.8.3)):
+  remix-development-tools@4.1.4(@remix-run/react@2.9.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.4.5))(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vite@5.2.10(@types/node@20.12.7)):
     dependencies:
       '@radix-ui/react-accordion': 1.1.2(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@radix-ui/react-select': 1.2.2(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -10470,7 +10464,7 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
       tailwind-merge: 1.14.0
       uuid: 9.0.1
-      vite: 5.2.10(@types/node@20.8.3)
+      vite: 5.2.10(@types/node@20.12.7)
       zod: 3.23.3
     transitivePeerDependencies:
       - '@types/react'
@@ -10904,11 +10898,11 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.4
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5))):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))):
     dependencies:
-      tailwindcss: 3.4.3(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5))
+      tailwindcss: 3.4.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))
 
-  tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5)):
+  tailwindcss@3.4.3(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -10927,7 +10921,7 @@ snapshots:
       postcss: 8.4.38
       postcss-import: 15.1.0(postcss@8.4.38)
       postcss-js: 4.0.1(postcss@8.4.38)
-      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5))
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.12.7)(typescript@5.4.5))
       postcss-nested: 6.0.1(postcss@8.4.38)
       postcss-selector-parser: 6.0.16
       resolve: 1.22.8
@@ -11045,25 +11039,6 @@ snapshots:
       typescript: 5.4.5
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-
-  ts-node@10.9.2(@types/node@20.8.3)(typescript@5.4.5):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 20.8.3
-      acorn: 8.11.3
-      acorn-walk: 8.3.2
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.4.5
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optional: true
 
   tsconfck@3.0.3(typescript@5.4.5):
     optionalDependencies:
@@ -11334,13 +11309,13 @@ snapshots:
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
 
-  vite-node@1.5.1(@types/node@20.8.3):
+  vite-node@1.5.1(@types/node@20.12.7):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.10(@types/node@20.8.3)
+      vite: 5.2.10(@types/node@20.12.7)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -11351,39 +11326,39 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.10(@types/node@20.8.3)):
+  vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.10(@types/node@20.12.7)):
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 3.0.3(typescript@5.4.5)
     optionalDependencies:
-      vite: 5.2.10(@types/node@20.8.3)
+      vite: 5.2.10(@types/node@20.12.7)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@5.2.10(@types/node@20.8.3):
+  vite@5.2.10(@types/node@20.12.7):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.16.2
     optionalDependencies:
-      '@types/node': 20.8.3
+      '@types/node': 20.12.7
       fsevents: 2.3.3
 
-  vitest-environment-miniflare@2.14.2(vitest@1.5.1(@types/node@20.8.3)):
+  vitest-environment-miniflare@2.14.2(vitest@1.5.1(@types/node@20.12.7)):
     dependencies:
       '@miniflare/queues': 2.14.2
       '@miniflare/runner-vm': 2.14.2
       '@miniflare/shared': 2.14.2
       '@miniflare/shared-test-environment': 2.14.2
       undici: 5.28.2
-      vitest: 1.5.1(@types/node@20.8.3)
+      vitest: 1.5.1(@types/node@20.12.7)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  vitest@1.5.1(@types/node@20.8.3):
+  vitest@1.5.1(@types/node@20.12.7):
     dependencies:
       '@vitest/expect': 1.5.1
       '@vitest/runner': 1.5.1
@@ -11402,11 +11377,11 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.2.10(@types/node@20.8.3)
-      vite-node: 1.5.1(@types/node@20.8.3)
+      vite: 5.2.10(@types/node@20.12.7)
+      vite-node: 1.5.1(@types/node@20.12.7)
       why-is-node-running: 2.2.2
     optionalDependencies:
-      '@types/node': 20.8.3
+      '@types/node': 20.12.7
     transitivePeerDependencies:
       - less
       - lightningcss
