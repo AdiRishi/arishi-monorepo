@@ -227,8 +227,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/typescript-config
       '@vitest/coverage-v8':
-        specifier: ^1.5.2
-        version: 1.5.2(vitest@1.5.3(@types/node@20.12.7))
+        specifier: ^1.5.3
+        version: 1.5.3(vitest@1.5.3(@types/node@20.12.7))
       miniflare:
         specifier: ^3.20240419.0
         version: 3.20240419.0
@@ -1827,10 +1827,10 @@ packages:
   '@vanilla-extract/private@1.0.4':
     resolution: {integrity: sha512-8FGD6AejeC/nXcblgNCM5rnZb9KXa4WNkR03HCWtdJBpANjTgjHEglNLFnhuvdQ78tC6afaxBPI+g7F2NX3tgg==}
 
-  '@vitest/coverage-v8@1.5.2':
-    resolution: {integrity: sha512-QJqxRnbCwNtbbegK9E93rBmhN3dbfG1bC/o52Bqr0zGCYhQzwgwvrJBG7Q8vw3zilX6Ryy6oa/mkZku2lLJx1Q==}
+  '@vitest/coverage-v8@1.5.3':
+    resolution: {integrity: sha512-DPyGSu/fPHOJuPxzFSQoT4N/Fu/2aJfZRtEpEp8GI7NHsXBGE94CQ+pbEGBUMFjatsHPDJw/+TAF9r4ens2CNw==}
     peerDependencies:
-      vitest: 1.5.2
+      vitest: 1.5.3
 
   '@vitest/expect@1.5.3':
     resolution: {integrity: sha512-y+waPz31pOFr3rD7vWTbwiLe5+MgsMm40jTZbQE8p8/qXyBX3CQsIXRx9XK12IbY7q/t5a5aM/ckt33b4PxK2g==}
@@ -7209,7 +7209,7 @@ snapshots:
 
   '@vanilla-extract/private@1.0.4': {}
 
-  '@vitest/coverage-v8@1.5.2(vitest@1.5.3(@types/node@20.12.7))':
+  '@vitest/coverage-v8@1.5.3(vitest@1.5.3(@types/node@20.12.7))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
