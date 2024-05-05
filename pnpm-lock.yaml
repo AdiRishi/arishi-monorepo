@@ -115,8 +115,8 @@ importers:
         specifier: ^8.4.38
         version: 8.4.38
       remix-development-tools:
-        specifier: ^4.1.4
-        version: 4.1.4(@remix-run/react@2.9.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5))(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.11(@types/node@20.12.8))
+        specifier: ^4.1.5
+        version: 4.1.5(@remix-run/react@2.9.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5))(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.11(@types/node@20.12.8))
       remix-sitemap:
         specifier: ^3.2.0
         version: 3.2.0(@remix-run/server-runtime@2.9.1(typescript@5.4.5))(typescript@5.4.5)
@@ -4542,8 +4542,8 @@ packages:
   remark-rehype@10.1.0:
     resolution: {integrity: sha512-EFmR5zppdBp0WQeDVZ/b66CWJipB2q2VLNFMabzDSGR66Z2fQii83G5gTBbgGEnEEA0QRussvrFHxk1HWGJskw==}
 
-  remix-development-tools@4.1.4:
-    resolution: {integrity: sha512-m7whc0iwskF6lg+NggzSJtryxw3gwlvIHOBLXXcrqi0JpAqgdc/26nPH2mKjIvUgGdK6Hl/mSUfFI6wOuIq+yw==}
+  remix-development-tools@4.1.5:
+    resolution: {integrity: sha512-ydbKlZnMz2xZPsgCQysBfU0aKRyAR4A1GArNuguYFDZapfBC9LY5p0yq9DSNfvtzpi4lXxgyB8cacF7wimC0xg==}
     peerDependencies:
       '@remix-run/react': '>=1.15'
       react: '>=17'
@@ -5531,9 +5531,6 @@ packages:
 
   youch@3.3.3:
     resolution: {integrity: sha512-qSFXUk3UZBLfggAW3dJKg0BMblG5biqSF8M34E06o5CSsZtH92u9Hqmj2RzGiHDi64fhe83+4tENFP2DB6t6ZA==}
-
-  zod@3.23.3:
-    resolution: {integrity: sha512-tPvq1B/2Yu/dh2uAIH2/BhUlUeLIUvAjr6dpL/75I0pCYefHgjhXk1o1Kob3kTU8C7yU1j396jFHlsVWFi9ogg==}
 
   zod@3.23.6:
     resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
@@ -10449,7 +10446,7 @@ snapshots:
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
 
-  remix-development-tools@4.1.4(@remix-run/react@2.9.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5))(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.11(@types/node@20.12.8)):
+  remix-development-tools@4.1.5(@remix-run/react@2.9.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5))(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.11(@types/node@20.12.8)):
     dependencies:
       '@radix-ui/react-accordion': 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-select': 1.2.2(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -10470,7 +10467,7 @@ snapshots:
       tailwind-merge: 1.14.0
       uuid: 9.0.1
       vite: 5.2.11(@types/node@20.12.8)
-      zod: 3.23.3
+      zod: 3.23.6
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
@@ -11580,8 +11577,6 @@ snapshots:
       cookie: 0.5.0
       mustache: 4.2.0
       stacktracey: 2.1.8
-
-  zod@3.23.3: {}
 
   zod@3.23.6: {}
 
