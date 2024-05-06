@@ -23,7 +23,7 @@
   "packageManager": "pnpm@9.1.0",
   "pnpm": {
     "overrides": {
-      "@types/node": "20.12.8"
+      "@types/node": "20.12.9"
     }
   },
   "engines": {
