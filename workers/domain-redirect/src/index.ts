@@ -8,6 +8,8 @@ export type Env = {
 export const DOMAIN_MAP: Record<string, string> = {
   'adishwarrishi.com': 'adishwar-rishi.com',
   'www.adishwarrishi.com': 'www.adishwar-rishi.com',
+  'turborepo-remote-cache.dev': 'cloudflare.turborepo-remote-cache.dev',
+  'www.turborepo-remote-cache.dev': 'cloudflare.turborepo-remote-cache.dev',
 };
 
 export function handleRequest(request: Request): Response {
