@@ -37,7 +37,6 @@ jobs:
           command: pages deploy ./build/client --project-name=adishwar-rishi-website
           workingDirectory: 'apps/arishi-website-webapp'
           packageManager: 'pnpm'
-          wranglerVersion: '3.51.2'
 
       - name: Comment with deploy link
         if: github.event_name == 'pull_request'
