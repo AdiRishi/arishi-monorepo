@@ -26,6 +26,9 @@
       "@types/node": "20.13.0"
     }
   },
+  "volta": {
+    "node": "20.14.0"
+  },
   "engines": {
     "node": ">=18",
     "pnpm": ">=8"
