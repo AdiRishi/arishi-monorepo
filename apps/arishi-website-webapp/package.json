@@ -44,7 +44,7 @@
     "remix-development-tools": "^4.1.6",
     "remix-sitemap": "^3.2.0",
     "rollup-plugin-visualizer": "^5.12.0",
-    "tailwindcss": "^3.4.3",
+    "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
     "vite": "^5.2.12",
     "vite-tsconfig-paths": "^4.3.2",
