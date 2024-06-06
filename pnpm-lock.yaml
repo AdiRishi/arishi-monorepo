@@ -69,8 +69,8 @@ importers:
         specifier: ^5.1.9
         version: 5.1.9
       lucide-react:
-        specifier: ^0.387.0
-        version: 0.387.0(react@18.3.1)
+        specifier: ^0.390.0
+        version: 0.390.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -3600,8 +3600,8 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  lucide-react@0.387.0:
-    resolution: {integrity: sha512-NyB4oJZ0pzLHT/QgMpgCPbez6yqvz8QPBocMJBXQCInPpXcQVCUpcU1CDlRG8mT2j0KqodLQYp+F5zn8U86sXg==}
+  lucide-react@0.390.0:
+    resolution: {integrity: sha512-APqbfEcVuHnZbiy3E97gYWLeBdkE4e6NbY6AuVETZDZVn/bQCHYUoHyxcUHyvRopfPOHhFUEvDyyQzHwM+S9/w==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
 
@@ -9291,7 +9291,7 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  lucide-react@0.387.0(react@18.3.1):
+  lucide-react@0.390.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
