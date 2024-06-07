@@ -1,7 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
+  "remoteCache": {
+    "signature": true
+  },
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]
@@ -16,6 +19,5 @@
       "cache": false,
       "persistent": true
     }
-  },
-  "remoteCache": { "signature": true }
+  }
 }
