@@ -14,7 +14,7 @@
     "typegen": "wrangler types"
   },
   "dependencies": {
-    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@remix-run/cloudflare": "^2.9.2",
