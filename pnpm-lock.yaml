@@ -115,8 +115,8 @@ importers:
         specifier: ^8.4.38
         version: 8.4.38
       remix-development-tools:
-        specifier: ^4.2.1
-        version: 4.2.1(@remix-run/react@2.10.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.2))(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.1(@types/node@20.14.9))
+        specifier: ^4.2.2
+        version: 4.2.2(@remix-run/react@2.10.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.2))(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.1(@types/node@20.14.9))
       remix-sitemap:
         specifier: ^3.2.0
         version: 3.2.0(@remix-run/server-runtime@2.10.0(typescript@5.5.2))(typescript@5.5.2)
@@ -4743,8 +4743,8 @@ packages:
   remark-rehype@10.1.0:
     resolution: {integrity: sha512-EFmR5zppdBp0WQeDVZ/b66CWJipB2q2VLNFMabzDSGR66Z2fQii83G5gTBbgGEnEEA0QRussvrFHxk1HWGJskw==}
 
-  remix-development-tools@4.2.1:
-    resolution: {integrity: sha512-Ta1BexmcSue9fB8yCvwPyYp+aXTpryKF417iNtcq8/T0/q6b76xcACtGvTFjfL31Y3YgBWRs614QI6TpdMBtTA==}
+  remix-development-tools@4.2.2:
+    resolution: {integrity: sha512-hDiu3sacKgKy5sdPv3k6UeOLd4viQI8b1ExvkanDfhllRrjrRZHgAMwGc7exdD5XfE+YO7JZZnjBZpYnFNe15g==}
     peerDependencies:
       '@remix-run/react': '>=1.15'
       react: '>=17'
@@ -10876,7 +10876,7 @@ snapshots:
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
 
-  remix-development-tools@4.2.1(@remix-run/react@2.10.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.2))(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.1(@types/node@20.14.9)):
+  remix-development-tools@4.2.2(@remix-run/react@2.10.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.2))(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.3.1(@types/node@20.14.9)):
     dependencies:
       '@radix-ui/react-accordion': 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-select': 1.2.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
