@@ -78,8 +78,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       remix-themes:
-        specifier: ^1.3.1
-        version: 1.3.1(@remix-run/react@2.10.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.1(typescript@5.5.3))
+        specifier: ^1.4.0
+        version: 1.4.0(@remix-run/react@2.10.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.1(typescript@5.5.3))
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.3.0
@@ -4792,8 +4792,8 @@ packages:
     peerDependencies:
       '@remix-run/server-runtime': ^2.0.0
 
-  remix-themes@1.3.1:
-    resolution: {integrity: sha512-RNw2nMG7c8Ei6KLjr5dUwy++4ga3KFSmedzqPk+de+f3JZhPbfH+HaEWSu2nPpuIMBlNldrUoCt4GN7rC5u5uw==}
+  remix-themes@1.4.0:
+    resolution: {integrity: sha512-0XzBcuDPGU020+Dfxe+QNiAn1Y2+DRBAemGIWD8PpoyjcJ6LLriX6JYeGdoTRbhWjilJaCehxnKfTGs9CYAwYw==}
     peerDependencies:
       '@remix-run/react': '>= 1'
       '@remix-run/server-runtime': '>= 1'
@@ -11004,7 +11004,7 @@ snapshots:
       - supports-color
       - typescript
 
-  remix-themes@1.3.1(@remix-run/react@2.10.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.1(typescript@5.5.3)):
+  remix-themes@1.4.0(@remix-run/react@2.10.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.1(typescript@5.5.3)):
     dependencies:
       '@remix-run/react': 2.10.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3)
       '@remix-run/server-runtime': 2.10.1(typescript@5.5.3)
