@@ -66,8 +66,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       isbot:
-        specifier: ^5.1.11
-        version: 5.1.11
+        specifier: ^5.1.12
+        version: 5.1.12
       lucide-react:
         specifier: ^0.403.0
         version: 0.403.0(react@18.3.1)
@@ -3584,8 +3584,8 @@ packages:
     resolution: {integrity: sha512-iHrqe5shvBUcFbmZq9zOQHBoeOhZJu6RQGrDpBgenUm/Am+F3JM2MgQj+rK3Z601fzrL5gLZWtAPH2OBaSVcyw==}
     engines: {node: '>= 8.0.0'}
 
-  isbot@5.1.11:
-    resolution: {integrity: sha512-Asuou7OsKVbATgXlrlqdeSRw4fYnD6CNcc0IXy1f5m1AImL2S6IP0xRcRRzjGjoARbegvnBnju9kk5z/Itf70Q==}
+  isbot@5.1.12:
+    resolution: {integrity: sha512-Igy8nbj3Yn/XgYboRFTixH5ccUBvNPA89ek2zx3jCcBYkDkEnuFs0RkT36EPag5OFd2nLlK7u4uzG5AXfXR46w==}
     engines: {node: '>=18'}
 
   isexe@2.0.0:
@@ -9527,7 +9527,7 @@ snapshots:
 
   isbinaryfile@4.0.10: {}
 
-  isbot@5.1.11: {}
+  isbot@5.1.12: {}
 
   isexe@2.0.0: {}
 
