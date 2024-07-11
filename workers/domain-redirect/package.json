@@ -17,16 +17,16 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/coverage-v8": "^2.0.2",
     "miniflare": "^3.20240701.0",
     "typescript": "^5.5.3",
-    "vitest": "^1.6.0",
+    "vitest": "^2.0.2",
     "vitest-environment-miniflare": "^2.14.2",
-    "wrangler": "^3.62.0"
+    "wrangler": "^3.63.2"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
-    "hono": "4.4.11",
+    "hono": "4.4.13",
     "zod": "^3.23.8"
   }
 }
