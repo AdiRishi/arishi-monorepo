@@ -42,12 +42,22 @@ export const RESUME_DATA: ResumeData = {
   ],
   work: [
     {
+      company: 'Airwallex',
+      link: 'https://www.airwallex.com',
+      badges: ['Promotion'],
+      title: 'Senior Software Engineer',
+      start: 'June 2024',
+      end: 'Present',
+      description:
+        'Senior software engineer at Airwallex, working in the Cards and spend management team.',
+    },
+    {
       company: 'Freelancer.com',
       link: 'https://www.freelancer.com',
       badges: ['Promotion'],
       title: 'Senior Software Engineer - Technical Lead',
       start: 'Sep 2019',
-      end: 'Present',
+      end: 'June 2024',
       description:
         'Tech Lead for Escrow.com, steering technical direction and ensuring quality and timely delivery. Managed a tech stack with 20+ Python services, databases, and React.js front-end. Architected new features, maintained system integrity, and managed AWS infrastructure to achieve a 99.9% uptime SLA.',
     },
