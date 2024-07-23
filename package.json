@@ -23,7 +23,7 @@
   "packageManager": "pnpm@9.6.0",
   "pnpm": {
     "overrides": {
-      "@types/node": "20.14.11"
+      "@types/node": "20.14.12"
     }
   },
   "volta": {
