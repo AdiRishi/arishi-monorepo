@@ -17,10 +17,10 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@vitest/coverage-v8": "^2.0.4",
+    "@vitest/coverage-v8": "^2.0.5",
     "miniflare": "^3.20240718.1",
     "typescript": "^5.5.4",
-    "vitest": "^2.0.4",
+    "vitest": "^2.0.5",
     "vitest-environment-miniflare": "^2.14.2",
     "wrangler": "^3.67.1"
   },
