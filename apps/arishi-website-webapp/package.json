@@ -40,7 +40,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.40",
+    "postcss": "^8.4.41",
     "remix-development-tools": "^4.2.2",
     "remix-sitemap": "^3.2.0",
     "rollup-plugin-visualizer": "^5.12.0",
