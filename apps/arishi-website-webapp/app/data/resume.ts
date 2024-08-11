@@ -48,8 +48,7 @@ export const RESUME_DATA: ResumeData = {
       title: 'Senior Software Engineer',
       start: 'June 2024',
       end: 'Present',
-      description:
-        'Senior software engineer at Airwallex, working in the Cards and spend management team.',
+      description: 'Senior software engineer at Airwallex, working in the Cards and spend management team.',
     },
     {
       company: 'Freelancer.com',

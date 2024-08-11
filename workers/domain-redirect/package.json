@@ -13,20 +13,20 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240725.0",
+    "@cloudflare/workers-types": "^4.20240806.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@vitest/coverage-v8": "^2.0.5",
-    "miniflare": "^3.20240718.1",
+    "miniflare": "^3.20240806.0",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5",
     "vitest-environment-miniflare": "^2.14.2",
-    "wrangler": "^3.67.1"
+    "wrangler": "^3.70.0"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
-    "hono": "4.5.3",
+    "hono": "4.5.5",
     "zod": "^3.23.8"
   }
 }
