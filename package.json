@@ -18,7 +18,7 @@
     "dotenv-cli": "^7.4.2",
     "handlebars": "^4.7.8",
     "prettier": "^3.3.3",
-    "turbo": "^2.0.13"
+    "turbo": "^2.0.14"
   },
   "packageManager": "pnpm@9.7.1",
   "pnpm": {
