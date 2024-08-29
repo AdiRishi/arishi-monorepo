@@ -239,8 +239,8 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@20.16.2)
       vitest-environment-miniflare:
-        specifier: ^2.14.2
-        version: 2.14.2(vitest@2.0.5(@types/node@20.16.2))
+        specifier: ^2.14.3
+        version: 2.14.3(vitest@2.0.5(@types/node@20.16.2))
       wrangler:
         specifier: ^3.72.3
         version: 3.72.3(@cloudflare/workers-types@4.20240821.1)
@@ -5570,8 +5570,8 @@ packages:
       terser:
         optional: true
 
-  vitest-environment-miniflare@2.14.2:
-    resolution: {integrity: sha512-9bVoJ59m8RtW+KxXoQBTm+2ljZDTuN/yxth3VlIJV4oOpjLo7ambK+exWJmoU+2lcSf0WAC/610a3gJuAJJDTg==}
+  vitest-environment-miniflare@2.14.3:
+    resolution: {integrity: sha512-K84P7FQCZkjkfeXqm68ScgdyR3S5ze67KEYUo3zatpLNCDSQivszyZMfyxmNwS4ajt/ZCc/dyRwaGUuOUOBrFw==}
     engines: {node: '>=16.13'}
     peerDependencies:
       vitest: '>=0.23.0'
@@ -11804,13 +11804,13 @@ snapshots:
       '@types/node': 20.16.2
       fsevents: 2.3.3
 
-  vitest-environment-miniflare@2.14.2(vitest@2.0.5(@types/node@20.16.2)):
+  vitest-environment-miniflare@2.14.3(vitest@2.0.5(@types/node@20.16.2)):
     dependencies:
       '@miniflare/queues': 2.14.2
       '@miniflare/runner-vm': 2.14.2
       '@miniflare/shared': 2.14.2
       '@miniflare/shared-test-environment': 2.14.2
-      undici: 5.28.2
+      undici: 5.28.4
       vitest: 2.0.5(@types/node@20.16.2)
     transitivePeerDependencies:
       - bufferutil
