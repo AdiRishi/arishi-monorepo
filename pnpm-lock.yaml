@@ -206,10 +206,10 @@ importers:
     dependencies:
       '@hono/zod-validator':
         specifier: ^0.2.2
-        version: 0.2.2(hono@4.5.10)(zod@3.23.8)
+        version: 0.2.2(hono@4.5.11)(zod@3.23.8)
       hono:
-        specifier: 4.5.10
-        version: 4.5.10
+        specifier: 4.5.11
+        version: 4.5.11
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -3317,8 +3317,8 @@ packages:
   header-case@1.0.1:
     resolution: {integrity: sha512-i0q9mkOeSuhXw6bGgiQCCBgY/jlZuV/7dZXyZ9c6LcBrqwvT8eT719E9uxE5LiZftdl+z81Ugbg/VvXV4OJOeQ==}
 
-  hono@4.5.10:
-    resolution: {integrity: sha512-az6tdU1U8o/l0v8O37FIQuc+ER/TeD9vHt/qs8JnBDgMxw6Zu5L2AixUyHeXZNcu87r7iYo8Ey85R7IogOINKA==}
+  hono@4.5.11:
+    resolution: {integrity: sha512-62FcjLPtjAFwISVBUshryl+vbHOjg8rE4uIK/dxyR8GpLztunZpwFmfEvmJCUI7xoGh/Sr3CGCDPCmYxVw7wUQ==}
     engines: {node: '>=16.0.0'}
 
   hosted-git-info@6.1.1:
@@ -6401,9 +6401,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.7': {}
 
-  '@hono/zod-validator@0.2.2(hono@4.5.10)(zod@3.23.8)':
+  '@hono/zod-validator@0.2.2(hono@4.5.11)(zod@3.23.8)':
     dependencies:
-      hono: 4.5.10
+      hono: 4.5.11
       zod: 3.23.8
 
   '@humanwhocodes/config-array@0.11.14':
@@ -9281,7 +9281,7 @@ snapshots:
       no-case: 2.3.2
       upper-case: 1.1.3
 
-  hono@4.5.10: {}
+  hono@4.5.11: {}
 
   hosted-git-info@6.1.1:
     dependencies:
