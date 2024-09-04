@@ -32,7 +32,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240821.1",
+    "@cloudflare/workers-types": "^4.20240903.0",
     "@remix-run/dev": "^2.11.2",
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
