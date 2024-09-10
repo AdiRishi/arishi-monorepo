@@ -230,8 +230,8 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(vitest@2.0.5(@types/node@20.16.5))
       miniflare:
-        specifier: ^3.20240821.1
-        version: 3.20240821.1
+        specifier: ^3.20240821.2
+        version: 3.20240821.2
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
@@ -4029,6 +4029,11 @@ packages:
 
   miniflare@3.20240821.1:
     resolution: {integrity: sha512-81qdiryDG7VXzZuoa0EwhkaIYYrn7+StRIrd/2i7SPqPUNICUBjbhFFKqTnvE1+fqIPPB6l8ShKFaFvmnZOASg==}
+    engines: {node: '>=16.13'}
+    hasBin: true
+
+  miniflare@3.20240821.2:
+    resolution: {integrity: sha512-mgWekp437zD5l2Rz/in/OGBAISNB3rWr69DhR5Iq3WoToUNeAnkbW/CWPBpJiw5WHzZfHHOT+sVjSksAGRJitg==}
     engines: {node: '>=16.13'}
     hasBin: true
 
@@ -10139,6 +10144,25 @@ snapshots:
   mimic-fn@4.0.0: {}
 
   miniflare@3.20240821.1:
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      acorn: 8.12.1
+      acorn-walk: 8.3.3
+      capnp-ts: 0.7.0
+      exit-hook: 2.2.1
+      glob-to-regexp: 0.4.1
+      stoppable: 1.1.0
+      undici: 5.28.4
+      workerd: 1.20240821.1
+      ws: 8.18.0
+      youch: 3.3.3
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  miniflare@3.20240821.2:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       acorn: 8.12.1
