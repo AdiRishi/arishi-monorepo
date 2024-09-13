@@ -92,7 +92,7 @@ importers:
         version: 4.20240909.0
       '@remix-run/dev':
         specifier: ^2.12.0
-        version: 2.12.0(@remix-run/react@2.12.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@types/node@20.16.5)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@20.16.5)(typescript@5.6.2))(typescript@5.6.2)(vite@5.4.5(@types/node@20.16.5))(wrangler@3.77.0(@cloudflare/workers-types@4.20240909.0))
+        version: 2.12.0(@remix-run/react@2.12.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@types/node@20.16.5)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@20.16.5)(typescript@5.6.2))(typescript@5.6.2)(vite@5.4.5(@types/node@20.16.5))(wrangler@3.78.1(@cloudflare/workers-types@4.20240909.0))
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
@@ -136,8 +136,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(typescript@5.6.2)(vite@5.4.5(@types/node@20.16.5))
       wrangler:
-        specifier: ^3.77.0
-        version: 3.77.0(@cloudflare/workers-types@4.20240909.0)
+        specifier: ^3.78.1
+        version: 3.78.1(@cloudflare/workers-types@4.20240909.0)
 
   packages/eslint-config:
     dependencies:
@@ -242,8 +242,8 @@ importers:
         specifier: ^2.14.3
         version: 2.14.3(vitest@2.1.1(@types/node@20.16.5))
       wrangler:
-        specifier: ^3.77.0
-        version: 3.77.0(@cloudflare/workers-types@4.20240909.0)
+        specifier: ^3.78.1
+        version: 3.78.1(@cloudflare/workers-types@4.20240909.0)
 
 packages:
 
@@ -470,8 +470,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-shared@0.5.0':
-    resolution: {integrity: sha512-qLJzGKwl2SiaaieoCFdj2q85hthPgmF5KjRaZzsPdMKtP+PQnzSWfARsd5mZh71ut5/0grYkUCYWedFe4bY++g==}
+  '@cloudflare/workers-shared@0.5.2':
+    resolution: {integrity: sha512-7A4srUwAAfL+OeQdXgWZEflIvT0u8MQ7S/Frm1VfgdPF1kFEzTrCa37GHcL2MzXftLm3hNGdqi24vwNuQyFv2A==}
     engines: {node: '>=16.7.0'}
 
   '@cloudflare/workers-types@4.20240909.0':
@@ -4032,6 +4032,11 @@ packages:
     engines: {node: '>=16.13'}
     hasBin: true
 
+  miniflare@3.20240909.1:
+    resolution: {integrity: sha512-tdzJFApHmqFYlpjfpqBDnsE6dHUDLHejBrNgXftLfTf/ni5NySgXKnuntCCMdRtnTpjUKmkHiusGrBCf9b1rnA==}
+    engines: {node: '>=16.13'}
+    hasBin: true
+
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
@@ -5690,8 +5695,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@3.77.0:
-    resolution: {integrity: sha512-XdzStAdB6c87cc9CJRinMzAAFqqSZ19pQ+m6Gzx5fHeWXSclrOFsfD2iSmil8C3/LsrtwoIXghibK98FN0HhhQ==}
+  wrangler@3.78.1:
+    resolution: {integrity: sha512-octA1RZBB/AmHPHEcFQJEdPEIVaLbQd0guTNECkmJ/aKi+VSW+EKsvfhMx0m6TWLmH8NWSJBnqwJ98uiwgLvqQ==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -6080,7 +6085,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20240909.0':
     optional: true
 
-  '@cloudflare/workers-shared@0.5.0':
+  '@cloudflare/workers-shared@0.5.2':
     dependencies:
       mime: 3.0.0
       zod: 3.23.8
@@ -7170,7 +7175,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.6.2
 
-  '@remix-run/dev@2.12.0(@remix-run/react@2.12.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@types/node@20.16.5)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@20.16.5)(typescript@5.6.2))(typescript@5.6.2)(vite@5.4.5(@types/node@20.16.5))(wrangler@3.77.0(@cloudflare/workers-types@4.20240909.0))':
+  '@remix-run/dev@2.12.0(@remix-run/react@2.12.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@types/node@20.16.5)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@20.16.5)(typescript@5.6.2))(typescript@5.6.2)(vite@5.4.5(@types/node@20.16.5))(wrangler@3.78.1(@cloudflare/workers-types@4.20240909.0))':
     dependencies:
       '@babel/core': 7.25.2
       '@babel/generator': 7.25.0
@@ -7229,7 +7234,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.6.2
       vite: 5.4.5(@types/node@20.16.5)
-      wrangler: 3.77.0(@cloudflare/workers-types@4.20240909.0)
+      wrangler: 3.78.1(@cloudflare/workers-types@4.20240909.0)
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -10150,6 +10155,25 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  miniflare@3.20240909.1:
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      acorn: 8.12.1
+      acorn-walk: 8.3.3
+      capnp-ts: 0.7.0
+      exit-hook: 2.2.1
+      glob-to-regexp: 0.4.1
+      stoppable: 1.1.0
+      undici: 5.28.4
+      workerd: 1.20240909.0
+      ws: 8.18.0
+      youch: 3.3.3
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -11964,17 +11988,17 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20240909.0
       '@cloudflare/workerd-windows-64': 1.20240909.0
 
-  wrangler@3.77.0(@cloudflare/workers-types@4.20240909.0):
+  wrangler@3.78.1(@cloudflare/workers-types@4.20240909.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
-      '@cloudflare/workers-shared': 0.5.0
+      '@cloudflare/workers-shared': 0.5.2
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
       '@esbuild-plugins/node-modules-polyfill': 0.2.2(esbuild@0.17.19)
       blake3-wasm: 2.1.5
       chokidar: 3.6.0
       date-fns: 3.6.0
       esbuild: 0.17.19
-      miniflare: 3.20240909.0
+      miniflare: 3.20240909.1
       nanoid: 3.3.7
       path-to-regexp: 6.2.2
       resolve: 1.22.8
