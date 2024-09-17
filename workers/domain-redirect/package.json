@@ -18,7 +18,7 @@
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@vitest/coverage-v8": "^2.1.1",
-    "miniflare": "^3.20240909.1",
+    "miniflare": "^3.20240909.2",
     "typescript": "^5.6.2",
     "vitest": "^2.1.1",
     "vitest-environment-miniflare": "^2.14.3",
