@@ -1,0 +1,45 @@
+{
+  "name": "@arishi/eslint",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.js",
+      "types": "./src/index.d.ts"
+    }
+  },
+  "scripts": {
+    "lint": "prettier --check ."
+  },
+  "dependencies": {
+    "@eslint/compat": "^1.1.1",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.11.0",
+    "eslint": "^9.11.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsdoc": "^50.2.4",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-regexp": "^2.6.0",
+    "eslint-plugin-security": "^3.0.1",
+    "eslint-plugin-turbo": "^2.1.2",
+    "globals": "^15.9.0",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.6.0"
+  },
+  "devDependencies": {
+    "@arishi/prettier-config": "workspace:*",
+    "@arishi/tsconfig": "workspace:*",
+    "@types/eslint": "^9.6.1",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "@types/eslint-plugin-jsx-a11y": "^6.9.0",
+    "@types/eslint-plugin-security": "^3.0.0",
+    "@types/eslint__eslintrc": "^2.1.2",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^22.5.5"
+  },
+  "packageManager": "pnpm@9.11.0"
+}

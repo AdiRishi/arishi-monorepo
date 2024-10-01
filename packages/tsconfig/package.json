@@ -1,0 +1,21 @@
+{
+  "name": "@arishi/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A package to share tsconfig presets around the workspace",
+  "files": [
+    "./base.json",
+    "./remix.json",
+    "./react.json",
+    "./cloudflare-workers-src.json",
+    "./cloudflare-workers-test.json"
+  ],
+  "scripts": {
+    "lint": "prettier --check ."
+  },
+  "devDependencies": {
+    "@arishi/prettier-config": "workspace:*"
+  },
+  "packageManager": "pnpm@9.11.0"
+}

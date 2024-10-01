@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Cloudflare Workers Source",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "checkJs": true,
+    "types": ["@cloudflare/workers-types/experimental"],
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "baseUrl": "${configDir}"
+  },
+  "exclude": ["${configDir}/test"],
+  "include": ["${configDir}/src/**/*.ts", "${configDir}/**/*.tsx", "${configDir}/env.d.ts"]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Remix",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "checkJs": false,
+
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
+    "types": ["@remix-run/cloudflare", "vite/client"],
+    "jsx": "react-jsx",
+
+    "paths": {
+      "~/*": ["${configDir}/app/*"]
+    }
+  },
+  "include": [
+    "${configDir}/**/*.ts",
+    "${configDir}/**/*.tsx",
+    "${configDir}/**/.server/**/*.ts",
+    "${configDir}/**/.server/**/*.tsx",
+    "${configDir}/**/.client/**/*.ts",
+    "${configDir}/**/.client/**/*.tsx"
+  ]
+}

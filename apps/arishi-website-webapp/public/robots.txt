@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://adishwar-rishi.com/
-
-# Sitemaps
-Sitemap: https://adishwar-rishi.com//sitemap.xml

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Cloudflare Workers Test",
+  "extends": "./cloudflare-workers-src.json",
+  "compilerOptions": {
+    "types": ["@cloudflare/workers-types/experimental", "@cloudflare/vitest-pool-workers"]
+  },
+  "include": ["${configDir}/**/*.ts", "${configDir}/../env.d.ts", "${configDir}/../src/**/*.ts"],
+  "exclude": []
+}

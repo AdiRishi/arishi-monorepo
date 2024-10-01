@@ -1,7 +1,0 @@
-{
-  "$schema": "http://json.schemastore.org/prettierrc",
-  "singleQuote": true,
-  "trailingComma": "es5",
-  "semi": true,
-  "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"]
-}
