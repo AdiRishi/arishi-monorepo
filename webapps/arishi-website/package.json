@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build && wrangler pages functions build --outdir build/worker",
-    "deploy": "wrangler deploy",
+    "deploy": "wrangler deploy --minify",
     "dev": "remix vite:dev",
     "lint": "eslint . && prettier --check .",
     "preview:pages": "wrangler pages dev ./build/client",

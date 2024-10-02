@@ -39,8 +39,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          command: pages deploy ./build/client --project-name=adishwar-rishi-website
-          workingDirectory: 'apps/arishi-website-webapp'
+          command: deploy --minify
+          workingDirectory: 'webapps/arishi-website'
           packageManager: 'pnpm'
 
       - name: Comment with deploy link
