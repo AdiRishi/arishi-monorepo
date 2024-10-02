@@ -34,7 +34,7 @@ describe('Domain Redirect worker', () => {
   });
 
   describe('Integration Tests', () => {
-    it.only('redirects adishwarrishi.com to adishwar-rishi.com', async () => {
+    it('redirects adishwarrishi.com to adishwar-rishi.com', async () => {
       const response = await SELF.fetch('http://adishwarrishi.com', {
         redirect: 'manual',
       });
