@@ -9,3 +9,8 @@ enabled = true
 
 [placement]
 mode = "smart"
+
+[[services]]
+binding = "PUBLIC_DATA_SERVICE"
+service = "arishi-website-api"
+entrypoint = "PublicDataService"

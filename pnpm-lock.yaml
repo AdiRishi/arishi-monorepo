@@ -431,6 +431,9 @@ importers:
       '@arishi/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
+      '@arishi/website-api':
+        specifier: workspace:*
+        version: link:../../cf-workers/website-api
       '@cloudflare/workers-types':
         specifier: ^4.20240925.0
         version: 4.20240925.0

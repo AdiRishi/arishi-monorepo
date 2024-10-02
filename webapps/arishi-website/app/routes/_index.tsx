@@ -1,11 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@arishi/shadcn-ui/components/avatar';
 import { Badge } from '@arishi/shadcn-ui/components/badge';
-import type { MetaFunction } from '@remix-run/cloudflare';
-import { Link } from '@remix-run/react';
+import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
+import { defer, Link } from '@remix-run/react';
 import Markdown from 'react-markdown';
 import { ProjectCard } from '~/components/project-card';
 import { ResumeCard } from '~/components/resume-card';
 import { DATA } from '~/content/data';
+
+export const loader = async (args: LoaderFunctionArgs) => {
+  const pingResponse = await args.context.cloudflare.env.PUBLIC_DATA_SERVICE.ping();
+  return defer({ pingResponse });
+};
 
 export const meta: MetaFunction = () => {
   return [{ title: DATA.name }, { name: 'description', content: DATA.description }];

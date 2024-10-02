@@ -30,5 +30,10 @@ describe('Domain Redirect worker', () => {
       expect(response.status).toBe(200);
       expect(await response.text()).toEqual('Hello world');
     });
+
+    it('should call PublicDataService ping function', async () => {
+      const response = await env.PUBLIC_DATA_SERVICE.ping();
+      expect(response).toEqual('pong');
+    });
   });
 });

@@ -1,7 +1,9 @@
+import { PublicDataService } from '@arishi/website-api';
 import { type PlatformProxy } from 'wrangler';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Env {}
+interface Env {
+  PUBLIC_DATA_SERVICE: Service<PublicDataService>;
+}
 
 type Cloudflare = Omit<PlatformProxy<Env>, 'dispose'>;
 

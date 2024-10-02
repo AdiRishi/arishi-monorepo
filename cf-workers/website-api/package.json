@@ -3,9 +3,12 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
+  "exports": {
+    ".": "./src/package-export.ts"
+  },
   "scripts": {
     "build": "wrangler deploy --dry-run --minify --outdir dist",
-    "deploy": "wrangler deploy",
+    "deploy": "wrangler deploy --minify",
     "dev": "wrangler dev",
     "start": "wrangler dev",
     "lint": "eslint . && prettier --check .",

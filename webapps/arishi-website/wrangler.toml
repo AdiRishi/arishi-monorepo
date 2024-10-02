@@ -6,3 +6,8 @@ assets = { directory = "./build/client" }
 
 [observability]
 enabled = true
+
+[[services]]
+binding = "PUBLIC_DATA_SERVICE"
+service = "arishi-website-api"
+entrypoint = "PublicDataService"
