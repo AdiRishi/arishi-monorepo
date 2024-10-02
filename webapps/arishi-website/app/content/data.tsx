@@ -40,7 +40,7 @@ export const DATA: ResumeData = {
         name: 'Send Email',
         url: '#',
         icon: Icons.email,
-        navbar: false,
+        navbar: true,
       },
     },
   },
