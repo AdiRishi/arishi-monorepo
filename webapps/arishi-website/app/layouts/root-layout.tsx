@@ -1,6 +1,8 @@
+import { TooltipProvider } from '@arishi/shadcn-ui/components/tooltip';
 import { cn } from '@arishi/shadcn-ui/lib/utils';
 import { useNavigation } from '@remix-run/react';
 import { useEffect, useState, useRef } from 'react';
+import NavDock from '~/components/navdock';
 
 export type LayoutProps = {
   children: React.ReactNode;
@@ -9,7 +11,10 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="flex flex-col bg-background text-foreground">
       <GlobalLoading />
-      <main className="mx-auto min-h-screen max-w-2xl bg-background px-6 py-12 antialiased sm:py-24">{children}</main>
+      <TooltipProvider delayDuration={0}>
+        <main className="mx-auto min-h-screen max-w-2xl bg-background px-6 py-12 antialiased sm:py-24">{children}</main>
+        <NavDock />
+      </TooltipProvider>
     </div>
   );
 }
