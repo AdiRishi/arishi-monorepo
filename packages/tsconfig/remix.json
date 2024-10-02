@@ -6,7 +6,7 @@
     "checkJs": false,
 
     "lib": ["DOM", "DOM.Iterable", "ES2023"],
-    "types": ["@remix-run/cloudflare", "vite/client"],
+    "types": ["@remix-run/cloudflare", "vite/client", "@cloudflare/workers-types/experimental"],
     "jsx": "react-jsx",
 
     "paths": {

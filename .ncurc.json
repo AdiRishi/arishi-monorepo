@@ -2,5 +2,5 @@
   "$schema": "https://raw.githubusercontent.com/raineorshine/npm-check-updates/main/src/types/RunOptions.json",
   "workspaces": true,
   "root": true,
-  "reject": [""]
+  "reject": ["react-day-picker"]
 }

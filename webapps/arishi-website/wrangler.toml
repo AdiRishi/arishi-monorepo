@@ -1,0 +1,8 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "arishi-website"
+compatibility_date = "2024-10-02"
+main = "./build/worker/index.js"
+assets = { directory = "./build/client" }
+
+[observability]
+enabled = true
