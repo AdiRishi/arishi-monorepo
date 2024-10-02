@@ -1,20 +1,23 @@
-import type { LinksFunction } from '@remix-run/cloudflare';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from '@remix-run/react';
+import { UnhandledError } from '~/components/page-layout/unhandled-error-page';
 import './global-styles/tailwind.css';
 import { Layout as RootLayout } from './layouts/root-layout';
 
-export const links: LinksFunction = () => [
-  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-  {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
-    crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
-  },
-];
+export const ErrorBoundary = () => {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <UnhandledError title={error.statusText} statusCode={error.status} description={JSON.stringify(error.data)} />
+    );
+  } else if (error instanceof Error) {
+    return <UnhandledError title="Something unexpected happened" statusCode={500} description={error.message} />;
+  } else {
+    return (
+      <UnhandledError title="Something unexpected happened" statusCode={500} description={JSON.stringify(error)} />
+    );
+  }
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
