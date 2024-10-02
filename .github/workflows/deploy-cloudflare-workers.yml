@@ -39,3 +39,12 @@ jobs:
           command: deploy --minify
           workingDirectory: 'cf-workers/domain-redirect'
           packageManager: 'pnpm'
+
+      - name: Deploy arishi-website-api worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: deploy --minify
+          workingDirectory: 'cf-workers/website-api'
+          packageManager: 'pnpm'
