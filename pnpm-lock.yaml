@@ -48,6 +48,33 @@ importers:
         specifier: ^3.79.0
         version: 3.79.0(@cloudflare/workers-types@4.20240925.0)
 
+  cf-workers/website-api:
+    devDependencies:
+      '@arishi/eslint':
+        specifier: workspace:*
+        version: link:../../packages/eslint
+      '@arishi/prettier-config':
+        specifier: workspace:*
+        version: link:../../packages/prettier-config
+      '@arishi/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@cloudflare/vitest-pool-workers':
+        specifier: 0.5.13
+        version: 0.5.13(@cloudflare/workers-types@4.20240925.0)(@vitest/runner@2.1.1)(@vitest/snapshot@2.1.1)(vitest@2.1.1(@types/node@22.7.4)(terser@5.34.1))
+      '@cloudflare/workers-types':
+        specifier: ^4.20240925.0
+        version: 4.20240925.0
+      typescript:
+        specifier: ^5.6.2
+        version: 5.6.2
+      vitest:
+        specifier: 2.1.1
+        version: 2.1.1(@types/node@22.7.4)(terser@5.34.1)
+      wrangler:
+        specifier: ^3.79.0
+        version: 3.79.0(@cloudflare/workers-types@4.20240925.0)
+
   packages/eslint:
     dependencies:
       '@eslint/compat':
@@ -9193,7 +9220,7 @@ snapshots:
       '@babel/plugin-syntax-typescript': 7.25.4(@babel/core@7.25.2)
       '@vanilla-extract/babel-plugin-debug-ids': 1.1.0
       '@vanilla-extract/css': 1.16.0
-      esbuild: 0.17.6
+      esbuild: 0.17.19
       eval: 0.1.8
       find-up: 5.0.0
       javascript-stringify: 2.1.0
