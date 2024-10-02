@@ -47,9 +47,9 @@ export default function Index() {
           <div>
             <h2 className="text-xl font-bold">Work Experience</h2>
           </div>
-          {DATA.work.map((work) => (
+          {DATA.work.map((work, id) => (
             <ResumeCard
-              key={work.company}
+              key={id}
               logoUrl={work.logoUrl}
               altText={work.company}
               title={work.company}
