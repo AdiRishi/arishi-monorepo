@@ -1,15 +1,24 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@arishi/shadcn-ui/components/avatar';
 import { Badge } from '@arishi/shadcn-ui/components/badge';
+import { AppType } from '@arishi/website-api';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { defer, Link } from '@remix-run/react';
+import { hc } from 'hono/client';
 import Markdown from 'react-markdown';
 import { ProjectCard } from '~/components/project-card';
 import { ResumeCard } from '~/components/resume-card';
 import { DATA } from '~/content/data';
 
 export const loader = async (args: LoaderFunctionArgs) => {
+  const apiClient = hc<AppType>('https://website-api.com', {
+    // @ts-expect-error - RequestInfo type mismatch
+    fetch: args.context.cloudflare.env.WEBSITE_API.fetch.bind(args.context.cloudflare.env.WEBSITE_API),
+  });
   const pingResponse = await args.context.cloudflare.env.PUBLIC_DATA_SERVICE.ping();
-  return defer({ pingResponse });
+  const honoPingResponse = await apiClient['public-data'].ping.$get();
+  const honoPing = await honoPingResponse.text();
+  console.log(pingResponse, honoPing);
+  return defer({ pingResponse, honoPing });
 };
 
 export const meta: MetaFunction = () => {

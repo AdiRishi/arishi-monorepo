@@ -11,3 +11,7 @@ enabled = true
 binding = "PUBLIC_DATA_SERVICE"
 service = "arishi-website-api"
 entrypoint = "PublicDataService"
+
+[[services]]
+binding = "WEBSITE_API"
+service = "arishi-website-api"

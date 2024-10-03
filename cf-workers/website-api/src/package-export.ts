@@ -1,3 +1,4 @@
-import type { PublicDataService } from './index';
+import { AppType } from './fetch-handlers/app';
+import { PublicDataService } from './index';
 
-export { PublicDataService };
+export { PublicDataService, type AppType };
