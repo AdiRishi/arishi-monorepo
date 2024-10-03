@@ -23,6 +23,7 @@ describe('Website API worker', () => {
     it('should return a pong from http fetch to public data ping', async () => {
       const request = new IncomingRequest('http://worker.com/public-data/ping');
       const res = await worker.fetch(request, env, ctx);
+      await waitOnExecutionContext(ctx);
       expect(res.status).toEqual(200);
       const text = await res.text();
       expect(text).toEqual('pong');
