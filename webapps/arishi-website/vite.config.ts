@@ -1,9 +1,12 @@
 import { vitePlugin as remix, cloudflareDevProxyVitePlugin as remixCloudflareDevProxy } from '@remix-run/dev';
+import { remixDevTools } from 'remix-development-tools';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [
+    remixDevTools(),
     remixCloudflareDevProxy(),
     remix({
       future: {
@@ -15,5 +18,6 @@ export default defineConfig({
       },
     }),
     tsconfigPaths({ root: '.' }),
+    visualizer({ emitFile: true }),
   ],
 });

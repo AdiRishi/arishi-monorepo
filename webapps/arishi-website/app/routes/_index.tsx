@@ -17,7 +17,6 @@ export const loader = async (args: LoaderFunctionArgs) => {
   const pingResponse = await args.context.cloudflare.env.PUBLIC_DATA_SERVICE.ping();
   const honoPingResponse = await apiClient['public-data'].ping.$get();
   const honoPing = await honoPingResponse.text();
-  console.log(pingResponse, honoPing);
   return defer({ pingResponse, honoPing });
 };
 
