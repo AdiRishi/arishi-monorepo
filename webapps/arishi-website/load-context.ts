@@ -12,4 +12,7 @@ declare module '@remix-run/cloudflare' {
   interface AppLoadContext {
     cloudflare: Cloudflare;
   }
+  interface Future {
+    v3_singleFetch: true;
+  }
 }

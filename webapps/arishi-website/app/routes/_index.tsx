@@ -2,22 +2,26 @@ import { Avatar, AvatarFallback, AvatarImage } from '@arishi/shadcn-ui/component
 import { Badge } from '@arishi/shadcn-ui/components/badge';
 import { AppType } from '@arishi/website-api';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { defer, Link } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import { hc } from 'hono/client';
+import * as _ from 'radashi';
 import Markdown from 'react-markdown';
 import { ProjectCard } from '~/components/project-card';
 import { ResumeCard } from '~/components/resume-card';
 import { DATA } from '~/content/data';
+import { wrapPromise } from '~/lib/ts-utils';
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const apiClient = hc<AppType>('https://website-api.com', {
     // @ts-expect-error - RequestInfo type mismatch
     fetch: args.context.cloudflare.env.WEBSITE_API.fetch.bind(args.context.cloudflare.env.WEBSITE_API),
   });
-  const pingResponse = await args.context.cloudflare.env.PUBLIC_DATA_SERVICE.ping();
-  const honoPingResponse = await apiClient['public-data'].ping.$get();
+  const { rpcPing, honoPingResponse } = await _.all({
+    rpcPing: wrapPromise(args.context.cloudflare.env.PUBLIC_DATA_SERVICE.ping()),
+    honoPingResponse: apiClient['public-data'].ping.$get(),
+  });
   const honoPing = await honoPingResponse.text();
-  return defer({ pingResponse, honoPing });
+  return { rpcPing, honoPing };
 };
 
 export const meta: MetaFunction = () => {
@@ -25,6 +29,8 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <section className="flex min-h-[100dvh] flex-col space-y-10">
       <section id="hero">
@@ -45,6 +51,10 @@ export default function Index() {
           </div>
         </div>
       </section>
+      <form hidden className="hidden">
+        <input type="hidden" name="honoPing" value={data.honoPing} />
+        <input type="hidden" name="rpcPing" value={data.rpcPing} />
+      </form>
       <section id="about">
         <div>
           <h2 className="text-xl font-bold">About</h2>
