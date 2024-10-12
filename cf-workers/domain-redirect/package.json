@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "wrangler deploy --dry-run --minify --outdir dist",
-    "deploy": "wrangler deploy",
+    "deploy": "wrangler deploy --minify",
     "dev": "wrangler dev",
     "start": "wrangler dev",
     "lint": "eslint . && prettier --check .",

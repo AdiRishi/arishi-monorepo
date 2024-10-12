@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix vite:build && wrangler pages functions build --outdir build/worker",
+    "build": "remix vite:build && wrangler pages functions build --outdir build/worker --minify",
     "deploy": "wrangler deploy --minify",
     "dev": "remix vite:dev",
     "lint": "eslint . && prettier --check .",
