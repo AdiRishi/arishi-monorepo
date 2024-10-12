@@ -15,6 +15,10 @@ env:
   TURBO_TEAM: 'team_arishi_monorepo'
   TURBO_REMOTE_CACHE_SIGNATURE_KEY: ${{ secrets.TURBOREPO_REMOTE_CACHE_SIGNATURE_KEY }}
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   check:
     name: Build and deploy CF Workers
