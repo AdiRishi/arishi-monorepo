@@ -15,7 +15,7 @@
     "typegen": "wrangler types"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "0.5.21",
+    "@cloudflare/vitest-pool-workers": "0.5.22",
     "@cloudflare/workers-types": "^4.20241022.0",
     "@arishi/eslint": "workspace:*",
     "@arishi/prettier-config": "workspace:*",
