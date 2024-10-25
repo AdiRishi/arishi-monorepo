@@ -4,12 +4,11 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix vite:build && wrangler pages functions build --outdir build/worker --minify",
+    "build": "remix vite:build",
     "deploy": "wrangler deploy --minify",
     "dev": "remix vite:dev",
     "lint": "eslint . && prettier --check .",
-    "preview:pages": "wrangler pages dev ./build/client",
-    "preview:workers": "wrangler dev",
+    "preview": "wrangler dev",
     "typecheck": "tsc",
     "format": "prettier --write ."
   },

@@ -3,6 +3,7 @@ import { remixDevTools } from 'remix-development-tools';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { getLoadContext } from './load-context';
 
 export default defineConfig({
   esbuild: {
@@ -11,9 +12,19 @@ export default defineConfig({
   build: {
     minify: true,
   },
+  ssr: {
+    resolve: {
+      conditions: ['workerd', 'worker', 'browser'],
+    },
+  },
+  resolve: {
+    mainFields: ['browser', 'module', 'main'],
+  },
   plugins: [
     remixDevTools(),
-    remixCloudflareDevProxy(),
+    remixCloudflareDevProxy({
+      getLoadContext,
+    }),
     remix({
       future: {
         v3_fetcherPersist: true,
