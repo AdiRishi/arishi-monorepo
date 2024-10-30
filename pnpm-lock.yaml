@@ -45,8 +45,8 @@ importers:
         specifier: 2.1.4
         version: 2.1.4(@types/node@22.8.4)(terser@5.34.1)
       wrangler:
-        specifier: ^3.83.0
-        version: 3.83.0(@cloudflare/workers-types@4.20241022.0)
+        specifier: ^3.84.0
+        version: 3.84.0(@cloudflare/workers-types@4.20241022.0)
 
   cf-workers/website-api:
     dependencies:
@@ -76,8 +76,8 @@ importers:
         specifier: 2.1.4
         version: 2.1.4(@types/node@22.8.4)(terser@5.34.1)
       wrangler:
-        specifier: ^3.83.0
-        version: 3.83.0(@cloudflare/workers-types@4.20241022.0)
+        specifier: ^3.84.0
+        version: 3.84.0(@cloudflare/workers-types@4.20241022.0)
 
   packages/eslint:
     dependencies:
@@ -449,7 +449,7 @@ importers:
         version: 4.20241022.0
       '@remix-run/dev':
         specifier: ^2.13.1
-        version: 2.13.1(@remix-run/react@2.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@types/node@22.8.4)(babel-plugin-macros@3.1.0)(terser@5.34.1)(typescript@5.6.3)(vite@5.4.10(@types/node@22.8.4)(terser@5.34.1))(wrangler@3.83.0(@cloudflare/workers-types@4.20241022.0))
+        version: 2.13.1(@remix-run/react@2.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@types/node@22.8.4)(babel-plugin-macros@3.1.0)(terser@5.34.1)(typescript@5.6.3)(vite@5.4.10(@types/node@22.8.4)(terser@5.34.1))(wrangler@3.84.0(@cloudflare/workers-types@4.20241022.0))
       '@types/react':
         specifier: ^18.3.12
         version: 18.3.12
@@ -484,8 +484,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(typescript@5.6.3)(vite@5.4.10(@types/node@22.8.4)(terser@5.34.1))
       wrangler:
-        specifier: ^3.83.0
-        version: 3.83.0(@cloudflare/workers-types@4.20241022.0)
+        specifier: ^3.84.0
+        version: 3.84.0(@cloudflare/workers-types@4.20241022.0)
 
 packages:
 
@@ -9059,7 +9059,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.6.3
 
-  '@remix-run/dev@2.13.1(@remix-run/react@2.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@types/node@22.8.4)(babel-plugin-macros@3.1.0)(terser@5.34.1)(typescript@5.6.3)(vite@5.4.10(@types/node@22.8.4)(terser@5.34.1))(wrangler@3.83.0(@cloudflare/workers-types@4.20241022.0))':
+  '@remix-run/dev@2.13.1(@remix-run/react@2.13.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@types/node@22.8.4)(babel-plugin-macros@3.1.0)(terser@5.34.1)(typescript@5.6.3)(vite@5.4.10(@types/node@22.8.4)(terser@5.34.1))(wrangler@3.84.0(@cloudflare/workers-types@4.20241022.0))':
     dependencies:
       '@babel/core': 7.25.8
       '@babel/generator': 7.25.7
@@ -9118,7 +9118,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.6.3
       vite: 5.4.10(@types/node@22.8.4)(terser@5.34.1)
-      wrangler: 3.83.0(@cloudflare/workers-types@4.20241022.0)
+      wrangler: 3.84.0(@cloudflare/workers-types@4.20241022.0)
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
