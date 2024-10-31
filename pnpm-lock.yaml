@@ -327,8 +327,8 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1(react@18.3.1)(storybook@8.3.6)
       '@storybook/addon-actions':
-        specifier: ^8.3.6
-        version: 8.3.6(storybook@8.3.6)
+        specifier: ^8.4.0
+        version: 8.4.0(storybook@8.3.6)
       '@storybook/addon-essentials':
         specifier: ^8.3.6
         version: 8.3.6(storybook@8.3.6)(webpack-sources@3.2.3)
@@ -2543,6 +2543,11 @@ packages:
     resolution: {integrity: sha512-nOqgl0WoZK2KwjaABaXMoIgrIHOQl9inOzJvqQau0HOtsvnXGXYfJXYnpjZenoZDoZXKbUDl0U2haDFx2a2fJw==}
     peerDependencies:
       storybook: ^8.3.6
+
+  '@storybook/addon-actions@8.4.0':
+    resolution: {integrity: sha512-xQ84mDIl+jyDpjt8SnCfhqVECQu7k1dLyhiAi983Tp5nyW8KRJa/tEATDLOCpz1eL9AMf2WjAypi+vIiNIul8w==}
+    peerDependencies:
+      storybook: ^8.4.0
 
   '@storybook/addon-backgrounds@8.3.6':
     resolution: {integrity: sha512-yBn+a8i5OJzJaX6Bx5MAkfei7c2nvq+RRmvuyvxw11rtDGR6Nz4OBBe56reWxo868wVUggpRTPJCMVe5tDYgVg==}
@@ -9115,6 +9120,15 @@ snapshots:
     optional: true
 
   '@storybook/addon-actions@8.3.6(storybook@8.3.6)':
+    dependencies:
+      '@storybook/global': 5.0.0
+      '@types/uuid': 9.0.8
+      dequal: 2.0.3
+      polished: 4.3.1
+      storybook: 8.3.6
+      uuid: 9.0.1
+
+  '@storybook/addon-actions@8.4.0(storybook@8.3.6)':
     dependencies:
       '@storybook/global': 5.0.0
       '@types/uuid': 9.0.8
