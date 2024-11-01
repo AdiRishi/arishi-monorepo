@@ -275,8 +275,8 @@ importers:
         specifier: ^11.11.11
         version: 11.11.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       input-otp:
-        specifier: ^1.2.5
-        version: 1.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.4.0
+        version: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@18.3.1)
@@ -4517,8 +4517,8 @@ packages:
   inline-style-parser@0.2.4:
     resolution: {integrity: sha512-0aO8FkhNZlj/ZIbNi7Lxxr12obT7cL1moPfE4tg1LkX7LlLfC6DeX4l2ZEud1ukP9jNQyNnfzQVqwbwmAATY4Q==}
 
-  input-otp@1.2.5:
-    resolution: {integrity: sha512-XoRSZyr5NaK++/Ml/0bsTycKiSq9M5u6fWgG5Cqjldj6+ontrKnPRqn+6Bo4fzUwoMXRenUdacVfR7Y68gldKw==}
+  input-otp@1.4.0:
+    resolution: {integrity: sha512-whngTwnXhSQijjxNGUaU/O94LNugnuliZoWktQd5nVYESNlb01guoo+1T/1zppJ8fbo2J2/GVe20x3M6qpgdFg==}
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0
       react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0
@@ -9769,9 +9769,9 @@ snapshots:
       mime-types: 2.1.35
       negotiator: 0.6.3
 
-  acorn-import-attributes@1.9.5(acorn@8.12.1):
+  acorn-import-attributes@1.9.5(acorn@8.14.0):
     dependencies:
-      acorn: 8.12.1
+      acorn: 8.14.0
 
   acorn-jsx@5.3.2(acorn@8.12.1):
     dependencies:
@@ -11361,7 +11361,7 @@ snapshots:
 
   inline-style-parser@0.2.4: {}
 
-  input-otp@1.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  input-otp@1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -13622,7 +13622,7 @@ snapshots:
   terser@5.34.1:
     dependencies:
       '@jridgewell/source-map': 0.3.6
-      acorn: 8.12.1
+      acorn: 8.14.0
       commander: 2.20.3
       source-map-support: 0.5.21
 
@@ -14127,8 +14127,8 @@ snapshots:
       '@webassemblyjs/ast': 1.12.1
       '@webassemblyjs/wasm-edit': 1.12.1
       '@webassemblyjs/wasm-parser': 1.12.1
-      acorn: 8.12.1
-      acorn-import-attributes: 1.9.5(acorn@8.12.1)
+      acorn: 8.14.0
+      acorn-import-attributes: 1.9.5(acorn@8.14.0)
       browserslist: 4.24.0
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.17.1
