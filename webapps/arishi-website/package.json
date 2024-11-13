@@ -16,7 +16,7 @@
     "@remix-run/cloudflare": "^2.14.0",
     "@remix-run/cloudflare-pages": "^2.14.0",
     "@remix-run/react": "^2.14.0",
-    "framer-motion": "^11.11.13",
+    "framer-motion": "^11.11.15",
     "hono": "^4.6.10",
     "isbot": "^5.1.17",
     "lucide-react": "^0.456.0",
