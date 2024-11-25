@@ -51,8 +51,8 @@ importers:
   cf-workers/website-api:
     dependencies:
       hono:
-        specifier: ^4.6.11
-        version: 4.6.11
+        specifier: ^4.6.12
+        version: 4.6.12
     devDependencies:
       '@arishi/eslint':
         specifier: workspace:*
@@ -408,8 +408,8 @@ importers:
         specifier: ^11.11.17
         version: 11.11.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       hono:
-        specifier: ^4.6.11
-        version: 4.6.11
+        specifier: ^4.6.12
+        version: 4.6.12
       isbot:
         specifier: ^5.1.17
         version: 5.1.17
@@ -4423,8 +4423,8 @@ packages:
   hast-util-whitespace@3.0.0:
     resolution: {integrity: sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw==}
 
-  hono@4.6.11:
-    resolution: {integrity: sha512-f0LwJQFKdUUrCUAVowxSvNCjyzI7ZLt8XWYU/EApyeq5FfOvHFarBaE5rjU9HTNFk4RI0FkdB2edb3p/7xZjzQ==}
+  hono@4.6.12:
+    resolution: {integrity: sha512-eHtf4kSDNw6VVrdbd5IQi16r22m3s7mWPLd7xOMhg1a/Yyb1A0qpUFq8xYMX4FMuDe1nTKeMX5rTx7Nmw+a+Ag==}
     engines: {node: '>=16.9.0'}
 
   hosted-git-info@6.1.3:
@@ -11249,7 +11249,7 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
-  hono@4.6.11: {}
+  hono@4.6.12: {}
 
   hosted-git-info@6.1.3:
     dependencies:
