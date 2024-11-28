@@ -13,7 +13,6 @@ import { wrapPromise } from '~/lib/ts-utils';
 
 export const loader = async (args: LoaderFunctionArgs) => {
   const apiClient = hc<AppType>('https://website-api.com', {
-    // @ts-expect-error - RequestInfo type mismatch
     fetch: args.context.cloudflare.env.WEBSITE_API.fetch.bind(args.context.cloudflare.env.WEBSITE_API),
   });
   const { rpcPing, honoPingResponse } = await _.all({
