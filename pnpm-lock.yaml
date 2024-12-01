@@ -417,8 +417,8 @@ importers:
         specifier: ^0.462.0
         version: 0.462.0(react@18.3.1)
       radashi:
-        specifier: ^12.2.3
-        version: 12.2.3
+        specifier: ^12.3.0
+        version: 12.3.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -5705,8 +5705,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  radashi@12.2.3:
-    resolution: {integrity: sha512-KenCSk3vdquRkVwjQOwj1bdazsskNtpKTqnxR8CGFw42BqmIoW+lMRtT+qOZTkvzXHTbRnw8gL9mpDehAHENEQ==}
+  radashi@12.3.0:
+    resolution: {integrity: sha512-ViMnMTF4g+wqL1pp4sMJOEXFydvB+6EsJJOv9/PBVO1lrKbeYNay2ePd6SGrbaBKf1MH+ZpGFx0EwGTElVCWHw==}
     engines: {node: '>=16.0.0'}
 
   randombytes@2.1.0:
@@ -12733,7 +12733,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  radashi@12.2.3: {}
+  radashi@12.3.0: {}
 
   randombytes@2.1.0:
     dependencies:
