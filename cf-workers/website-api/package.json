@@ -22,7 +22,7 @@
     "@arishi/prettier-config": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
     "@cloudflare/vitest-pool-workers": "0.5.32",
-    "@cloudflare/workers-types": "^4.20241127.0",
+    "@cloudflare/workers-types": "^4.20241202.0",
     "typescript": "^5.7.2",
     "vitest": "2.1.8",
     "wrangler": "^3.91.0"
