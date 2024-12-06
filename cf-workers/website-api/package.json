@@ -29,6 +29,6 @@
   },
   "packageManager": "pnpm@9.14.4",
   "dependencies": {
-    "hono": "^4.6.12"
+    "hono": "^4.6.13"
   }
 }
