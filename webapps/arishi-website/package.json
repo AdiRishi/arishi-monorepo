@@ -33,7 +33,7 @@
     "@arishi/website-api": "workspace:*",
     "@cloudflare/workers-types": "^4.20241205.0",
     "@remix-run/dev": "^2.15.1",
-    "@types/react": "^18.3.16",
+    "@types/react": "^18.3.17",
     "@types/react-dom": "^18.3.5",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
