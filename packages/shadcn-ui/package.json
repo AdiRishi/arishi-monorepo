@@ -69,7 +69,7 @@
     "@arishi/eslint": "workspace:*",
     "@arishi/prettier-config": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
-    "@chromatic-com/storybook": "^3.2.2",
+    "@chromatic-com/storybook": "^3.2.3",
     "@storybook/addon-actions": "^8.4.7",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
