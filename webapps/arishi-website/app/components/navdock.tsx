@@ -1,8 +1,8 @@
-import { Button, buttonVariants } from '@arishi/shadcn-ui/components/button';
-import { Dock, DockIcon } from '@arishi/shadcn-ui/components/magicui/dock';
-import { Separator } from '@arishi/shadcn-ui/components/separator';
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@arishi/shadcn-ui/components/tooltip';
-import { cn } from '@arishi/shadcn-ui/lib/utils';
+import { Button, buttonVariants } from '@arishi/ui/components/button';
+import { Dock, DockIcon } from '@arishi/ui/components/dock';
+import { Separator } from '@arishi/ui/components/separator';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@arishi/ui/components/tooltip';
+import { cn } from '@arishi/ui/lib/utils';
 import { Link } from '@remix-run/react';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { DATA } from '~/content/data';

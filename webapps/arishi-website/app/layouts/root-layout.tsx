@@ -1,4 +1,4 @@
-import { cn } from '@arishi/shadcn-ui/lib/utils';
+import { cn } from '@arishi/ui/lib/utils';
 import { useNavigation } from '@remix-run/react';
 import { useEffect, useState, useRef } from 'react';
 import NavDock from '~/components/navdock';

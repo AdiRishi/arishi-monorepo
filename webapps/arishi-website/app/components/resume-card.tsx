@@ -1,9 +1,7 @@
-'use client';
-
-import { Avatar, AvatarFallback, AvatarImage } from '@arishi/shadcn-ui/components/avatar';
-import { Badge } from '@arishi/shadcn-ui/components/badge';
-import { Card, CardHeader } from '@arishi/shadcn-ui/components/card';
-import { cn } from '@arishi/shadcn-ui/lib/utils';
+import { Avatar, AvatarFallback, AvatarImage } from '@arishi/ui/components/avatar';
+import { Badge } from '@arishi/ui/components/badge';
+import { Card, CardHeader } from '@arishi/ui/components/card';
+import { cn } from '@arishi/ui/lib/utils';
 import { Link } from '@remix-run/react';
 import { motion } from 'framer-motion';
 import { ChevronRightIcon } from 'lucide-react';

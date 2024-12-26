@@ -1,6 +1,6 @@
-import { Badge } from '@arishi/shadcn-ui/components/badge';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@arishi/shadcn-ui/components/card';
-import { cn } from '@arishi/shadcn-ui/lib/utils';
+import { Badge } from '@arishi/ui/components/badge';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@arishi/ui/components/card';
+import { cn } from '@arishi/ui/lib/utils';
 import { Link } from '@remix-run/react';
 import Markdown from 'react-markdown';
 

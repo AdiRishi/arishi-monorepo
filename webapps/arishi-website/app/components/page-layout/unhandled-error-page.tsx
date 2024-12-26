@@ -1,4 +1,4 @@
-import { Button } from '@arishi/shadcn-ui/components/button';
+import { Button } from '@arishi/ui/components/button';
 import { Link } from '@remix-run/react';
 import { ContentSection } from './content-section';
 

@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@arishi/shadcn-ui/components/avatar';
-import { Badge } from '@arishi/shadcn-ui/components/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@arishi/ui/components/avatar';
+import { Badge } from '@arishi/ui/components/badge';
 import { AppType } from '@arishi/website-api';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
 import { Link, useLoaderData } from '@remix-run/react';

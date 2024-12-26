@@ -28,8 +28,8 @@
   "devDependencies": {
     "@arishi/eslint": "workspace:*",
     "@arishi/prettier-config": "workspace:*",
-    "@arishi/shadcn-ui": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
+    "@arishi/ui": "workspace:*",
     "@arishi/website-api": "workspace:*",
     "@cloudflare/workers-types": "^4.20241224.0",
     "@remix-run/dev": "^2.15.2",
