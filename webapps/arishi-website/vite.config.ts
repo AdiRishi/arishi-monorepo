@@ -1,6 +1,7 @@
 import { reactRouter } from '@react-router/dev/vite';
 import { cloudflareDevProxy } from '@react-router/dev/vite/cloudflare';
 import autoprefixer from 'autoprefixer';
+import { reactRouterDevTools } from 'react-router-devtools';
 import { visualizer } from 'rollup-plugin-visualizer';
 import tailwindcss from 'tailwindcss';
 import { defineConfig } from 'vite';
@@ -17,6 +18,7 @@ export default defineConfig(() => ({
     },
   },
   plugins: [
+    reactRouterDevTools(),
     cloudflareDevProxy({
       getLoadContext,
     }),
