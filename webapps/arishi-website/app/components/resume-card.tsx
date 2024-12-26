@@ -2,10 +2,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@arishi/ui/components/avata
 import { Badge } from '@arishi/ui/components/badge';
 import { Card, CardHeader } from '@arishi/ui/components/card';
 import { cn } from '@arishi/ui/lib/utils';
-import { Link } from '@remix-run/react';
 import { motion } from 'framer-motion';
 import { ChevronRightIcon } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router';
 
 interface ResumeCardProps {
   logoUrl: string;

@@ -20,3 +20,4 @@ playwright-report
 .cache
 pnpm-lock.yaml
 **/build
+.react-router

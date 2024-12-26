@@ -1,13 +1,10 @@
-import { createRequestHandler, type ServerBuild } from '@remix-run/cloudflare';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore This file won’t exist if it hasn’t yet been built
-import * as build from './build/server';
+import { createRequestHandler, type ServerBuild } from 'react-router';
+import * as build from '../build/server';
 import { getLoadContext, Env } from './load-context';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const handleRemixRequest = createRequestHandler(build as any as ServerBuild);
+const requestHandler = createRequestHandler(build as unknown as ServerBuild);
 
-const handler: ExportedHandler<Env> = {
+export default {
   async fetch(request, env, ctx) {
     try {
       const loadContext = getLoadContext({
@@ -28,12 +25,10 @@ const handler: ExportedHandler<Env> = {
           },
         },
       });
-      return await handleRemixRequest(request, loadContext);
+      return await requestHandler(request, loadContext);
     } catch (error) {
       console.log(error);
       return new Response('An unexpected error occurred', { status: 500 });
     }
   },
-};
-
-export default handler;
+} satisfies ExportedHandler<Env>;

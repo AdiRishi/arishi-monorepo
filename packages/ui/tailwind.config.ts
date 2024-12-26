@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 
-const config = {
+const config: Config = {
   darkMode: ['class'],
   content: ['app/**/*.{ts,tsx}', 'components/**/*.{ts,tsx}', '../../packages/ui/src/components/**/*.{ts,tsx}'],
   theme: {
@@ -93,6 +93,6 @@ const config = {
     },
   },
   plugins: [tailwindcssAnimate],
-} satisfies Config;
+};
 
 export default config;

@@ -1,17 +1,17 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@arishi/ui/components/avatar';
 import { Badge } from '@arishi/ui/components/badge';
 import { AppType } from '@arishi/website-api';
-import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/cloudflare';
-import { Link, useLoaderData } from '@remix-run/react';
 import { hc } from 'hono/client';
 import * as _ from 'radashi';
 import Markdown from 'react-markdown';
+import { Link } from 'react-router';
 import { ProjectCard } from '~/components/project-card';
 import { ResumeCard } from '~/components/resume-card';
 import { DATA } from '~/content/data';
 import { wrapPromise } from '~/lib/ts-utils';
+import { Route } from './+types/home';
 
-export const loader = async (args: LoaderFunctionArgs) => {
+export const loader = async (args: Route.LoaderArgs) => {
   const apiClient = hc<AppType>('https://website-api.com', {
     fetch: args.context.cloudflare.env.WEBSITE_API.fetch.bind(args.context.cloudflare.env.WEBSITE_API),
   });
@@ -23,13 +23,11 @@ export const loader = async (args: LoaderFunctionArgs) => {
   return { rpcPing, honoPing };
 };
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
   return [{ title: DATA.name }, { name: 'description', content: DATA.description }];
 };
 
-export default function Index() {
-  const data = useLoaderData<typeof loader>();
-
+export default function Index({ loaderData: data }: Route.ComponentProps) {
   return (
     <section className="flex min-h-[100dvh] flex-col space-y-10">
       <section id="hero">

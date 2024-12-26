@@ -1,42 +1,27 @@
-import { vitePlugin as remix, cloudflareDevProxyVitePlugin as remixCloudflareDevProxy } from '@remix-run/dev';
-import { remixDevTools } from 'remix-development-tools';
+import { reactRouter } from '@react-router/dev/vite';
+import { cloudflareDevProxy } from '@react-router/dev/vite/cloudflare';
+import autoprefixer from 'autoprefixer';
 import { visualizer } from 'rollup-plugin-visualizer';
+import tailwindcss from 'tailwindcss';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { getLoadContext } from './load-context';
+import { getLoadContext } from './server/load-context';
 
-export default defineConfig({
-  esbuild: {
-    target: 'es2022',
-  },
+export default defineConfig(() => ({
   build: {
     minify: true,
   },
-  ssr: {
-    resolve: {
-      conditions: ['workerd', 'worker', 'browser'],
+  css: {
+    postcss: {
+      plugins: [tailwindcss, autoprefixer],
     },
   },
-  resolve: {
-    mainFields: ['browser', 'module', 'main'],
-  },
   plugins: [
-    remixDevTools(),
-    remixCloudflareDevProxy({
+    cloudflareDevProxy({
       getLoadContext,
     }),
-    remix({
-      future: {
-        v3_fetcherPersist: true,
-        v3_relativeSplatPath: true,
-        v3_throwAbortReason: true,
-        // Type augmentation for single fetch is done in load-context.ts
-        v3_singleFetch: true,
-        v3_lazyRouteDiscovery: true,
-        unstable_optimizeDeps: true,
-      },
-    }),
+    reactRouter(),
     tsconfigPaths({ root: '.' }),
     visualizer({ emitFile: true }),
   ],
-});
+}));

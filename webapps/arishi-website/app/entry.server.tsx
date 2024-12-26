@@ -1,50 +1,51 @@
-/**
- * By default, Remix will handle generating the HTTP Response for you.
- * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
- * For more information, see https://remix.run/file-conventions/entry.server
- */
-import type { AppLoadContext, EntryContext } from '@remix-run/cloudflare';
-import { RemixServer } from '@remix-run/react';
 import { isbot } from 'isbot';
 import { renderToReadableStream } from 'react-dom/server';
+import type { AppLoadContext, EntryContext } from 'react-router';
+import { ServerRouter } from 'react-router';
 
-const ABORT_DELAY = 5000;
+// Reject all pending promises from handler functions after 10 seconds
+export const streamTimeout = 10000;
 
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext,
-  // This is ignored so we can keep it in the template for visibility.  Feel
-  // free to delete this parameter in your app if you're not using it!
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  loadContext: AppLoadContext
+  routerContext: EntryContext,
+  // This parameter is kept in the template for visibility, feel free to remove it if you don't need it
+  _loadContext: AppLoadContext
 ) {
+  let shellRendered = false;
+  const userAgent = request.headers.get('user-agent');
+
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), ABORT_DELAY);
+  const abortTimeout = setTimeout(() => {
+    controller.abort();
+  }, streamTimeout);
 
-  const body = await renderToReadableStream(
-    <RemixServer context={remixContext} url={request.url} abortDelay={ABORT_DELAY} />,
-    {
-      signal: controller.signal,
-      onError(error: unknown) {
-        if (!controller.signal.aborted) {
-          // Log streaming rendering errors from inside the shell
-          console.error(error);
-        }
-        responseStatusCode = 500;
-      },
-    }
-  );
+  const stream = await renderToReadableStream(<ServerRouter context={routerContext} url={request.url} />, {
+    signal: controller.signal,
+    onError(error, errorInfo) {
+      responseStatusCode = 500;
+      // Log streaming rendering errors from inside the shell.  Don't log
+      // errors encountered during initial shell rendering since they'll
+      // reject and get logged in handleDocumentRequest.
+      if (shellRendered) {
+        console.error(error, errorInfo);
+      }
+    },
+  });
+  shellRendered = true;
 
-  void body.allReady.then(() => clearTimeout(timeoutId));
+  stream.allReady.then(() => clearTimeout(abortTimeout)).catch(() => clearTimeout(abortTimeout));
 
-  if (isbot(request.headers.get('user-agent') ?? '')) {
-    await body.allReady;
+  // Ensure requests from bots and SPA Mode renders wait for all content to load before responding
+  // https://react.dev/reference/react-dom/server/renderToPipeableStream#waiting-for-all-content-to-load-for-crawlers-and-static-generation
+  if ((userAgent && isbot(userAgent)) || routerContext.isSpaMode) {
+    await stream.allReady;
   }
 
   responseHeaders.set('Content-Type', 'text/html');
-  return new Response(body, {
+  return new Response(stream, {
     headers: responseHeaders,
     status: responseStatusCode,
   });

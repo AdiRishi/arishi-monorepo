@@ -1,5 +1,5 @@
 import { Button } from '@arishi/ui/components/button';
-import { Link } from '@remix-run/react';
+import { Link } from 'react-router';
 import { ContentSection } from './content-section';
 
 export type UnhandledErrorProps = {

@@ -6,6 +6,10 @@
       "dependsOn": ["^build"],
       "env": ["NODE_ENV"],
       "outputs": ["build/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "outputs": ["tsconfig.tsbuildinfo", ".react-router/**"]
     }
   }
 }

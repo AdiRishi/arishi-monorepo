@@ -4,7 +4,7 @@ import globals from 'globals';
 import { compat, defineConfig } from '../utils.js';
 
 export const remix = defineConfig(
-  { ignores: ['!**/.server', '!**/.client'] },
+  { ignores: ['!**/.server', '!**/.client', '.react-router'] },
 
   // React addons
   reactPlugin.configs.flat.recommended,

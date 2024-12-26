@@ -19,6 +19,7 @@ playwright-report
 **/public/build
 .cache
 pnpm-lock.yaml
+**/.react-router
 
 # Ignore due to bug in prettier - tries to search for active node_modules with tailwindcss-animate for formatting the file
 turbo/generators/templates/remix-shadcn-template/app/global-styles/tailwind.css

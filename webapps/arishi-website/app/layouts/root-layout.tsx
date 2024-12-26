@@ -1,6 +1,6 @@
 import { cn } from '@arishi/ui/lib/utils';
-import { useNavigation } from '@remix-run/react';
 import { useEffect, useState, useRef } from 'react';
+import { useNavigation } from 'react-router';
 import NavDock from '~/components/navdock';
 
 export type LayoutProps = {

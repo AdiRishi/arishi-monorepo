@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "React Router",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "checkJs": false,
+
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
+    "types": ["vite/client", "@cloudflare/workers-types/experimental"],
+    "jsx": "react-jsx",
+
+    "rootDirs": ["${configDir}", "${configDir}/.react-router/types"],
+    "paths": {
+      "~/*": ["${configDir}/app/*"]
+    }
+  },
+  "include": [
+    "${configDir}/react-router/types/**/*",
+    "${configDir}/app/**/*",
+    "${configDir}/app/**/.server/**/*",
+    "${configDir}/app/**/.client/**/*",
+    "${configDir}/server/**/*"
+  ],
+  "exclude": ["${configDir}/node_modules", "${configDir}/dist", "${configDir}/build"]
+}

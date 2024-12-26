@@ -1,8 +1,8 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "arishi-website"
-compatibility_date = "2024-10-25"
+compatibility_date = "2024-12-25"
 workers_dev = true
-main = "./server.ts"
+main = "./server/server.ts"
 
 [assets]
 directory = "./build/client"

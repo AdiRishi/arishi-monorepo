@@ -1,4 +1,4 @@
-import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from '@remix-run/react';
+import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from 'react-router';
 import { UnhandledError } from '~/components/page-layout/unhandled-error-page';
 import './global-styles/tailwind.css';
 import { Layout as RootLayout } from './layouts/root-layout';

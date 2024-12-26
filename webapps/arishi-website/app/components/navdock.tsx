@@ -3,8 +3,8 @@ import { Dock, DockIcon } from '@arishi/ui/components/dock';
 import { Separator } from '@arishi/ui/components/separator';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@arishi/ui/components/tooltip';
 import { cn } from '@arishi/ui/lib/utils';
-import { Link } from '@remix-run/react';
 import { MoonIcon, SunIcon } from 'lucide-react';
+import { Link } from 'react-router';
 import { DATA } from '~/content/data';
 
 export default function NavDock() {

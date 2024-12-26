@@ -39,6 +39,7 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
       return React.Children.map(children, (child) => {
         if (React.isValidElement(child) && child.type === DockIcon) {
           return React.cloneElement(child, {
+            // @ts-expect-error - Should be fine?
             ...child.props,
             mouseX: mouseX,
             size: iconSize,

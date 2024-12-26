@@ -29,8 +29,8 @@ jobs:
 
       - run: pnpm install
       - run: pnpm build
-      - run: pnpm lint
       - run: pnpm typecheck
+      - run: pnpm lint
       - run: pnpm test
 
       # - name: Coveralls Coverage Report
