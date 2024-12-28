@@ -17,5 +17,5 @@
   "devDependencies": {
     "@arishi/prettier-config": "workspace:*"
   },
-  "packageManager": "pnpm@9.15.1"
+  "packageManager": "pnpm@9.15.2"
 }
