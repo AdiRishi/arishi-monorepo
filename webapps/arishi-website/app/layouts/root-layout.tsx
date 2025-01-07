@@ -1,16 +1,15 @@
 import { cn } from '@arishi/ui/lib/utils';
 import { useEffect, useState, useRef } from 'react';
-import { useNavigation } from 'react-router';
+import { Outlet, useNavigation } from 'react-router';
 import NavDock from '~/components/navdock';
 
-export type LayoutProps = {
-  children: React.ReactNode;
-};
-export function Layout({ children }: LayoutProps) {
+export default function RootLayout() {
   return (
-    <div className="flex flex-col bg-background text-foreground">
+    <div className="bg-background text-foreground">
       <GlobalLoading />
-      <main className="mx-auto min-h-screen max-w-2xl bg-background px-6 py-12 antialiased sm:py-24">{children}</main>
+      <main>
+        <Outlet />
+      </main>
       <NavDock />
     </div>
   );

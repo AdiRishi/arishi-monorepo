@@ -1,7 +1,6 @@
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from 'react-router';
 import { UnhandledError } from '~/components/page-layout/unhandled-error-page';
 import './global-styles/tailwind.css';
-import { Layout as RootLayout } from './layouts/root-layout';
 
 export const ErrorBoundary = () => {
   const error = useRouteError();
@@ -38,9 +37,5 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return (
-    <RootLayout>
-      <Outlet />
-    </RootLayout>
-  );
+  return <Outlet />;
 }
