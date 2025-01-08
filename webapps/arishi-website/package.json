@@ -17,7 +17,7 @@
     "hono": "^4.6.16",
     "isbot": "^5.1.20",
     "lucide-react": "^0.469.0",
-    "radashi": "^12.3.0",
+    "radashi": "^12.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^9.0.3",
