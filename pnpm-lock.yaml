@@ -418,8 +418,8 @@ importers:
         specifier: ^8.4.49
         version: 8.4.49
       react-router-devtools:
-        specifier: ^1.0.5
-        version: 1.0.5(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react-router@7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(vite@6.0.7(@types/node@22.10.5)(jiti@1.21.7)(yaml@2.6.1))
+        specifier: ^1.0.6
+        version: 1.1.0(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react-router@7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(vite@6.0.7(@types/node@22.10.5)(jiti@1.21.7)(yaml@2.6.1))
       rollup-plugin-visualizer:
         specifier: ^5.13.1
         version: 5.13.1(rollup@4.29.1)
@@ -4497,8 +4497,8 @@ packages:
       react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
-  react-router-devtools@1.0.5:
-    resolution: {integrity: sha512-JPY1H2oAp2QJUVpH4b97G+2xk+YldoXGwpwQf0fQrjCJs8zupfV/NXCF3hrkFZVLo1JH+WJO/iFXxfz7lJanjQ==}
+  react-router-devtools@1.1.0:
+    resolution: {integrity: sha512-/6ae1EPlxmNCZUsNBvAoXy8suGwKSvAbZeU1ryxg7PfnElepd8EIrovlYW+X+N+/kkp0vs1lL8eqbsVniVhiUA==}
     peerDependencies:
       react: '>=17'
       react-dom: '>=17'
@@ -9698,7 +9698,7 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  react-router-devtools@1.0.5(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react-router@7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(vite@6.0.7(@types/node@22.10.5)(jiti@1.21.7)(yaml@2.6.1)):
+  react-router-devtools@1.1.0(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react-router@7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(vite@6.0.7(@types/node@22.10.5)(jiti@1.21.7)(yaml@2.6.1)):
     dependencies:
       '@babel/core': 7.26.0
       '@babel/generator': 7.26.3
