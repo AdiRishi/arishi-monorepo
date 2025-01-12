@@ -68,7 +68,7 @@
     "@arishi/eslint": "workspace:*",
     "@arishi/prettier-config": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
-    "@types/react": "^19.0.4",
+    "@types/react": "^19.0.5",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
