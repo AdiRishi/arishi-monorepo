@@ -1,7 +1,7 @@
 import { Button } from '@arishi/ui/components/button';
 import { Textarea } from '@arishi/ui/components/textarea';
 import { useState } from 'react';
-import { Route } from './/+types/json-formatter';
+import { Route } from './+types/json-formatter';
 
 export const meta: Route.MetaFunction = () => {
   return [
