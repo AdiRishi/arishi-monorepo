@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "framer-motion": "^11.18.1",
-    "hono": "^4.6.16",
+    "hono": "^4.6.17",
     "isbot": "^5.1.21",
     "lucide-react": "^0.473.0",
     "radashi": "^12.3.3",
