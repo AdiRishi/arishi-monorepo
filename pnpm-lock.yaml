@@ -45,8 +45,8 @@ importers:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.12.0)
       wrangler:
-        specifier: ^3.107.0
-        version: 3.107.0(@cloudflare/workers-types@4.20250129.0)
+        specifier: ^3.107.1
+        version: 3.107.1(@cloudflare/workers-types@4.20250129.0)
 
   cf-workers/website-api:
     dependencies:
@@ -76,8 +76,8 @@ importers:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.12.0)
       wrangler:
-        specifier: ^3.107.0
-        version: 3.107.0(@cloudflare/workers-types@4.20250129.0)
+        specifier: ^3.107.1
+        version: 3.107.1(@cloudflare/workers-types@4.20250129.0)
 
   packages/eslint:
     dependencies:
@@ -401,7 +401,7 @@ importers:
         version: 4.20250129.0
       '@react-router/dev':
         specifier: ^7.1.4
-        version: 7.1.4(@react-router/serve@7.1.4(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3))(@types/node@22.12.0)(babel-plugin-macros@3.1.0)(jiti@1.21.7)(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3)(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(yaml@2.6.1))(wrangler@3.107.0(@cloudflare/workers-types@4.20250129.0))(yaml@2.6.1)
+        version: 7.1.4(@react-router/serve@7.1.4(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3))(@types/node@22.12.0)(babel-plugin-macros@3.1.0)(jiti@1.21.7)(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3)(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(yaml@2.6.1))(wrangler@3.107.1(@cloudflare/workers-types@4.20250129.0))(yaml@2.6.1)
       '@react-router/serve':
         specifier: ^7.1.4
         version: 7.1.4(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3)
@@ -439,8 +439,8 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.7.3)(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(yaml@2.6.1))
       wrangler:
-        specifier: ^3.107.0
-        version: 3.107.0(@cloudflare/workers-types@4.20250129.0)
+        specifier: ^3.107.1
+        version: 3.107.1(@cloudflare/workers-types@4.20250129.0)
 
 packages:
 
@@ -7330,7 +7330,7 @@ snapshots:
 
   '@radix-ui/rect@1.1.0': {}
 
-  '@react-router/dev@7.1.4(@react-router/serve@7.1.4(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3))(@types/node@22.12.0)(babel-plugin-macros@3.1.0)(jiti@1.21.7)(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3)(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(yaml@2.6.1))(wrangler@3.107.0(@cloudflare/workers-types@4.20250129.0))(yaml@2.6.1)':
+  '@react-router/dev@7.1.4(@react-router/serve@7.1.4(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3))(@types/node@22.12.0)(babel-plugin-macros@3.1.0)(jiti@1.21.7)(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3)(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(yaml@2.6.1))(wrangler@3.107.1(@cloudflare/workers-types@4.20250129.0))(yaml@2.6.1)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/generator': 7.26.5
@@ -7366,7 +7366,7 @@ snapshots:
     optionalDependencies:
       '@react-router/serve': 7.1.4(react-router@7.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.7.3)
       typescript: 5.7.3
-      wrangler: 3.107.0(@cloudflare/workers-types@4.20250129.0)
+      wrangler: 3.107.1(@cloudflare/workers-types@4.20250129.0)
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
