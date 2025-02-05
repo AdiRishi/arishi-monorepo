@@ -418,8 +418,8 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1
       react-router-devtools:
-        specifier: ^1.1.3
-        version: 1.1.3(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react-router@7.1.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(vite@6.0.11(@types/node@22.13.1)(jiti@1.21.7)(yaml@2.6.1))
+        specifier: ^1.1.4
+        version: 1.1.4(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react-router@7.1.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(vite@6.0.11(@types/node@22.13.1)(jiti@1.21.7)(yaml@2.6.1))
       rollup-plugin-visualizer:
         specifier: ^5.13.1
         version: 5.13.1(rollup@4.29.1)
@@ -4292,8 +4292,8 @@ packages:
       react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
-  react-router-devtools@1.1.3:
-    resolution: {integrity: sha512-ZiVY4neWHXpXAHPeiZsxv6+K2oCDKu1QumYt6zq8RlFE8FzYHNZlKclhryGPYeqos3PWJu5FWkir6iIbndhrsQ==}
+  react-router-devtools@1.1.4:
+    resolution: {integrity: sha512-BVbvFBVLbPVAfs1X9IiHtwfK5SbzmGzK8FW2GtzCUl7wy/VzRjSEURGFeAKlou4ZFw7j+wgDlG2jelD4w/S0lg==}
     peerDependencies:
       react: '>=17'
       react-dom: '>=17'
@@ -9310,7 +9310,7 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  react-router-devtools@1.1.3(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react-router@7.1.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(vite@6.0.11(@types/node@22.13.1)(jiti@1.21.7)(yaml@2.6.1)):
+  react-router-devtools@1.1.4(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react-router@7.1.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(vite@6.0.11(@types/node@22.13.1)(jiti@1.21.7)(yaml@2.6.1)):
     dependencies:
       '@babel/core': 7.26.7
       '@babel/generator': 7.26.5
