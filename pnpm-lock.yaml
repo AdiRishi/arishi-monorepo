@@ -278,8 +278,8 @@ importers:
         specifier: ^8.5.2
         version: 8.5.2(react@19.0.0)
       framer-motion:
-        specifier: ^12.2.0
-        version: 12.2.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^12.3.1
+        version: 12.3.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       input-otp:
         specifier: ^1.4.2
         version: 1.4.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -354,8 +354,8 @@ importers:
   webapps/arishi-website:
     dependencies:
       framer-motion:
-        specifier: ^12.2.0
-        version: 12.2.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^12.3.1
+        version: 12.3.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       hono:
         specifier: ^4.6.20
         version: 4.6.20
@@ -3140,8 +3140,8 @@ packages:
   fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
-  framer-motion@12.2.0:
-    resolution: {integrity: sha512-sYzL4obvn6KH/keIxcgUaXlWoOpkWejI228NMSr57hBunzvUNQD+rP/7I35CY1ciE8r9LjuItOalD+m51urBkg==}
+  framer-motion@12.3.1:
+    resolution: {integrity: sha512-Br4a2YhdeEvdzMDX8ToVO+/Jbqm2Loo/8rMjizX1nejjBvRJGMfz+NW1qBo4WCHF26uIdES5MBztUlB4pIyfqQ==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0 || ^19.0.0
@@ -8107,7 +8107,7 @@ snapshots:
 
   fraction.js@4.3.7: {}
 
-  framer-motion@12.2.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  framer-motion@12.3.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       motion-dom: 12.0.0
       motion-utils: 12.0.0
@@ -9324,7 +9324,7 @@ snapshots:
       chalk: 5.4.1
       clsx: 2.1.1
       date-fns: 4.1.0
-      framer-motion: 12.2.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      framer-motion: 12.3.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
       react-d3-tree: 3.6.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-diff-viewer-continued: 4.0.5(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
