@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "0.6.16",
-    "@cloudflare/workers-types": "^4.20250204.0",
+    "@cloudflare/workers-types": "^4.20250214.0",
     "@arishi/eslint": "workspace:*",
     "@arishi/prettier-config": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
