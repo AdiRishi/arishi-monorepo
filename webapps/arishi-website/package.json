@@ -32,7 +32,7 @@
     "@cloudflare/workers-types": "^4.20250214.0",
     "@react-router/dev": "^7.1.5",
     "@react-router/serve": "^7.1.5",
-    "@types/react": "^19.0.8",
+    "@types/react": "^19.0.9",
     "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.2",
