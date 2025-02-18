@@ -51,8 +51,8 @@ importers:
   cf-workers/website-api:
     dependencies:
       hono:
-        specifier: ^4.7.1
-        version: 4.7.1
+        specifier: ^4.7.2
+        version: 4.7.2
     devDependencies:
       '@arishi/eslint':
         specifier: workspace:*
@@ -357,8 +357,8 @@ importers:
         specifier: ^12.4.4
         version: 12.4.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       hono:
-        specifier: ^4.7.1
-        version: 4.7.1
+        specifier: ^4.7.2
+        version: 4.7.2
       isbot:
         specifier: ^5.1.22
         version: 5.1.22
@@ -3518,8 +3518,8 @@ packages:
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
-  hono@4.7.1:
-    resolution: {integrity: sha512-V3eWoPkBxoNgFCkSc5Y5rpLF6YoQQx1pkYO4qrF6YfOw8RZbujUNlJLZCxh0z9gZct70+je2Ih7Zrdpv21hP9w==}
+  hono@4.7.2:
+    resolution: {integrity: sha512-8V5XxoOF6SI12jkHkzX/6aLBMU5GEF5g387EjVSQipS0DlxWgWGSMeEayY3CRBjtTUQYwLHx9JYouWqKzy2Vng==}
     engines: {node: '>=16.9.0'}
 
   hosted-git-info@6.1.3:
@@ -8681,7 +8681,7 @@ snapshots:
     dependencies:
       react-is: 16.13.1
 
-  hono@4.7.1: {}
+  hono@4.7.2: {}
 
   hosted-git-info@6.1.3:
     dependencies:
