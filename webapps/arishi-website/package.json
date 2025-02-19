@@ -21,7 +21,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^9.0.3",
-    "react-router": "^7.1.5"
+    "react-router": "^7.2.0"
   },
   "devDependencies": {
     "@arishi/eslint": "workspace:*",
@@ -30,8 +30,8 @@
     "@arishi/ui": "workspace:*",
     "@arishi/website-api": "workspace:*",
     "@cloudflare/workers-types": "^4.20250214.0",
-    "@react-router/dev": "^7.1.5",
-    "@react-router/serve": "^7.1.5",
+    "@react-router/dev": "^7.2.0",
+    "@react-router/serve": "^7.2.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.4.20",
