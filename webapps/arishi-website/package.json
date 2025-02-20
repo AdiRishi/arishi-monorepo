@@ -20,7 +20,7 @@
     "radashi": "^12.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-markdown": "^9.0.3",
+    "react-markdown": "^9.1.0",
     "react-router": "^7.2.0"
   },
   "devDependencies": {
