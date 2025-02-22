@@ -2,6 +2,7 @@ import { PublicDataService } from '@arishi/website-api';
 import { PlatformProxy } from 'wrangler';
 
 export interface Env {
+  VALUE_FROM_CLOUDFLARE: 'Hello from Cloudflare';
   PUBLIC_DATA_SERVICE: Service<PublicDataService>;
   WEBSITE_API: Fetcher;
 }

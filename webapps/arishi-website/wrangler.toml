@@ -1,14 +1,18 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "arishi-website"
+name = "react-router-cloudflare"
 compatibility_date = "2024-12-25"
+
 workers_dev = true
-main = "./server/server.ts"
+main = "./workers/server.ts"
 
 [assets]
 directory = "./build/client"
 
 [observability]
 enabled = true
+
+[vars]
+VALUE_FROM_CLOUDFLARE = "Hello from Cloudflare"
 
 [[services]]
 binding = "PUBLIC_DATA_SERVICE"

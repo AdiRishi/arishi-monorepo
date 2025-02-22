@@ -2,7 +2,7 @@ import { HomeIcon } from 'lucide-react';
 import { Icons } from '~/components/icons';
 import { ResumeData } from './resume-type';
 
-export const DATA: ResumeData = {
+export const RESUME_DATA: ResumeData = {
   name: 'Adishwar Rishi',
   initials: 'AR',
   url: 'https://adishwar-rishi.com',
@@ -38,7 +38,7 @@ export const DATA: ResumeData = {
       },
       email: {
         name: 'Send Email',
-        url: '#',
+        url: 'mailto:adishwar.rishi@gmail.com',
         icon: Icons.email,
         navbar: true,
       },
@@ -48,7 +48,7 @@ export const DATA: ResumeData = {
     {
       company: 'Airwallex',
       href: 'https://airwallex.com',
-      badges: [],
+      badges: ['Current'],
       location: 'Sydney',
       title: 'Senior Software Engineer',
       logoUrl: 'https://public-assets.adishwar-rishi.com/images/logos/airwallex.png',

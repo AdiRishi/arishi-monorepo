@@ -1,23 +1,30 @@
+# Ignore version control directories
 **/.git
 **/.svn
 **/.hg
+
+# Node based directories
 **/node_modules
+pnpm-lock.yaml
+package-lock.json
+
+# Ignore build output directories
 **/.next
 **/.nuxt
 **/.output
 **/dist
+**/public/build
+**/.vitepress/cache
+**/.vitepress/dist
+**/build
+.react-router
+
+# Editor directories
+**/.vscode
+**/.idea
+
+# Cloudflare specific files
 **/functions/*.js
 **/functions/*.js.map
 **/functions/metafile.*.json
-.react-email
-.vscode
-.wrangler
-playwright-report
-**/coverage
-.yarn
-*.hbs
-**/public/build
-.cache
-pnpm-lock.yaml
-**/build
-.react-router
+**/.wrangler

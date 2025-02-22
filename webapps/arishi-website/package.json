@@ -1,27 +1,28 @@
 {
-  "name": "@arishi/website",
+  "name": "arishi-website",
+  "version": "1.0.0",
   "private": true,
+  "description": "",
   "sideEffects": false,
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "deploy": "wrangler deploy --minify",
+    "deploy": "wrangler deploy",
     "dev": "react-router dev",
+    "format": "prettier --write .",
     "lint": "eslint . && prettier --check .",
-    "preview": "wrangler dev",
-    "typecheck": "react-router typegen && tsc --build --noEmit",
-    "format": "prettier --write ."
+    "start": "wrangler dev",
+    "typecheck": "react-router typegen && tsc --build --noEmit"
   },
   "dependencies": {
-    "framer-motion": "^12.4.7",
-    "hono": "^4.7.2",
+    "@react-router/serve": "^7.3.0",
+    "hono": "^4.7.4",
     "isbot": "^5.1.23",
-    "lucide-react": "^0.475.0",
+    "lucide-react": "^0.479.0",
     "radashi": "^12.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-markdown": "^9.1.0",
-    "react-router": "^7.2.0"
+    "react-router": "^7.3.0"
   },
   "devDependencies": {
     "@arishi/eslint": "workspace:*",
@@ -29,21 +30,16 @@
     "@arishi/tsconfig": "workspace:*",
     "@arishi/ui": "workspace:*",
     "@arishi/website-api": "workspace:*",
-    "@cloudflare/workers-types": "^4.20250214.0",
-    "@react-router/dev": "^7.2.0",
-    "@react-router/serve": "^7.2.0",
+    "@cloudflare/workers-types": "^4.20250303.0",
+    "@react-router/dev": "^7.3.0",
+    "@tailwindcss/vite": "^4.0.12",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.5.3",
-    "react-router-devtools": "^1.1.5",
-    "rollup-plugin-visualizer": "^5.13.1",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.0.12",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.7.3",
-    "vite": "^6.1.1",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.1",
     "vite-tsconfig-paths": "^5.1.4",
-    "wrangler": "^3.109.2"
-  },
-  "packageManager": "pnpm@9.15.5"
+    "wrangler": "^3.114.0"
+  }
 }

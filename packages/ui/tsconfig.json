@@ -3,6 +3,7 @@
   "extends": "@arishi/tsconfig/react.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "types": ["vite/client"],
     "paths": {
       "@arishi/ui/*": ["./src/*"]
     }

@@ -1,7 +1,7 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "arishi-website-api"
 main = "src/index.ts"
-compatibility_date = "2024-10-02"
+compatibility_date = "2025-02-14"
 
 # This API can only be accessed via bindings
 workers_dev = false

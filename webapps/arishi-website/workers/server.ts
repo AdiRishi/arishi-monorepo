@@ -1,4 +1,6 @@
 import { createRequestHandler, type ServerBuild } from 'react-router';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore - This file is created by running npm run build
 import * as build from '../build/server';
 import { getLoadContext, Env } from './load-context';
 
