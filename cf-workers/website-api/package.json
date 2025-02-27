@@ -21,7 +21,7 @@
     "@arishi/eslint": "workspace:*",
     "@arishi/prettier-config": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
-    "@cloudflare/vitest-pool-workers": "0.7.3",
+    "@cloudflare/vitest-pool-workers": "0.7.4",
     "@cloudflare/workers-types": "^4.20250224.0",
     "typescript": "^5.7.3",
     "vitest": "2.1.9",
