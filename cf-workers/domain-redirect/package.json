@@ -21,7 +21,7 @@
     "@arishi/prettier-config": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
     "typescript": "^5.8.2",
-    "vitest": "2.1.9",
+    "vitest": "3.0.8",
     "wrangler": "^3.111.0"
   },
   "packageManager": "pnpm@9.15.6"
