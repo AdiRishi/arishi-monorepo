@@ -1,6 +1,6 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "react-router-cloudflare"
-compatibility_date = "2024-12-25"
+name = "arishi-website"
+compatibility_date = "2025-02-24"
 
 workers_dev = true
 main = "./workers/server.ts"
