@@ -13,7 +13,7 @@ import { wrapPromise } from '~/lib/ts-utils';
 import { Route } from './+types/home';
 
 export const meta: Route.MetaFunction = () => {
-  return [{ title: 'New React Router App' }, { name: 'description', content: 'Welcome to React Router!' }];
+  return [{ title: RESUME_DATA.name }, { name: 'description', content: RESUME_DATA.description }];
 };
 
 export async function loader({ context }: Route.LoaderArgs) {
