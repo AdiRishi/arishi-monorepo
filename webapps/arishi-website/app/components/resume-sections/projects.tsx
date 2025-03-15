@@ -66,8 +66,8 @@ interface ProjectCardProps {
 
 function ProjectCard({ title, description, tags, link }: ProjectCardProps) {
   return (
-    <Card className="flex h-full flex-col overflow-hidden border p-3" role="article">
-      <CardHeader>
+    <Card className="flex h-full flex-col gap-0 overflow-hidden rounded-lg border p-3 shadow-none" role="article">
+      <CardHeader className="gap-0 space-y-1.5 px-0 print:space-y-1">
         <div className="space-y-1">
           <CardTitle className="text-base">
             <ProjectLink title={title} link={link} />
@@ -77,7 +77,7 @@ function ProjectCard({ title, description, tags, link }: ProjectCardProps) {
           </CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="mt-auto flex">
+      <CardContent className="mt-auto flex px-0 text-pretty">
         <ProjectTags tags={tags} />
       </CardContent>
     </Card>
