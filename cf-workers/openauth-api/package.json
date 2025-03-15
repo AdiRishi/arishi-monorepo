@@ -1,0 +1,34 @@
+{
+  "name": "@arishi/openauth-api",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/package-export.ts"
+  },
+  "scripts": {
+    "build": "wrangler deploy --dry-run --minify --outdir dist",
+    "deploy": "wrangler deploy --minify",
+    "dev": "wrangler dev",
+    "start": "wrangler dev",
+    "lint": "eslint . && prettier --check .",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "typegen": "wrangler types"
+  },
+  "devDependencies": {
+    "@arishi/eslint": "workspace:*",
+    "@arishi/prettier-config": "workspace:*",
+    "@arishi/tsconfig": "workspace:*",
+    "@cloudflare/vitest-pool-workers": "0.8.0",
+    "@cloudflare/workers-types": "^4.20250313.0",
+    "typescript": "^5.8.2",
+    "vitest": "3.0.8",
+    "wrangler": "^4.0.0"
+  },
+  "packageManager": "pnpm@9.15.9",
+  "dependencies": {
+    "hono": "^4.7.4"
+  }
+}

@@ -51,6 +51,37 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(@cloudflare/workers-types@4.20250313.0)
 
+  cf-workers/openauth-api:
+    dependencies:
+      hono:
+        specifier: ^4.7.4
+        version: 4.7.4
+    devDependencies:
+      '@arishi/eslint':
+        specifier: workspace:*
+        version: link:../../packages/eslint
+      '@arishi/prettier-config':
+        specifier: workspace:*
+        version: link:../../packages/prettier-config
+      '@arishi/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@cloudflare/vitest-pool-workers':
+        specifier: 0.8.0
+        version: 0.8.0(@cloudflare/workers-types@4.20250313.0)(@vitest/runner@3.0.8)(@vitest/snapshot@3.0.8)(vitest@3.0.8(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2))
+      '@cloudflare/workers-types':
+        specifier: ^4.20250313.0
+        version: 4.20250313.0
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
+      vitest:
+        specifier: 3.0.8
+        version: 3.0.8(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)
+      wrangler:
+        specifier: ^4.0.0
+        version: 4.0.0(@cloudflare/workers-types@4.20250313.0)
+
   cf-workers/website-api:
     dependencies:
       hono:
