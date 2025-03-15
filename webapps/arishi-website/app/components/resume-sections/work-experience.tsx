@@ -21,7 +21,7 @@ function BadgeList({ className, badges }: BadgeListProps) {
         <li key={badge}>
           <Badge
             variant="secondary"
-            className="align-middle text-xs print:px-1 print:py-0.5 print:text-[8px] print:leading-tight"
+            className="justify-start gap-0 align-middle font-mono text-xs font-semibold text-nowrap focus:ring-2 focus:ring-offset-2 focus:outline-none print:px-1 print:py-0.5 print:text-[8px] print:leading-tight"
           >
             {badge}
           </Badge>
