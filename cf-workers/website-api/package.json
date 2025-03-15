@@ -22,12 +22,12 @@
     "@arishi/prettier-config": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
     "@cloudflare/vitest-pool-workers": "0.8.0",
-    "@cloudflare/workers-types": "^4.20250312.0",
+    "@cloudflare/workers-types": "^4.20250313.0",
     "typescript": "^5.8.2",
     "vitest": "3.0.8",
     "wrangler": "^4.0.0"
   },
-  "packageManager": "pnpm@9.15.8",
+  "packageManager": "pnpm@9.15.9",
   "dependencies": {
     "hono": "^4.7.4"
   }
