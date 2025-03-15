@@ -10,7 +10,7 @@ enabled = true
 [placement]
 mode = "smart"
 
-[[services]]
-binding = "PUBLIC_DATA_SERVICE"
-service = "arishi-website-api"
-entrypoint = "PublicDataService"
+[[kv_namespaces]]
+binding = "OPENAUTH_KV_STORAGE"
+id = "c6079dce0e51438fab5bb342d8e46acd"
+preview_id = "c6079dce0e51438fab5bb342d8e46acd"

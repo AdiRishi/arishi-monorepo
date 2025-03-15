@@ -2,6 +2,7 @@
 name = "arishi-openauth-api"
 main = "src/index.ts"
 compatibility_date = "2025-02-24"
+compatibility_flags = ["nodejs_compat"]
 
 # This API can only be accessed via bindings
 workers_dev = false
@@ -11,3 +12,8 @@ enabled = true
 
 [placement]
 mode = "smart"
+
+[[kv_namespaces]]
+binding = "OPENAUTH_KV_STORAGE"
+id = "c6079dce0e51438fab5bb342d8e46acd"
+preview_id = "c6079dce0e51438fab5bb342d8e46acd"

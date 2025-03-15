@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
-  "exports": {
-    ".": "./src/package-export.ts"
-  },
   "scripts": {
     "build": "wrangler deploy --dry-run --minify --outdir dist",
     "deploy": "wrangler deploy --minify",
@@ -29,6 +26,8 @@
   },
   "packageManager": "pnpm@9.15.9",
   "dependencies": {
-    "hono": "^4.7.4"
+    "@openauthjs/openauth": "^0.4.3",
+    "hono": "^4.7.4",
+    "valibot": "1.0.0-rc.4"
   }
 }

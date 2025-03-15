@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export type Env = {};
+export type Env = {
+  OPENAUTH_KV_STORAGE: KVNamespace;
+};
 
 export interface LocalExportedHandler<Env> {
   fetch: ExportedHandlerFetchHandler<Env>;
