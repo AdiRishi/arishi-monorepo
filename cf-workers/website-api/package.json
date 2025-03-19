@@ -27,7 +27,7 @@
     "vitest": "3.0.8",
     "wrangler": "^4.0.0"
   },
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@10.6.5",
   "dependencies": {
     "hono": "^4.7.4"
   }
