@@ -18,11 +18,11 @@
     "@arishi/eslint": "workspace:*",
     "@arishi/prettier-config": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
-    "@cloudflare/vitest-pool-workers": "0.8.4",
-    "@cloudflare/workers-types": "^4.20250321.0",
+    "@cloudflare/vitest-pool-workers": "0.8.8",
+    "@cloudflare/workers-types": "^4.20250327.0",
     "typescript": "^5.8.2",
     "vitest": "3.0.9",
-    "wrangler": "^4.4.0"
+    "wrangler": "^4.6.0"
   },
   "packageManager": "pnpm@9.15.9",
   "dependencies": {
