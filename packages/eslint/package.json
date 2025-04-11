@@ -13,22 +13,22 @@
     "lint": "prettier --check ."
   },
   "dependencies": {
-    "@eslint/compat": "^1.2.7",
+    "@eslint/compat": "^1.2.8",
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.23.0",
-    "eslint": "^9.23.0",
-    "eslint-config-prettier": "^10.1.1",
+    "@eslint/js": "^9.24.0",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-jsdoc": "^50.6.9",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-prettier": "^5.2.5",
-    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-regexp": "^2.7.0",
     "eslint-plugin-security": "^3.0.1",
-    "eslint-plugin-turbo": "^2.4.4",
+    "eslint-plugin-turbo": "^2.5.0",
     "globals": "^16.0.0",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.28.0"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.29.1"
   },
   "devDependencies": {
     "@arishi/prettier-config": "workspace:*",
@@ -38,7 +38,7 @@
     "@types/eslint-plugin-jsx-a11y": "^6.10.0",
     "@types/eslint-plugin-security": "^3.0.0",
     "@types/eslint__eslintrc": "^3.3.0",
-    "@types/node": "^22.13.14"
+    "@types/node": "^22.14.1"
   },
   "packageManager": "pnpm@9.15.9"
 }
