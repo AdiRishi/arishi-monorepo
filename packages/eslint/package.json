@@ -40,5 +40,5 @@
     "@types/eslint__eslintrc": "^3.3.0",
     "@types/node": "^22.13.14"
   },
-  "packageManager": "pnpm@9.15.9"
+  "packageManager": "pnpm@10.17.0"
 }

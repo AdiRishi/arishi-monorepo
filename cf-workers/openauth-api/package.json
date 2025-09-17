@@ -24,7 +24,7 @@
     "vitest": "3.0.9",
     "wrangler": "^4.6.0"
   },
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@10.17.0",
   "dependencies": {
     "@openauthjs/openauth": "^0.4.3",
     "hono": "^4.7.5",
