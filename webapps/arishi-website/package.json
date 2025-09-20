@@ -16,14 +16,14 @@
   },
   "dependencies": {
     "@openauthjs/openauth": "^0.4.3",
-    "@react-router/serve": "^7.4.1",
-    "hono": "^4.7.5",
-    "isbot": "^5.1.25",
-    "lucide-react": "^0.485.0",
-    "radashi": "^12.4.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router": "^7.4.1"
+    "@react-router/serve": "^7.9.1",
+    "hono": "^4.9.8",
+    "isbot": "^5.1.30",
+    "lucide-react": "^0.544.0",
+    "radashi": "^12.6.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router": "^7.9.1"
   },
   "devDependencies": {
     "@arishi/eslint": "workspace:*",
@@ -31,16 +31,16 @@
     "@arishi/tsconfig": "workspace:*",
     "@arishi/ui": "workspace:*",
     "@arishi/website-api": "workspace:*",
-    "@cloudflare/workers-types": "^4.20250327.0",
-    "@react-router/dev": "^7.4.1",
-    "@tailwindcss/vite": "^4.0.17",
-    "@types/react": "^19.0.12",
-    "@types/react-dom": "^19.0.4",
-    "tailwindcss": "^4.0.17",
+    "@cloudflare/workers-types": "^4.20250919.0",
+    "@react-router/dev": "^7.9.1",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "tailwindcss": "^4.1.13",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.8.2",
-    "vite": "^6.2.3",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.6",
     "vite-tsconfig-paths": "^5.1.4",
-    "wrangler": "^4.6.0"
+    "wrangler": "^4.38.0"
   }
 }

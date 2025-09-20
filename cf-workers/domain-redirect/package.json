@@ -15,14 +15,14 @@
     "typegen": "wrangler types"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "0.8.8",
-    "@cloudflare/workers-types": "^4.20250327.0",
+    "@cloudflare/vitest-pool-workers": "0.9.3",
+    "@cloudflare/workers-types": "^4.20250919.0",
     "@arishi/eslint": "workspace:*",
     "@arishi/prettier-config": "workspace:*",
     "@arishi/tsconfig": "workspace:*",
-    "typescript": "^5.8.2",
-    "vitest": "3.0.9",
-    "wrangler": "^4.6.0"
+    "typescript": "^5.9.2",
+    "vitest": "3.2.4",
+    "wrangler": "^4.38.0"
   },
   "packageManager": "pnpm@9.15.9"
 }
