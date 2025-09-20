@@ -6,6 +6,7 @@ import { Projects } from "@/components/cv-components/Projects";
 import { Skills } from "@/components/cv-components/Skills";
 import { Summary } from "@/components/cv-components/Summary";
 import { WorkExperience } from "@/components/cv-components/WorkExperience";
+import { HomeDock } from "@/components/home-dock";
 
 export const metadata: Metadata = {
   title: RESUME_DATA.name,
@@ -34,6 +35,7 @@ export default function Home() {
           <Projects projects={RESUME_DATA.projects} />
         </div>
       </section>
+      <HomeDock />
     </main>
   );
 }
