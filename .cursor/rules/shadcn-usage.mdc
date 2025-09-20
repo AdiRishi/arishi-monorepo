@@ -1,0 +1,18 @@
+---
+globs: src/components/ui/*.tsx
+---
+
+### shadcn/ui Usage
+
+- **Imports**: Import utilities from `@/lib/utils` and components via `@/components/ui/*` aliases set in [`components.json`](mdc:components.json).
+- **Variants**: Prefer `class-variance-authority` (`cva`) for `variant` and `size` props, as in [`button.tsx`](mdc:src/components/ui/button.tsx).
+- **Classnames**: Use `cn` from [`src/lib/utils.ts`](mdc:src/lib/utils.ts) to merge classes with `tailwind-merge`.
+- **Slotting**: For polymorphic components, use `@radix-ui/react-slot` and expose `asChild` where appropriate.
+- **Accessibility**: Keep `data-slot` attributes and preserve focus-visible styles.
+- **Dark mode**: Favor opacity/tint utilities that work in light/dark (e.g., `hover:bg-accent`).
+
+Component Guidance:
+
+- Keep exported named components (e.g., `export { Button, buttonVariants }`).
+- Avoid inline styles; rely on Tailwind tokens and theming.
+- Keep default `variant` and `size` in the `cva` config for consistency.

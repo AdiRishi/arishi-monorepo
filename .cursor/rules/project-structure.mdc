@@ -1,0 +1,22 @@
+---
+alwaysApply: true
+---
+
+### Project Structure Guide
+
+- **App Router**: This is a Next.js 14+ App Router project. The main entry for UI is `src/app`.
+  - Global styles: [`src/app/globals.css`](mdc:src/app/globals.css)
+  - Root layout: [`src/app/layout.tsx`](mdc:src/app/layout.tsx)
+  - Home page: [`src/app/page.tsx`](mdc:src/app/page.tsx)
+- **UI Components**: Shadcn/UI components live under `src/components/ui` and use aliases configured in [`components.json`](mdc:components.json) and `tsconfig.json`.
+  - Example: [`src/components/ui/button.tsx`](mdc:src/components/ui/button.tsx)
+  - Utilities: [`src/lib/utils.ts`](mdc:src/lib/utils.ts)
+- **TypeScript Config**: Paths alias `@/*` to `src/*` per [`tsconfig.json`](mdc:tsconfig.json).
+- **Next Config**: [`next.config.ts`](mdc:next.config.ts)
+- **Linting**: ESLint flat config in [`eslint.config.mjs`](mdc:eslint.config.mjs)
+
+Conventions:
+
+- Prefer absolute imports with the `@/` alias.
+- Components should be colocated under `src/components` and imported via configured aliases.
+- Use the App Router file-based routing under `src/app` for pages and layouts.

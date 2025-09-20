@@ -1,0 +1,17 @@
+---
+globs: *.tsx,*.ts
+---
+
+### Tailwind Styling Conventions
+
+- **Utility-first**: Prefer Tailwind utilities; avoid custom CSS unless necessary. Global resets in [`src/app/globals.css`](mdc:src/app/globals.css).
+- **Class merging**: Always use `cn(...classes)` from [`src/lib/utils.ts`](mdc:src/lib/utils.ts) to merge conditional classes.
+- **Design tokens**: Use semantic tokens (`bg-background`, `text-foreground`, `border`, `ring`) for theme compatibility.
+- **Spacing**: Follow existing patterns (`gap-4`, `px-4`, `h-10`). Use responsive prefixes (`sm:`, `md:`) as in [`src/app/page.tsx`](mdc:src/app/page.tsx).
+- **Dark mode**: Prefer utilities that adapt in both themes (e.g., `dark:hover:bg-...`) and neutral base color per [`components.json`](mdc:components.json).
+- **Focus states**: Preserve `focus-visible` ring and border classes for interactive elements.
+- **No arbitrary where avoidable**: Use design scale; only use arbitrary values for one-off layout needs.
+
+Performance:
+
+- Remove unused classes and components; keep class strings readable and grouped by function (layout, spacing, color, typography).

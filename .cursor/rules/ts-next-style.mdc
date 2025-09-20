@@ -1,0 +1,21 @@
+---
+globs: *.ts,*.tsx
+---
+
+### TypeScript and Next.js Conventions
+
+- **Strict TS**: `strict: true` is enabled. Avoid `any`; prefer precise types. Export function and prop types explicitly for public APIs.
+- **Module Resolution**: Use `@/*` alias for imports from `src/*`.
+- **React Server Components**: Default to server components in `src/app`. Add `"use client"` only when needed (state, effects, event handlers, refs).
+- **Fonts**: Use `next/font/*` like in [`src/app/layout.tsx`](mdc:src/app/layout.tsx). Keep font variables on `<body>`.
+- **Metadata**: Prefer `export const metadata` in page/layout files for SEO.
+- **File-based routing**: Place pages in `src/app/*/page.tsx` and layouts in `src/app/*/layout.tsx`.
+- **Images**: Use `next/image` for local assets in `public/`.
+- **No unused code**: Remove dead exports and unused imports.
+- **Error handling**: Fail fast with early returns; avoid deep nesting. Do not catch without handling.
+- **Accessibility**: Ensure interactive elements are buttons/links, with focus styles preserved.
+
+Testing/Verification:
+
+- Type-check with `tsc --noEmit` or `next build` before committing.
+- Do not auto-start dev servers; provide run instructions instead.

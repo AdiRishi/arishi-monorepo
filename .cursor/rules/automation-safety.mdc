@@ -1,0 +1,13 @@
+---
+alwaysApply: true
+---
+
+### Automation and Safety Rules
+
+- **Do not auto-start dev servers**: Never run `npm run dev`, `pnpm dev`, or equivalents automatically. Provide instructions instead.
+- **Workspace commands**: Prefer `pnpm` over `npm/yarn` when scripting. Use `--filter` for packages if workspace grows.
+- **Non-interactive**: Pass non-interactive flags to long-running or interactive commands.
+- **Read-only first**: Prefer reading files and type-checking (`tsc --noEmit`) before making edits.
+- **Lints**: Respect flat ESLint config at [`eslint.config.mjs`](mdc:eslint.config.mjs). Fix lints in edited files before finishing.
+- **Paths**: Prefer absolute imports with `@/` and do not modify alias maps without updating both `tsconfig.json` and [`components.json`](mdc:components.json).
+- **Images and assets**: Place static assets in `public/` and reference with `/asset.svg` via `next/image` where possible.
