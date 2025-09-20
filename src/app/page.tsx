@@ -8,7 +8,7 @@ import { Summary } from "@/components/cv-components/Summary";
 import { WorkExperience } from "@/components/cv-components/WorkExperience";
 
 export const metadata: Metadata = {
-  title: `${RESUME_DATA.name} - Resume`,
+  title: RESUME_DATA.name,
   description: RESUME_DATA.description,
 };
 
