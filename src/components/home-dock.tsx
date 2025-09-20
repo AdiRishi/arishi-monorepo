@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Command, Home } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Command as CommandIcon, Home } from "lucide-react";
 import { Dock, DockIcon } from "@/components/ui/dock";
 import { Separator } from "@/components/ui/separator";
 import { Icons } from "@/components/icons";
@@ -12,8 +14,38 @@ import {
 } from "@/components/ui/tooltip";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 
 export function HomeDock() {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const isK = e.key === "k" || e.key === "K";
+      if (isK && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  const pages = [
+    {
+      label: "Home Loan Expense Calculator",
+      href: "/home-loan-expense-calculator",
+    },
+  ];
+
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex items-center justify-center">
       <div className="pointer-events-auto">
@@ -27,7 +59,7 @@ export function HomeDock() {
                   prefetch={false}
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "icon" }),
-                    "size-12 rounded-full"
+                    "size-12 rounded-full",
                   )}
                 >
                   <Home className="size-5" />
@@ -50,7 +82,7 @@ export function HomeDock() {
                   prefetch={false}
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "icon" }),
-                    "size-12 rounded-full"
+                    "size-12 rounded-full",
                   )}
                 >
                   <Icons.github className="size-5" />
@@ -71,7 +103,7 @@ export function HomeDock() {
                   prefetch={false}
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "icon" }),
-                    "size-12 rounded-full"
+                    "size-12 rounded-full",
                   )}
                 >
                   <Icons.linkedin className="size-5" />
@@ -89,18 +121,40 @@ export function HomeDock() {
                 <button
                   type="button"
                   aria-label="Command"
+                  onClick={() => setOpen(true)}
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "icon" }),
-                    "size-12 rounded-full"
+                    "size-12 rounded-full",
                   )}
                 >
-                  <Command className="size-5" />
+                  <CommandIcon className="size-5" />
                 </button>
               </TooltipTrigger>
-              <TooltipContent>Command</TooltipContent>
+              <TooltipContent>Command (⌘K / Ctrl+K)</TooltipContent>
             </Tooltip>
           </DockIcon>
         </Dock>
+
+        <CommandDialog open={open} onOpenChange={setOpen}>
+          <CommandInput placeholder="Search pages..." />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup heading="Pages">
+              {pages.map((page) => (
+                <CommandItem
+                  key={page.href}
+                  value={page.label}
+                  onSelect={() => {
+                    setOpen(false);
+                    router.push(page.href);
+                  }}
+                >
+                  {page.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </CommandDialog>
       </div>
     </div>
   );
