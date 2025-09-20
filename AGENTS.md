@@ -1,5 +1,7 @@
 # Repository Guidelines
 
+See @README for project description.
+
 ## Build, Test, and Development Commands
 
 - Install deps: `pnpm install`
