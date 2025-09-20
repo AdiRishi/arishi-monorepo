@@ -44,6 +44,10 @@ export function HomeDock() {
       label: "Home Loan Expense Calculator",
       href: "/home-loan-expense-calculator",
     },
+    {
+      label: "Vastu Layout Inspector",
+      href: "/vastu-layout-inspector",
+    },
   ];
 
   return (
