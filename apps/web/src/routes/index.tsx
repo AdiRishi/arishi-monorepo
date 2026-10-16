@@ -1,11 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/")({ component: App });
+import { PaperPage } from "@/features/paper/page";
 
-export function App() {
-  return (
-    <main>
-      <h1>Adishwar Rishi</h1>
-    </main>
-  );
-}
+export const Route = createFileRoute("/")({ component: PaperPage });

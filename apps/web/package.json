@@ -24,6 +24,7 @@
     "@tanstack/react-router-ssr-query": "catalog:",
     "@tanstack/react-start": "catalog:",
     "@tanstack/router-plugin": "catalog:",
+    "@vgpu/wgsl": "catalog:",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
     "effect": "catalog:",
@@ -32,7 +33,8 @@
     "react-dom": "catalog:",
     "tailwind-merge": "catalog:",
     "tailwindcss": "catalog:",
-    "tw-animate-css": "catalog:"
+    "tw-animate-css": "catalog:",
+    "vgpu": "catalog:"
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "catalog:",
@@ -46,6 +48,7 @@
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser-playwright": "catalog:",
+    "@webgpu/types": "catalog:",
     "playwright": "catalog:",
     "shadcn": "catalog:",
     "typescript": "catalog:",
