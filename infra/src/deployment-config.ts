@@ -5,10 +5,10 @@ import * as Function from "effect/Function";
 import * as Record from "effect/Record";
 import * as Schema from "effect/Schema";
 
-/** Primary hostname plus hostnames that permanently redirect to it. */
+/** Primary hostname plus extra hostnames that serve the same site. */
 export interface WebsiteDomain {
   readonly name: string;
-  readonly redirects: readonly string[];
+  readonly aliases: readonly string[];
 }
 
 interface StagePolicy {
@@ -23,7 +23,7 @@ const stages = {
     environment: "production",
     web: {
       workersDev: true,
-      domain: { name: "adishwar-rishi.com", redirects: ["www.adishwar-rishi.com"] },
+      domain: { name: "adishwar-rishi.com", aliases: ["www.adishwar-rishi.com"] },
     },
   },
 } as const;

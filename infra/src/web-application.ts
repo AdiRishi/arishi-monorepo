@@ -16,7 +16,7 @@ export const webApplication = Effect.fn("ApplicationPlatform.WebApplication")(fu
     compatibility: workerCompatibility,
     workersDev: config.web.workersDev,
     domain: config.web.domain
-      ? { name: config.web.domain.name, redirects: [...config.web.domain.redirects] }
+      ? { name: config.web.domain.name, aliases: [...config.web.domain.aliases] }
       : null,
     observability: workerObservability,
     memo: {
