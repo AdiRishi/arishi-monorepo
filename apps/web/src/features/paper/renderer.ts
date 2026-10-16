@@ -17,8 +17,6 @@ import paperWgsl from "./paper.wgsl";
 export interface SceneState {
   /** Name box in viewport fractions, top-left origin: x0, y0, x1, y1. */
   box: readonly [number, number, number, number];
-  /** The sheet's left and right edges as viewport fractions. */
-  sheet: readonly [number, number];
   tip: readonly [number, number];
   tipOn: number;
   latinF: number;
@@ -130,7 +128,6 @@ async function createWebGpu(
       p: {
         res: [1, 1],
         tip: [0, 0],
-        sheet: [0, 1],
         box: [0, 0, 1, 1],
         latinF: 0,
         bodyF: 0,
@@ -164,7 +161,6 @@ async function createWebGpu(
           p: {
             res: [canvas.width, canvas.height],
             tip: s.tip,
-            sheet: s.sheet,
             box: s.box,
             latinF: s.latinF,
             bodyF: s.bodyF,
@@ -229,7 +225,6 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
     res: u("uRes"),
     box: u("uBox"),
     tip: u("uTip"),
-    sheet: u("uSheet"),
     latinF: u("uLatinF"),
     bodyF: u("uBodyF"),
     headF: u("uHeadF"),
@@ -296,7 +291,6 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
       gl.uniform2f(U.res, canvas.width, canvas.height);
       gl.uniform4f(U.box, s.box[0], s.box[1], s.box[2], s.box[3]);
       gl.uniform2f(U.tip, s.tip[0], s.tip[1]);
-      gl.uniform2f(U.sheet, s.sheet[0], s.sheet[1]);
       gl.uniform1f(U.latinF, s.latinF);
       gl.uniform1f(U.bodyF, s.bodyF);
       gl.uniform1f(U.headF, s.headF);

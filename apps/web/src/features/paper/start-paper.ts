@@ -25,7 +25,6 @@ function find<T extends Element>(
 export function startPaper(root: HTMLElement): () => void {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canvas = find(root, "#scene", HTMLCanvasElement);
-  const sheet = find(root, "main", HTMLElement);
   const inkbox = find(root, "#inkbox", HTMLElement);
   const nib = find(root, "#nib", SVGSVGElement);
   const toast = find(root, "#toast", HTMLElement);
@@ -166,8 +165,6 @@ export function startPaper(root: HTMLElement): () => void {
         r.right / innerWidth,
         r.bottom / innerHeight,
       ];
-      const sr = sheet.getBoundingClientRect();
-      const sheetX: [number, number] = [sr.left / innerWidth, sr.right / innerWidth];
       const [mx, my] =
         t < W.body[0]
           ? mask.latinTip(latinF)
@@ -189,7 +186,6 @@ export function startPaper(root: HTMLElement): () => void {
 
       const state: SceneState = {
         box,
-        sheet: sheetX,
         tip,
         tipOn: writing || draw.tip ? 1 : 0,
         latinF,
@@ -202,7 +198,6 @@ export function startPaper(root: HTMLElement): () => void {
         canvas.width,
         canvas.height,
         box,
-        sheetX,
         tip,
         state.tipOn,
         latinF,

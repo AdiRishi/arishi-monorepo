@@ -1,7 +1,7 @@
 #version 300 es
 precision highp float;
 out vec4 fragColor;
-uniform vec2 uRes; uniform vec4 uBox; uniform vec2 uTip; uniform vec2 uSheet;
+uniform vec2 uRes; uniform vec4 uBox; uniform vec2 uTip;
 uniform float uLatinF; uniform float uBodyF; uniform float uHeadF; uniform float uTipOn;
 uniform sampler2D uInk; uniform sampler2D uDraw; uniform sampler2D uWash;
 
@@ -12,19 +12,13 @@ float fbm(vec2 q){ float v=0.0,a=0.5; for(int i=0;i<4;i++){ v+=a*noise(q); q=q*2
 
 vec3 paper(vec2 uv, float asp){
   vec2 q=uv*vec2(asp,1.0);
-  float sx=(uv.x-uSheet.x)/(uSheet.y-uSheet.x);
   float blotch=fbm(q*5.0), fibreH=noise(q*vec2(900.0,110.0)), fibreV=noise(q*vec2(130.0,900.0)), grain=hash(uv*uRes);
   vec3 c=vec3(0.945,0.915,0.855);
   c-=vec3(0.06,0.07,0.09)*(blotch-0.5);
   c-=vec3(0.04)*(fibreH-0.5)+vec3(0.03)*(fibreV-0.5);
   c-=vec3(0.035)*(grain-0.5);
-  float vig=smoothstep(1.6,0.5,length((vec2(sx,uv.y)-0.5)*vec2(1.2,1.0)));
+  float vig=smoothstep(1.6,0.5,length((uv-0.5)*vec2(1.2,1.0)));
   return c*(0.9+0.1*vig);
-}
-vec3 desk(vec2 uv, float outside){
-  float grain=noise(uv*uRes*0.35);
-  float shade=exp(-outside*110.0)*(uv.x>uSheet.y?0.75:0.45);
-  return vec3(0.30,0.255,0.225)*(0.94+0.12*grain)*(1.0-shade);
 }
 vec4 blur5(sampler2D t, vec2 uv){
   vec2 texel=1.0/vec2(textureSize(t,0));
@@ -71,8 +65,5 @@ void main(){
   vec3 col=mix(paper(uv,asp)*tint,inkCol,ink*0.97);
   float td=length((uv-uTip)*uRes);
   col=mix(col,vec3(0.05,0.05,0.08),smoothstep(5.0,2.0,td)*uTipOn);
-  float inset=min(uv.x-uSheet.x,uSheet.y-uv.x);
-  float edge=1.0-0.22*exp(-max(inset,0.0)*uRes.x/2.0);
-  col=inset>=0.0?col*edge:desk(uv,-inset);
   fragColor=vec4(col,1.0);
 }
