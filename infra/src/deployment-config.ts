@@ -5,15 +5,27 @@ import * as Function from "effect/Function";
 import * as Record from "effect/Record";
 import * as Schema from "effect/Schema";
 
+/** Primary hostname plus hostnames that permanently redirect to it. */
+export interface WebsiteDomain {
+  readonly name: string;
+  readonly redirects: readonly string[];
+}
+
 interface StagePolicy {
   readonly environment: "local" | "staging" | "production" | "test";
-  readonly web: { readonly workersDev: boolean; readonly domain: string | null };
+  readonly web: { readonly workersDev: boolean; readonly domain: WebsiteDomain | null };
 }
 
 const stages = {
   dev: { environment: "local", web: { workersDev: true, domain: null } },
   staging: { environment: "staging", web: { workersDev: true, domain: null } },
-  prod: { environment: "production", web: { workersDev: true, domain: null } },
+  prod: {
+    environment: "production",
+    web: {
+      workersDev: true,
+      domain: { name: "adishwar-rishi.com", redirects: ["www.adishwar-rishi.com"] },
+    },
+  },
 } as const;
 
 const TestStage = Schema.TemplateLiteral([
