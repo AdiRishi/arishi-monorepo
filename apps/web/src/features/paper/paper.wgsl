@@ -3,15 +3,13 @@
 
 struct P {
   res: vec2f,
-  mouse: vec2f,
-  box: vec4f,
   tip: vec2f,
-  time: f32,
+  sheet: vec2f,
+  box: vec4f,
   latinF: f32,
   bodyF: f32,
   headF: f32,
   tipOn: f32,
-  motion: f32,
 }
 @group(0) @binding(0) var<uniform> p: P;
 @group(0) @binding(1) var inkTex: texture_2d<f32>;
@@ -39,6 +37,7 @@ fn fbm(q0: vec2f) -> f32 {
 
 fn paper(uv: vec2f, asp: f32) -> vec3f {
   let q = uv * vec2f(asp, 1.0);
+  let sx = (uv.x - p.sheet.x) / (p.sheet.y - p.sheet.x);
   let blotch = fbm(q * 5.0);
   let fibreH = noise(q * vec2f(900.0, 110.0));
   let fibreV = noise(q * vec2f(130.0, 900.0));
@@ -47,8 +46,15 @@ fn paper(uv: vec2f, asp: f32) -> vec3f {
   c -= vec3f(0.06, 0.07, 0.09) * (blotch - 0.5);
   c -= vec3f(0.04) * (fibreH - 0.5) + vec3f(0.03) * (fibreV - 0.5);
   c -= vec3f(0.035) * (grain - 0.5);
-  let vig = smoothstep(1.6, 0.5, length((uv - 0.5) * vec2f(1.2, 1.0)));
+  let vig = smoothstep(1.6, 0.5, length((vec2f(sx, uv.y) - 0.5) * vec2f(1.2, 1.0)));
   return c * (0.9 + 0.1 * vig);
+}
+
+// The desk the sheet lies on, in shadow near the sheet's cut edges.
+fn desk(uv: vec2f, outside: f32) -> vec3f {
+  let grain = noise(uv * p.res * 0.35);
+  let shade = exp(-outside * 110.0) * select(0.45, 0.75, uv.x > p.sheet.y);
+  return vec3f(0.30, 0.255, 0.225) * (0.94 + 0.12 * grain) * (1.0 - shade);
 }
 
 fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
@@ -113,6 +119,9 @@ fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
   let td = length((uv - p.tip) * p.res);
   col = mix(col, vec3f(0.05, 0.05, 0.08), smoothstep(5.0, 2.0, td) * p.tipOn);
 
-  col += (hash(uv * p.res + fract(p.time) * vec2f(13.0, 7.0)) - 0.5) * 0.03;
+  // the cut edge of the sheet, and the desk beyond it
+  let inset = min(uv.x - p.sheet.x, p.sheet.y - uv.x);
+  let edge = 1.0 - 0.22 * exp(-max(inset, 0.0) * p.res.x / 2.0);
+  col = select(desk(uv, -inset), col * edge, inset >= 0.0);
   return vec4f(col, 1.0);
 }

@@ -73,10 +73,12 @@ export function PaperPage() {
           </filter>
         </defs>
         <g filter="url(#nibShadow)">
-          <path d="M4 116 L10 100 L96 14 Q104 6 110 12 Q116 18 108 26 L22 112 Z" fill="#6b4a2e" />
-          <path d="M4 116 L10 100 L22 112 Z" fill="#2b241f" />
-          <path d="M12 100 L96 16 L104 22 L20 108 Z" fill="#8a6540" opacity=".9" />
-          <path d="M4 116 L8 104 L16 110 Z" fill="#17161c" />
+          <path d="M46.5 82.1 L38.7 74.3 L108.2 8.1 L113.8 13.9 Z" fill="#2a2320" />
+          <path d="M42.5 77 L109 11" stroke="#6a584c" strokeWidth="1.2" strokeLinecap="round" />
+          <path d="M41 88.1 L32.6 79.5 L38.4 73.9 L46.8 82.5 Z" fill="#b9b2a6" />
+          <path d="M4 116 L31 101 L40 94 L30 84 L21 91 Z" fill="#d8c38a" />
+          <path d="M4 116 L24 96.4" stroke="#6b5a2e" strokeWidth="1" strokeLinecap="round" />
+          <circle cx="25.5" cy="94.5" r="1.8" fill="#6b5a2e" />
         </g>
       </svg>
       <div className="toast" id="toast"></div>
@@ -85,15 +87,31 @@ export function PaperPage() {
         <section className="hero wrap" id="top">
           <p className="eyebrow">Senior software engineer · Airwallex · Sydney</p>
           <div id="inkbox">
-            <span className="sr">
-              Adishwar Rishi, written by hand, with the name in Devanagari beneath
-            </span>
+            <h1>Adishwar Rishi</h1>
           </div>
-          <h1 className="sr">Adishwar Rishi</h1>
-          <p className="lede">
-            I build complex systems with the <b>simplest design that fits the real requirements.</b>{" "}
-            Nine years of payments, escrow and cards, where correctness is the product.
-          </p>
+          <div className="letterhead">
+            <p className="lede">
+              I build complex systems with the{" "}
+              <b>simplest design that fits the real requirements.</b> Nine years of payments, escrow
+              and cards, where correctness is the product.
+            </p>
+            <p className="from">
+              <a href="mailto:adishwar.rishi@gmail.com">adishwar.rishi@gmail.com</a>
+              <a href="https://github.com/AdiRishi" target="_blank" rel="noopener">
+                GitHub
+              </a>
+              <a
+                href="https://www.linkedin.com/in/adishwar-rishi-8a832498"
+                target="_blank"
+                rel="noopener"
+              >
+                LinkedIn
+              </a>
+              <a href="https://x.com/AdishwarR" target="_blank" rel="noopener">
+                X
+              </a>
+            </p>
+          </div>
           <p className="cue">
             <i></i>
             <span>Keep reading. The pen keeps going.</span>
@@ -408,7 +426,13 @@ export function PaperPage() {
                 <a href="https://x.com/AdishwarR" target="_blank" rel="noopener">
                   X
                 </a>
-                <a href="#top">Back to the top ↑</a>
+              </div>
+              <div className="signoff">
+                <p>Yours,</p>
+                <div className="draw sig" data-draw="signature" aria-hidden="true"></div>
+                <p className="k">
+                  Adishwar Rishi · Sydney · <a href="#top">Back to the top ↑</a>
+                </p>
               </div>
             </div>
             <div className="draw" data-draw="envelope" aria-hidden="true"></div>
