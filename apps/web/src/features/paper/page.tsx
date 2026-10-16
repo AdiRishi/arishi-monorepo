@@ -118,15 +118,14 @@ export function PaperPage() {
                   between people who have agreed not to trust each other.
                 </p>
                 <p>
-                  Nine years of that teaches one thing. A system should be exactly as complex as
-                  the problem, and not one layer more. The elegant answer and the correct answer
-                  are usually the same answer, and when they aren&apos;t, the correct one wins.
+                  Nine years of that teaches one thing. A system should be exactly as complex as the
+                  problem, and not one layer more. The elegant answer and the correct answer are
+                  usually the same answer, and when they aren&apos;t, the correct one wins.
                 </p>
                 <p>
                   I like serverless and the edge, TypeScript that makes the wrong thing hard to
-                  type, and deleting code. Away from the desk I&apos;m on a trail, in a raid, or
-                  two episodes deep into something I promised to watch &quot;just one
-                  episode&quot; of.
+                  type, and deleting code. Away from the desk I&apos;m on a trail, in a raid, or two
+                  episodes deep into something I promised to watch &quot;just one episode&quot; of.
                 </p>
               </div>
               <dl className="ledger">
@@ -186,8 +185,8 @@ export function PaperPage() {
                     <p>
                       A year on the Cards and spend management team, then Yield.{" "}
                       <mark className="ph">
-                        One concrete thing from each team goes here once you tell me what you
-                        are proudest of.
+                        One concrete thing from each team goes here once you tell me what you are
+                        proudest of.
                       </mark>
                     </p>
                     <ul className="tags">
@@ -243,8 +242,8 @@ export function PaperPage() {
                     </h3>
                     <p>
                       Ran a team of ten across two regions. Turned the product roadmap into work the
-                      team could deliver, coached three engineers to their next level, and took first
-                      call for production incidents.
+                      team could deliver, coached three engineers to their next level, and took
+                      first call for production incidents.
                     </p>
                     <ul className="tags">
                       <li>Leadership</li>
