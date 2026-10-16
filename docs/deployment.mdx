@@ -7,7 +7,7 @@ sidebar:
 
 ## Configure credentials
 
-Alchemy prompts for Cloudflare authentication when no saved profile is available. For non-interactive deployment, provide `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` as described in `infra/.env.example`.
+Alchemy prompts for Cloudflare authentication when no saved profile is available. For non-interactive deployment, provide `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` as described in `infra/.env.example`. [Deploy from GitHub Actions](#deploy-from-github-actions) covers the token's permissions.
 
 ## Select a stage
 
@@ -41,6 +41,91 @@ pnpm --filter @repo/infra deploy:staging
 ```
 
 To add another persistent environment, extend the stage policy and configure its website domain there.
+
+## Deploy from GitHub Actions
+
+`.github/workflows/ci.yml` runs two jobs:
+
+- `verify` runs on every pull request and every push to `main`. It runs `pnpm check`, `pnpm typecheck`, `pnpm test`, and `pnpm build`.
+- `deploy` runs only on a push to `main`, after `verify` passes. It checks the Cloudflare environment variables with `alchemy provider check-env`, prints the production plan with `pnpm plan`, and then deploys with `pnpm prod`.
+
+Pull requests do not run `pnpm plan`. Alchemy keeps state in a Cloudflare Worker whose bearer token is in the account Secrets Store. To read that token, Alchemy uploads a short-lived preview Worker that binds the secret, so a plan needs Workers Scripts Write and Secrets Store Write. That is the same token a deploy uses. The plan runs on `main` immediately before the deploy, and its output is in the `deploy` job log.
+
+The `deploy` job uses the `production` GitHub environment, which scopes the Cloudflare credentials to that job. The job's concurrency group is `deploy-production`, so a second deploy waits until the first one finishes. If more pushes arrive while a deploy runs, GitHub keeps only the newest one waiting.
+
+### Secrets and variables
+
+Set both values on the `production` environment, not on the repository:
+
+| Name                    | Kind     | Value                                                                                                                                                                                          |
+| ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CLOUDFLARE_ACCOUNT_ID` | Variable | The ID of the Cloudflare account that holds the stack and its state store. Copy it from the account home page in the Cloudflare dashboard, or from the URL `dash.cloudflare.com/<account-id>`. |
+| `CLOUDFLARE_API_TOKEN`  | Secret   | An account-scoped Cloudflare API token, described below.                                                                                                                                       |
+
+These are the names in `infra/.env.example`. The workflow needs no other values. Alchemy keeps the state store's encryption key in the Cloudflare Secrets Store, so there is no state password to set. The stack declares no GitHub resources, so the job needs no GitHub token.
+
+### Create the Cloudflare API token
+
+Alchemy's [CI guide](https://alchemy.run/environments/ci) lists these account permission groups for a CI token and says to remove the ones the application does not use:
+
+- Workers Scripts Write
+- Workers KV Storage Write
+- Workers R2 Storage Write
+- D1 Write
+- Queues Write
+- Pages Write
+- Account Settings Write
+- Secrets Store Write
+- Workers Tail Read
+
+The stack declares two Workers and no storage, so leave out the KV, R2, D1, Queues, and Pages groups. Give the token these groups:
+
+- Workers Scripts Write
+- Account Settings Write
+- Secrets Store Write. The state store needs Write, because Read only lists the store.
+- Workers Tail Read, which `alchemy logs --tail` uses.
+
+Add KV, R2, D1, or Queues permissions when the stack declares those resources. Scope the token's account resource to the one account in `CLOUDFLARE_ACCOUNT_ID`.
+
+You can create the token in the Cloudflare dashboard under **My Profile > API Tokens**, or with Alchemy, which prompts for a Global API Key and the permission groups:
+
+```sh
+pnpm --filter @repo/infra exec alchemy provider cloudflare token --account-id <account-id>
+```
+
+Before you save the token in GitHub, put it in `infra/.env` with the account ID and run `pnpm plan` locally. If the plan completes, the token can reach the state store and read the account.
+
+### One-time setup in GitHub
+
+1. Open **Settings > Environments** in the repository and create an environment named `production`.
+2. Under **Deployment branches and tags**, select **Selected branches and tags** and add `main`.
+3. Add the variable `CLOUDFLARE_ACCOUNT_ID` and the secret `CLOUDFLARE_API_TOKEN` to the environment.
+4. Optional: add yourself as a required reviewer. Each deploy then waits for your approval after `verify` passes.
+
+### One-time setup in Cloudflare
+
+The plan fails in CI if the account has no Alchemy state store, because the CLI cannot prompt there. If you have not run `pnpm dev` or a deploy against this account before, create the store once from your machine:
+
+```sh
+pnpm --filter @repo/infra exec alchemy provider cloudflare bootstrap
+```
+
+## Attach the custom domain
+
+Production deploys to its `workers.dev` URL only. To serve the site at `adishwar-rishi.com`, change the `prod` line in `infra/src/deployment-config.ts`:
+
+```ts
+prod: { environment: "production", web: { workersDev: true, domain: "adishwar-rishi.com" } },
+```
+
+The next deploy from `main` attaches the hostname to the website Worker as a Workers custom domain. Check these points before you merge that change:
+
+- The `adishwar-rishi.com` zone must be in the same Cloudflare account. Alchemy looks up the zone by hostname and does not create it.
+- The custom domain sends every request for the hostname to the Worker. Whatever the hostname serves now stops getting traffic as soon as the deploy finishes.
+- Cloudflare manages the DNS record for a custom domain itself. Delete any existing DNS record for `adishwar-rishi.com` first, or the attach can fail with a conflict.
+- The permission groups above are account-level and do not cover the zone. Give the token access to the `adishwar-rishi.com` zone, then confirm with a local `pnpm plan`.
+
+Keep `workersDev: true` until the custom domain serves the site, so the `workers.dev` URL still works if you need to roll back.
 
 ## Destroy a stage
 
