@@ -1,79 +1,33 @@
-# Repository Guidelines
+# Working in this repository
 
-See @README for project description.
+Read `docs/adr/` before changing repository layout, build wiring, or test setup.
+Read `docs/testing.mdx` before writing or changing tests.
 
-## Build, Test, and Development Commands
+`docs/` is a Blume site. Run `pnpm docs:dev` to browse it locally and
+`pnpm docs:build` after changing pages or documentation configuration.
 
-- Install deps: `pnpm install`
-- Type-check: `pnpm exec tsc --noEmit`
-- Lint: `pnpm lint`
-- Format: `pnpm format`
-- Build: `pnpm build`
-- Start dev server: `pnpm dev` (agents: do not auto-start; provide instructions instead)
-- Start production server: `pnpm start`
+Infrastructure belongs in `infra/`; Worker bindings are defined once in
+`infra/src/worker-bindings.ts` and imported by each runtime.
 
-## Project Structure & Module Organization
+Workspaces export TypeScript source, so Turbo tasks depend on the `transit`
+task to hash their dependencies' source. A workspace that imports another
+workspace by relative path, as `@repo/infra` imports `workers/*`, lists those
+paths in its own `transit` inputs in `turbo.json`. Without them, a cached
+result survives a change it should not.
 
-- Next.js (App Router) with TypeScript and Tailwind.
-- Source lives in `src/`:
-  - `src/app/` — routes, layouts, pages, and `globals.css`.
-  - `src/components/ui/` — reusable UI (Shadcn-style components).
-  - `src/hooks/` — React hooks (`use-*.ts(x)`).
-  - `src/lib/` — utilities (e.g., `src/lib/utils.ts`).
-- Static assets in `public/`. Config in root (`next.config.ts`, `eslint.config.mjs`, `postcss.config.mjs`).
-- Path aliases: `@/*` → `src/*` via `tsconfig.json`; shadcn aliases set in `components.json`.
+Run `pnpm check`, `pnpm typecheck`, and `pnpm test` before committing.
 
-## Code style
+`.repos/` contains read-only source references. When writing Effect code, read
+`.repos/effect/LLMS.md` and inspect the matching version there before choosing
+an API or project idiom.
 
-- TypeScript strict mode; avoid `any`. Export public types explicitly.
-- Prefer absolute imports with `@/`.
-- React Server Components by default in `src/app`; add `"use client"` only when needed.
-- Fonts via `next/font/*` (see `src/app/layout.tsx`); apply variables on `<body>`.
-- Use `export const metadata` in page/layout files for SEO.
-- Images via `next/image`; reference assets from `public/`.
-- Early-return error handling; avoid deep nesting and unhandled catches.
-- Accessibility: proper roles/elements; preserve focus-visible styles.
-- Keep components small/reusable; avoid duplicating `ui/*` primitives.
+<!-- BEGIN:turborepo-agent-rules -->
 
-### shadcn/ui
+# This is NOT the Turborepo you know
 
-- Use `class-variance-authority` (`cva`) for `variant` and `size` props.
-- Merge classes with `cn` from `src/lib/utils.ts` (Tailwind-aware).
-- For polymorphic components expose `asChild` with `@radix-ui/react-slot`.
-- Keep named exports (e.g., `export { Button, buttonVariants }`).
+Turborepo configuration, task behavior, and CLI commands can vary between installed versions and may differ from your training data. Resolve the `turbo` package from this file's directory or relevant workspace; in monorepos, it may not be visible from the repository root. For example, run `node -p "require.resolve('turbo/package.json')"` from a workspace that depends on `turbo`.
 
-### Tailwind CSS
+Read `docs/README.md` inside that installed package first, then read the relevant pages from its `docs/` directory before changing Turborepo configuration or commands. Heed deprecation notices. These bundled docs match the installed package version and are available without network access.
 
-- Utility-first; rely on design tokens (`bg-background`, `text-foreground`, `ring`, `border`).
-- Merge conditional classes with `cn(...)` to avoid conflicts.
-- Preserve focus styles (`focus-visible:*`) on interactive elements.
-- Prefer responsive scale utilities; use arbitrary values sparingly.
-- Favor light/dark-friendly patterns (e.g., `hover:bg-accent`).
-
-## Testing instructions
-
-- No test runner is configured yet. If adding tests, prefer Vitest + Testing Library.
-- Place tests next to sources as `*.test.ts(x)` (e.g., `src/components/ui/button.test.tsx`).
-- Ensure types and lints pass before merging: `pnpm exec tsc --noEmit` and `pnpm lint`.
-
-## PR instructions
-
-- Use clear, imperative commit messages. Conventional Commits encouraged:
-  - `feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, etc. (e.g., `feat(ui): add Carousel autoplay`).
-- Include purpose + summary, linked issues, and screenshots for UI changes.
-- Ensure `pnpm lint` and `pnpm format` pass; avoid unrelated diffs.
-
-## Automation & safety
-
-- Do not auto-start dev servers; provide run instructions instead.
-- Prefer `pnpm` over npm/yarn; pass non-interactive flags for CI/automation.
-- Read-only first: inspect files and type-check (`pnpm exec tsc --noEmit`) before edits.
-- Respect ESLint flat config at `eslint.config.mjs`; fix lints in edited files.
-- Use absolute imports with `@/`; if alias maps change, update both `tsconfig.json` and `components.json`.
-- Place static assets in `public/` and use `next/image` when possible.
-
-## Security & configuration tips
-
-- Store secrets in `.env.local` (never commit). Client-exposed keys must start with `NEXT_PUBLIC_`.
-- Keep dependencies via `pnpm@10+`. Use Node 20+.
-- Avoid broad refactors in feature PRs; keep changes scoped and incremental.
+This block is written and re-added by `turbo` before repository-scoped commands when an AI agent is detected. In the Turborepo source repository, its template is defined in `crates/turborepo-cli/src/cli/agent_guidance.rs`. Removing the managed block while updates are enabled means a later qualifying invocation will add it again. Set `"agentGuidance": false` in the root `turbo.json` or `turbo.jsonc` to opt out; this does not remove an existing block. Keep the block committed with your work to avoid an uncommitted change on the next agent invocation.
+<!-- END:turborepo-agent-rules -->

@@ -1,0 +1,33 @@
+---
+title: Test at three levels
+description: Unit tests for most behaviour, E2E tests for one Worker on the Cloudflare Vitest plugin, and a few integration journeys against the local stack.
+sidebar:
+  label: Kinds of tests
+---
+
+Each kind of test checks what the cheaper kind can't, and a check goes in the cheapest kind that can make it.
+
+| Kind        | Runs                                                                           | Where                               | Command                 |
+| ----------- | ------------------------------------------------------------------------------ | ----------------------------------- | ----------------------- |
+| Unit        | In Node or Chromium, with no Cloudflare runtime                                | `tests/**/*.test.ts(x)`             | `pnpm test`             |
+| E2E         | One Worker in `workerd` on the Cloudflare Vitest plugin, its bindings emulated | `tests/e2e/*.test.ts`               | `pnpm test`             |
+| Integration | Playwright against the whole stack, which Alchemy runs locally                 | `infra/tests/integration/journeys/` | `pnpm test:integration` |
+
+**Unit tests are most tests.** They check a module through its public interface with its real in-process collaborators: contracts, CSV profiling, and components rendered in Chromium.
+
+**E2E tests run one Worker as Cloudflare would.** Miniflare emulates D1, R2, queues, and Durable Objects, so a test can exercise the Worker's routes, RPC methods, queue and cron handlers, and storage without deploying anything. The Worker's neighbours are stand-ins the tests control.
+
+**Integration journeys are few and follow people through happy paths.** Alchemy runs the whole stack locally with `Test.make({ dev: true })`, and Playwright drives it in Chromium.
+
+## Considered options
+
+E2E tests need a Worker that `workerd` can load as written, so the API and processor are plain Worker modules, like the web app. Their default export handles fetch, cron, and queue events, and named `WorkerEntrypoint` classes serve Effect RPC. The test entry re-exports the Worker beside its stand-ins, and a test calls its handlers directly.
+
+The Workers used to be Effect-native Alchemy Workers, which only Alchemy's build turns into a module. Two ways to test them were tried:
+
+- Deploying part of the stack locally for each suite. That is an integration test: tests reach the Worker from outside, wait on the local queue broker, and share state across a file.
+- Bundling the Worker with Alchemy's build and running the bundle on the Vitest plugin. Each stand-in and test entry had to repeat Alchemy's binding names and list every RPC method by hand, so the harness copied Alchemy internals that a release can change.
+
+Plain modules can't bind each other in a cycle, so the API no longer calls the processor. The web app asks the processor for progress itself.
+
+Integration journeys used to run against Cloudflare as well. They now run only locally, so no test needs credentials or creates cloud resources.

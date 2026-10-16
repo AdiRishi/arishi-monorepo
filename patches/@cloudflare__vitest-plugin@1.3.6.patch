@@ -1,0 +1,137 @@
+diff --git a/dist/pool/index.mjs b/dist/pool/index.mjs
+--- a/dist/pool/index.mjs
++++ b/dist/pool/index.mjs
+@@ -49719,11 +49719,20 @@
+ 	const ids = await mf.listDurableObjectIds(bindingName, workerName);
+ 	return Response.json(ids);
+ }
+-function handleLoopbackRequest(request$1, mf) {
+-	const url$2 = new URL(request$1.url);
+-	if (url$2.pathname === "/snapshot") return handleSnapshotRequest(request$1, url$2);
+-	if (url$2.pathname === "/durable-objects") return listDurableObjectIds(request$1, mf, url$2);
+-	return new Response(null, { status: 404 });
++async function handleCoverageRequest(request$1, coverageFilesDirectory) {
++	if (request$1.method !== "POST") return new Response(null, { status: 405 });
++	const filePath = path.join(coverageFilesDirectory, `coverage-${randomUUID()}.json`);
++	await fs$1.writeFile(filePath, new Uint8Array(await request$1.arrayBuffer()));
++	return new Response(filePath);
++}
++function createLoopbackHandler(coverageFilesDirectory) {
++	return function handleLoopbackRequest(request$1, mf) {
++		const url$2 = new URL(request$1.url);
++		if (url$2.pathname === "/snapshot") return handleSnapshotRequest(request$1, url$2);
++		if (url$2.pathname === "/coverage") return handleCoverageRequest(request$1, coverageFilesDirectory);
++		if (url$2.pathname === "/durable-objects") return listDurableObjectIds(request$1, mf, url$2);
++		return new Response(null, { status: 404 });
++	};
+ }
+ 
+ //#endregion
+@@ -50368,7 +50377,8 @@
+ async function handleModuleFallbackRequest(vite, request$1) {
+ 	const parsed = await parseModuleFallbackRequest(request$1);
+ 	if (parsed === null) return new Response("Invalid module fallback request", { status: 400 });
+-	return parsed.protocol === "v1" ? handleV1ModuleFallbackRequest(vite, request$1) : handleV2ModuleFallbackRequest(vite, parsed);
++	if (parsed.protocol !== "v2") return new Response("Invalid module fallback request", { status: 400 });
++	return handleV2ModuleFallbackRequest(vite, parsed);
+ }
+ /** Handles the legacy V1 fallback protocol. */
+ async function handleV1ModuleFallbackRequest(vite, request$1) {
+@@ -50545,6 +50555,7 @@
+ /** Handles a parsed V2 fallback request. */
+ async function handleV2ModuleFallbackRequest(vite, request$1) {
+ 	if (request$1.referrer === void 0) return new Response("Invalid module fallback request", { status: 400 });
++	if (request$1.specifier === "node:process") return new Response();
+ 	let vitestModulePaths = v2VitestModulePaths.get(vite);
+ 	if (vitestModulePaths === void 0) {
+ 		vitestModulePaths = /* @__PURE__ */ new Set();
+@@ -64943,6 +64954,9 @@
+ 	}
+ 	runnerWorker.name = getRunnerName(project);
+ 	runnerWorker.compatibilityFlags ??= [];
++	const legacyModuleRegistryFlagIndex = runnerWorker.compatibilityFlags.indexOf("legacy_module_registry");
++	if (legacyModuleRegistryFlagIndex !== -1) runnerWorker.compatibilityFlags.splice(legacyModuleRegistryFlagIndex, 1);
++	if (!runnerWorker.compatibilityFlags.includes("new_module_registry")) runnerWorker.compatibilityFlags.push("new_module_registry");
+ 	runnerWorker.compatibilityFlags.push("no_handle_cross_request_promise_resolution");
+ 	if (runnerWorker.compatibilityDate === void 0) {
+ 		runnerWorker.compatibilityDate = DEFAULT_COMPAT_DATE;
+@@ -64971,6 +64985,7 @@
+ 		if (!isNodejsCompatDefaultOn(runnerWorker.compatibilityDate)) runnerWorker.compatibilityFlags.push("nodejs_compat_v2");
+ 	}
+ 	if (!runnerWorker.compatibilityFlags.includes("unsafe_module")) runnerWorker.compatibilityFlags.push("unsafe_module");
++	ensureFeature(runnerWorker.compatibilityFlags, "weak_ref", runnerWorker.compatibilityDate >= "2025-05-05");
+ 	ensureFeature(runnerWorker.compatibilityFlags, "nodejs_tty_module");
+ 	ensureFeature(runnerWorker.compatibilityFlags, "nodejs_fs_module");
+ 	ensureFeature(runnerWorker.compatibilityFlags, "nodejs_http_modules");
+@@ -64981,7 +64996,7 @@
+ 	runnerWorker.unsafeUseModuleFallbackService = true;
+ 	runnerWorker.serviceBindings ??= {};
+ 	runnerWorker.serviceBindings[SELF_SERVICE_BINDING] = kCurrentWorker;
+-	runnerWorker.serviceBindings[LOOPBACK_SERVICE_BINDING] = handleLoopbackRequest;
++	runnerWorker.serviceBindings[LOOPBACK_SERVICE_BINDING] = createLoopbackHandler(project.serializedConfig.coverage.coverageFilesDirectory);
+ 	runnerWorker.durableObjects ??= {};
+ 	const durableObjectClassNames = getDurableObjectClasses(runnerWorker);
+ 	const workflowClassNames = getWorkflowClasses(runnerWorker, configWorkerName);
+@@ -65191,10 +65206,10 @@
+ * @param compatibilityFlags The list of current compatibility flags.
+ * @param feature The name of the feature to enable.
+ */
+-function ensureFeature(compatibilityFlags, feature) {
++function ensureFeature(compatibilityFlags, feature, enabledByDefault = false) {
+ 	const flagToEnable = `enable_${feature}`;
+ 	const flagToDisable = `disable_${feature}`;
+-	if (!compatibilityFlags.includes(flagToEnable)) {
++	if (!enabledByDefault && !compatibilityFlags.includes(flagToEnable)) {
+ 		debug("Adding `%s` compatibility flag during tests as this feature is needed to support the Vitest runner.", flagToEnable);
+ 		compatibilityFlags.push(flagToEnable);
+ 	}
+diff --git a/dist/worker/index.mjs b/dist/worker/index.mjs
+--- a/dist/worker/index.mjs
++++ b/dist/worker/index.mjs
+@@ -799,11 +799,24 @@
+ 		}
+ 	}
+ }
++async function writeCoverageFile(loopback, coverage) {
++	const response = await loopback.fetch("http://placeholder/coverage", {
++		method: "POST",
++		body: JSON.stringify(coverage)
++	});
++	if (!response.ok) throw new Error(`Failed to write coverage file: ${response.status}`);
++	return response.text();
++}
+ var __VITEST_POOL_WORKERS_RUNNER_DURABLE_OBJECT__ = class extends DurableObject {
+ 	constructor(_state, doEnv) {
+ 		super(_state, doEnv);
+ 		vm._setUnsafeEval(doEnv.__VITEST_POOL_WORKERS_UNSAFE_EVAL);
+ 		ensurePatchedFunction(doEnv.__VITEST_POOL_WORKERS_UNSAFE_EVAL);
++		globalThis.__vitest_browser_runner__ = { commands: { triggerCommand: (command, args) => {
++			assert.strictEqual(command, "__vitest_writeCoverageFile");
++			assert.strictEqual(args.length, 1);
++			return writeCoverageFile(doEnv.__VITEST_POOL_WORKERS_LOOPBACK_SERVICE, args[0]);
++		} } };
+ 		applyDefines();
+ 	}
+ 	async handleVitestRunRequest(request) {
+@@ -852,6 +865,7 @@
+ 			setup: setupEnvironment,
+ 			onModuleRunner(moduleRunner) {
+ 				const runner = moduleRunner;
++				runner.isBrowser = true;
+ 				if (runner.evaluator?.createRequire) {
+ 					const originalCreateRequire = runner.evaluator.createRequire.bind(runner.evaluator);
+ 					function createRequire(url) {
+diff --git a/package.json b/package.json
+--- a/package.json
++++ b/package.json
+@@ -75,9 +75,7 @@
+     "@cloudflare/workflows-shared": "0.15.0"
+   },
+   "peerDependencies": {
+-    "@vitest/runner": "^4.1.0",
+-    "@vitest/snapshot": "^4.1.0",
+-    "vitest": "^4.1.0"
++    "vitest": "^4.1.11 || ^5.0.0"
+   },
+   "volta": {
+     "extends": "../../package.json"

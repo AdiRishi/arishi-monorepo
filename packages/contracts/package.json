@@ -1,0 +1,37 @@
+{
+  "name": "@repo/contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./app": {
+      "types": "./src/app.ts",
+      "default": "./src/app.ts"
+    },
+    "./artifacts": {
+      "types": "./src/artifacts.ts",
+      "default": "./src/artifacts.ts"
+    },
+    "./client": {
+      "types": "./src/client.ts",
+      "default": "./src/client.ts"
+    },
+    "./server": {
+      "types": "./src/server.ts",
+      "default": "./src/server.ts"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tests"
+  },
+  "dependencies": {
+    "effect": "catalog:"
+  },
+  "devDependencies": {
+    "@effect/vitest": "catalog:",
+    "@repo/tsconfig": "workspace:*",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

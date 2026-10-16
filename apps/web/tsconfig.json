@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/tsconfig/react.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "types": ["vite/client", "@cloudflare/workers-types"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}

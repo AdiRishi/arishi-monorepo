@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "vite/client",
+      "vitest/globals",
+      "@vitest/browser-playwright",
+      "@cloudflare/workers-types",
+      "@cloudflare/vitest-plugin/types"
+    ]
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../src/routeTree.gen.ts",
+    "../src/env.d.ts",
+    "../vite.config.ts",
+    "../vitest.config.ts"
+  ],
+  "exclude": ["./e2e/worker.ts"]
+}

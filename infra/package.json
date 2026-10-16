@@ -1,0 +1,47 @@
+{
+  "name": "@repo/infra",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./cloudflare-config": {
+      "types": "./src/cloudflare-config.ts",
+      "default": "./src/cloudflare-config.ts"
+    },
+    "./deployment-config": {
+      "types": "./src/deployment-config.ts",
+      "default": "./src/deployment-config.ts"
+    },
+    "./worker-bindings": {
+      "types": "./src/worker-bindings.ts",
+      "default": "./src/worker-bindings.ts"
+    }
+  },
+  "scripts": {
+    "deploy": "alchemy deploy --stage prod --yes",
+    "dev": "alchemy dev --stage dev",
+    "dev:destroy": "alchemy destroy --stage dev",
+    "plan": "alchemy plan --stage prod",
+    "prod:destroy": "alchemy destroy --stage prod",
+    "test": "vitest run --project unit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tests",
+    "deploy:staging": "alchemy deploy --stage staging --yes",
+    "plan:staging": "alchemy plan --stage staging",
+    "test:integration": "vitest run --project integration"
+  },
+  "dependencies": {
+    "@effect/platform-node": "catalog:",
+    "@repo/contracts": "workspace:*",
+    "alchemy": "catalog:",
+    "effect": "catalog:"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "catalog:",
+    "@effect/platform-browser": "catalog:",
+    "@effect/vitest": "catalog:",
+    "@playwright/test": "catalog:",
+    "@repo/tsconfig": "workspace:*",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

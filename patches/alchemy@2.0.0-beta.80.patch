@@ -1,0 +1,179 @@
+diff --git a/lib/Cloudflare/Workers/LocalWorkerProvider.js b/lib/Cloudflare/Workers/LocalWorkerProvider.js
+index 53bd66d3..e6674dc6 100644
+--- a/lib/Cloudflare/Workers/LocalWorkerProvider.js
++++ b/lib/Cloudflare/Workers/LocalWorkerProvider.js
+@@ -16,6 +16,7 @@ import * as Result from "effect/Result";
+ import * as Scope from "effect/Scope";
+ import * as Semaphore from "effect/Semaphore";
+ import * as Stream from "effect/Stream";
++import { rmSync } from "node:fs";
+ import * as os from "node:os";
+ import { ANSI_RESET, ansiFg, colorsEnabled } from "../../Util/Terminal.js";
+ import { theme } from "../../Util/Theme.js";
+@@ -1209,7 +1210,7 @@ export const LocalWorkerProvider = () => LocalProvider.make(Worker, LOCAL_PROVID
+                 accountId,
+             };
+         }),
+-        stop: Effect.fn(function* ({ fqn }) {
++        stop: Effect.fn(function* ({ fqn, output }) {
+             // Cross-restart state: the serve/restart bookkeeping, the running
+             // workerd (which outlives instance scopes for make-before-break),
+             // and the URL proxy live outside instance scopes and are only
+@@ -1217,6 +1218,11 @@ export const LocalWorkerProvider = () => LocalProvider.make(Worker, LOCAL_PROVID
+             dropServeState(fqn);
+             yield* closeWorkerd(fqn);
+             yield* stopProxy(fqn);
++            // A Durable Object namespace's storage is keyed by the worker's name
++            // and the class, which a later deploy of the same worker reuses, so a
++            // deleted worker's objects would otherwise come back with it.
++            for (const namespace of Object.values(output?.durableObjectNamespaces ?? {}))
++                yield* Effect.sync(() => rmSync(path.join(storageDirectory, namespace), { recursive: true, force: true }));
+         }),
+     };
+ }));
+diff --git a/lib/Local/LocalProvider.js b/lib/Local/LocalProvider.js
+index e7d8bc1c..8b04df92 100644
+--- a/lib/Local/LocalProvider.js
++++ b/lib/Local/LocalProvider.js
+@@ -193,7 +193,7 @@ export const make = (cls, providersUrl, spec) => RpcProvider.effect(cls, provide
+                 return yield* startInstance(input, session, config, configHash);
+             }));
+         }),
+-        delete: Effect.fn(function* ({ id, fqn, instanceId, }) {
++        delete: Effect.fn(function* ({ id, fqn, instanceId, output, }) {
+             yield* withLock(fqn, Effect.gen(function* () {
+                 const existing = instances.get(fqn);
+                 if (existing && existing.instanceId !== instanceId) {
+@@ -210,7 +210,7 @@ export const make = (cls, providersUrl, spec) => RpcProvider.effect(cls, provide
+                 // (proxies, restart hooks) and out-of-session cleanup (e.g.
+                 // deleting a local row during a live deploy) still need it.
+                 if (stop) {
+-                    yield* stop({ id, fqn, instanceId });
++                    yield* stop({ id, fqn, instanceId, output });
+                 }
+             }));
+         }),
+diff --git a/src/Cloudflare/Workers/LocalWorkerProvider.ts b/src/Cloudflare/Workers/LocalWorkerProvider.ts
+index 109a8af6..50bedf65 100644
+--- a/src/Cloudflare/Workers/LocalWorkerProvider.ts
++++ b/src/Cloudflare/Workers/LocalWorkerProvider.ts
+@@ -29,6 +29,7 @@ import * as Scope from "effect/Scope";
+ import * as Semaphore from "effect/Semaphore";
+ import * as Stream from "effect/Stream";
+ import type * as ChildProcessSpawner from "effect/process/ChildProcessSpawner";
++import { rmSync } from "node:fs";
+ import * as os from "node:os";
+ import type * as Bundle from "../../Bundle/Bundle.ts";
+ import { ANSI_RESET, ansiFg, colorsEnabled } from "../../Util/Terminal.ts";
+@@ -1610,7 +1611,7 @@ export const LocalWorkerProvider = () =>
+           } satisfies Worker["Attributes"];
+         }),
+ 
+-        stop: Effect.fn(function* ({ fqn }) {
++        stop: Effect.fn(function* ({ fqn, output }) {
+           // Cross-restart state: the serve/restart bookkeeping, the running
+           // workerd (which outlives instance scopes for make-before-break),
+           // and the URL proxy live outside instance scopes and are only
+@@ -1618,6 +1619,13 @@ export const LocalWorkerProvider = () =>
+           dropServeState(fqn);
+           yield* closeWorkerd(fqn);
+           yield* stopProxy(fqn);
++          // A Durable Object namespace's storage is keyed by the worker's name
++          // and the class, which a later deploy of the same worker reuses, so a
++          // deleted worker's objects would otherwise come back with it.
++          for (const namespace of Object.values(output?.durableObjectNamespaces ?? {}))
++            yield* Effect.sync(() =>
++              rmSync(path.join(storageDirectory, namespace), { recursive: true, force: true }),
++            );
+         }),
+       } satisfies LocalProvider.LocalProviderSpec<
+         Worker,
+diff --git a/src/Local/LocalProvider.ts b/src/Local/LocalProvider.ts
+index 7d6c69d0..97012d1a 100644
+--- a/src/Local/LocalProvider.ts
++++ b/src/Local/LocalProvider.ts
+@@ -80,7 +80,7 @@ export interface StartContext<
+   invalidate: Effect.Effect<void>;
+ }
+ 
+-export interface StopContext {
++export interface StopContext<R extends ResourceLike = ResourceLike> {
+   id: string;
+   /**
+    * Fully-qualified name (namespace path + logical id) — the key the
+@@ -91,6 +91,11 @@ export interface StopContext {
+    */
+   fqn: string;
+   instanceId: string;
++  /**
++   * The deleted resource's attributes, when it was ever reconciled, so a
++   * provider can reclaim local state keyed by them, such as storage on disk.
++   */
++  output: R["Attributes"] | undefined;
+ }
+ 
+ export interface StablesContext<
+@@ -155,7 +160,7 @@ export interface LocalProviderSpec<
+    * shared state. Must be idempotent; also called when nothing is running
+    * (e.g. cleaning up a local row during a live deploy).
+    */
+-  stop?: (ctx: StopContext) => Effect.Effect<void, any>;
++  stop?: (ctx: StopContext<R>) => Effect.Effect<void, any>;
+   /**
+    * Attributes that remain stable across the update the generated `diff`
+    * is about to report (see `Diff.stables`). Called only when the diff is
+@@ -479,10 +484,12 @@ export const make = <
+           id,
+           fqn,
+           instanceId,
++          output,
+         }: {
+           id: string;
+           fqn: string;
+           instanceId: string;
++          output?: R["Attributes"];
+         }) {
+           yield* withLock(
+             fqn,
+@@ -502,7 +509,7 @@ export const make = <
+               // (proxies, restart hooks) and out-of-session cleanup (e.g.
+               // deleting a local row during a live deploy) still need it.
+               if (stop) {
+-                yield* stop({ id, fqn, instanceId });
++                yield* stop({ id, fqn, instanceId, output });
+               }
+             }),
+           );
+diff --git a/lib/Local/LocalProvider.d.ts b/lib/Local/LocalProvider.d.ts
+--- a/lib/Local/LocalProvider.d.ts
++++ b/lib/Local/LocalProvider.d.ts
+@@ -61,7 +61,7 @@
+      */
+     invalidate: Effect.Effect<void>;
+ }
+-export interface StopContext {
++export interface StopContext<R extends ResourceLike = ResourceLike> {
+     id: string;
+     /**
+      * Fully-qualified name (namespace path + logical id) — the key the
+@@ -72,6 +72,11 @@
+      */
+     fqn: string;
+     instanceId: string;
++    /**
++     * The deleted resource's attributes, when it was ever reconciled, so a
++     * provider can reclaim local state keyed by them, such as storage on disk.
++     */
++    output: R["Attributes"] | undefined;
+ }
+ export interface StablesContext<R extends ResourceLike, Config> extends LocalProviderInput<R> {
+     config: Config;
+@@ -122,7 +127,7 @@
+      * shared state. Must be idempotent; also called when nothing is running
+      * (e.g. cleaning up a local row during a live deploy).
+      */
+-    stop?: (ctx: StopContext) => Effect.Effect<void, any>;
++    stop?: (ctx: StopContext<R>) => Effect.Effect<void, any>;
+     /**
+      * Attributes that remain stable across the update the generated `diff`
+      * is about to report (see `Diff.stables`). Called only when the diff is

@@ -1,0 +1,13 @@
+{
+  "extends": "@repo/tsconfig/base.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "rewriteRelativeImportExtensions": true,
+    "types": ["node"]
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["tests"]
+}

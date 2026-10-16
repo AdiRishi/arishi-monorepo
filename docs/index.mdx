@@ -1,0 +1,28 @@
+---
+title: Application platform
+description: A guide to the repository, its Worker graph, and local development.
+sidebar:
+  label: Overview
+  icon: house
+---
+
+This starter connects a web application, internal Workers, and shared Cloudflare resources through one typed Alchemy program. Effect services implement the application behavior; Alchemy owns deployment, bindings, and local runtimes.
+
+The included CSV profiler exercises the complete path from browser upload to background processing and source download. Replace that example with your own application once you understand the graph.
+
+<CardGroup cols={2}>
+  <Card title="Get started" href="/getting-started" icon="terminal">
+    Create a project, run the application, and browse these docs locally.
+  </Card>
+  <Card title="Architecture" href="/architecture" icon="network">
+    Find the code that owns each resource, binding, and Worker RPC method.
+  </Card>
+  <Card title="Testing" href="/testing" icon="flask-conical">
+    Run unit, browser, and infrastructure tests.
+  </Card>
+  <Card title="Deployment" href="/deployment" icon="cloud-upload">
+    Plan, deploy, and destroy an isolated Cloudflare stage.
+  </Card>
+</CardGroup>
+
+[Architecture decisions](/adr) record the repository's layout conventions and their rationale.

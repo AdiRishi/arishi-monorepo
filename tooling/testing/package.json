@@ -1,0 +1,24 @@
+{
+  "name": "@repo/testing",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./queue": "./src/queue.ts",
+    "./worker-config": "./src/worker-config.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@cloudflare/vitest-plugin": "catalog:",
+    "@repo/infra": "workspace:*",
+    "miniflare": "catalog:"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "catalog:",
+    "@repo/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
+}

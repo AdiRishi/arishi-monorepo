@@ -1,0 +1,20 @@
+---
+title: Mirror tests in a tests/ directory beside src/
+description: Keep tests beside the production tree, with matching paths and a separate TypeScript project.
+sidebar:
+  label: Test layout
+---
+
+Each workspace keeps tests in `tests/`, mirroring the paths under `src/`:
+
+```text
+workers/processor/
+  src/artifacts/profile-csv.ts
+  tests/artifacts/profile-csv.test.ts
+```
+
+Every test file ends in `.test.ts`, or `.test.tsx` for a component rendered in Chromium. A Worker's E2E tests cover the whole Worker rather than one module, so they live together in `tests/e2e/`, named for the behaviour they cover. Integration journeys live in `infra/tests/integration/journeys/`. [Kinds of tests](/adr/three-kinds-of-tests) says what each kind covers.
+
+Shared setup, stand-ins, and fixtures live under `tests/` beside the suites that use them.
+
+Tests have their own `tests/tsconfig.json`, extending the workspace configuration. This keeps test-runner types out of production code while making each test easy to find from its source path.

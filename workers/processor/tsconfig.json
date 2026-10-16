@@ -1,0 +1,9 @@
+{
+  "extends": "@repo/tsconfig/worker.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "types": ["@cloudflare/workers-types", "node"]
+  },
+  "include": ["src"]
+}

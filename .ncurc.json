@@ -1,5 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/raineorshine/npm-check-updates/main/src/types/RunOptions.json",
   "root": true,
-  "reject": ["recharts"]
+  "packageManager": "pnpm",
+  "workspaces": true,
+  "cooldown": "1d"
 }

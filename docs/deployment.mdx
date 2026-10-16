@@ -1,0 +1,54 @@
+---
+title: Deploy the application
+description: Select a stage, review its plan, and deploy or destroy the Cloudflare resources.
+sidebar:
+  order: 4
+---
+
+## Configure credentials
+
+Alchemy prompts for Cloudflare authentication when no saved profile is available. For non-interactive deployment, provide `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` as described in `infra/.env.example`.
+
+## Select a stage
+
+`infra/src/deployment-config.ts` defines the supported stages:
+
+| Stage          | Purpose                                      |
+| -------------- | -------------------------------------------- |
+| `dev`          | Local application and emulated data services |
+| `staging`      | Persistent remote staging resources          |
+| `prod`         | Production deployment                        |
+| `test-<8 hex>` | Isolated local test resources                |
+
+Alchemy generates physical resource names from the stack, stage, and logical resource identity. Internal Workers remain private in every stage. Public website settings belong to the stage policy.
+
+## Review and deploy
+
+Review the production plan before applying it:
+
+```sh
+pnpm plan
+pnpm prod
+```
+
+The deployment applies the complete resource graph and prints the public application URL.
+
+For staging:
+
+```sh
+pnpm --filter @repo/infra plan:staging
+pnpm --filter @repo/infra deploy:staging
+```
+
+To add another persistent environment, extend the stage policy and configure its website domain there.
+
+## Destroy a stage
+
+The starter treats its example data as disposable, including in production. Destruction removes its D1 data and R2 objects.
+
+```sh
+pnpm dev:destroy
+pnpm prod:destroy
+```
+
+Both commands prompt for confirmation.
