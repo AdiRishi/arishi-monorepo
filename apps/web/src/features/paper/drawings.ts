@@ -30,53 +30,6 @@ export const INK = {
 export const BOX_W = 400,
   BOX_H = 300;
 
-function fern() {
-  const P = (t: number): [number, number] => [
-    (1 - t) ** 2 * 70 + 2 * (1 - t) * t * 110 + t * t * 335,
-    (1 - t) ** 2 * 285 + 2 * (1 - t) * t * 125 + t * t * 45,
-  ];
-  const T = (t: number): [number, number] => {
-    const x = 2 * (1 - t) * 40 + 2 * t * 225,
-      y = 2 * (1 - t) * -160 + 2 * t * -80;
-    const l = Math.hypot(x, y);
-    return [x / l, y / l];
-  };
-  const paths = ["M70 285 Q110 125 335 45"];
-  const washes: Wash[] = [];
-  let side = 1;
-  for (let t = 0.07; t < 0.93; t += 0.05) {
-    const [x, y] = P(t),
-      [tx, ty] = T(t);
-    const nx = -ty * side,
-      ny = tx * side;
-    const L = 62 * Math.pow(Math.sin(Math.PI * t), 0.8) * (1 - t * 0.25);
-    const cx = x + nx * L * 0.55 + tx * L * 0.15,
-      cy = y + ny * L * 0.55 + ty * L * 0.15;
-    const ex = x + nx * L * 0.85 + tx * L * 0.55,
-      ey = y + ny * L * 0.85 + ty * L * 0.55;
-    paths.push(
-      `M${x.toFixed(1)} ${y.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`,
-    );
-    const bx = x + nx * L * 0.3 + tx * L * 0.45,
-      by = y + ny * L * 0.3 + ty * L * 0.45;
-    washes.push({
-      d: `M${(x + 3).toFixed(1)} ${(y + 2).toFixed(1)} Q${(cx + 3).toFixed(1)} ${(cy + 2).toFixed(1)} ${(ex + 3).toFixed(1)} ${(ey + 2).toFixed(1)} Q${(bx + 3).toFixed(1)} ${(by + 2).toFixed(1)} ${(x + 3).toFixed(1)} ${(y + 2).toFixed(1)} Z`,
-      color: INK.sage,
-    });
-    for (let k = 0.3; k < 0.95; k += 0.22) {
-      const u = 1 - k;
-      const px = u * u * x + 2 * u * k * cx + k * k * ex,
-        py = u * u * y + 2 * u * k * cy + k * k * ey;
-      const s = L * 0.22 * (1 - k * 0.6);
-      paths.push(
-        `M${px.toFixed(1)} ${py.toFixed(1)} l${(nx * s * 0.7 + tx * s * 0.5).toFixed(1)} ${(ny * s * 0.7 + ty * s * 0.5).toFixed(1)}`,
-      );
-    }
-    side = -side;
-  }
-  return { paths, washes };
-}
-
 export const drawings = {
   mountains: {
     width: 3,
@@ -182,7 +135,32 @@ export const drawings = {
       { d: "M24 236 L376 236 L376 256 L24 256 Z", color: INK.warmgrey },
     ],
   },
-  fern: { width: 2.6, ...fern() },
+  beach: {
+    width: 3,
+    paths: [
+      "M10 150 L390 150",
+      "M0 214 Q120 226 220 216 Q320 206 400 218",
+      "M24 178 q18 -9 36 0 t36 0 t36 0 t36 0 t36 0 t36 0 t36 0 t36 0 t36 0",
+      "M60 196 q18 -8 36 0 t36 0 t36 0 t36 0 t36 0 t36 0",
+      "M326 84 A26 26 0 1 1 274 84 A26 26 0 1 1 326 84",
+      "M72 214 Q118 170 164 214",
+      "M96 191 L104 214 M140 191 L132 214 M118 176 L118 214",
+      "M118 214 L110 272",
+      "M60 110 q8 -8 16 0 M76 110 q8 -8 16 0",
+      "M110 92 q7 -7 14 0 M124 92 q7 -7 14 0",
+      "M230 256 l10 -6 l10 6 M258 262 l8 -5 l8 5",
+    ],
+    washes: [
+      { d: "M4 154 L396 154 L396 222 Q320 210 220 220 Q120 230 4 218 Z", color: INK.bluegrey },
+      { d: "M4 218 Q120 230 220 220 Q320 210 396 222 L396 290 L4 290 Z", color: INK.ochre },
+      { d: "M328 88 A26 26 0 1 1 276 88 A26 26 0 1 1 328 88", color: INK.ochre },
+      { d: "M76 216 Q122 174 168 216 Z", color: INK.brick },
+      {
+        d: "M100 194 L108 216 L132 216 L136 194 Q122 186 100 194 Z",
+        color: "rgba(239,230,214,.9)",
+      },
+    ],
+  },
   envelope: {
     width: 3,
     paths: [

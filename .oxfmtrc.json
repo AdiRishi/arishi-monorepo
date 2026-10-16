@@ -6,6 +6,7 @@
     "stylesheet": "./apps/web/src/global-styles/tailwind.css"
   },
   "ignorePatterns": [
+    "archive/**",
     ".agent/**",
     ".agents/**",
     ".claude/**",

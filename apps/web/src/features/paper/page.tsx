@@ -108,7 +108,7 @@ export function PaperPage() {
             </div>
             <div className="body">
               <h2 className="write">
-                Engineer by trade, <em>naturalist</em> by weekend.
+                Engineer by trade, <em>beach person</em> by weekend.
               </h2>
               <div className="prose">
                 <p>
@@ -124,8 +124,8 @@ export function PaperPage() {
                 </p>
                 <p>
                   I like serverless and the edge, TypeScript that makes the wrong thing hard to
-                  type, and deleting code. Away from the desk I&apos;m on a trail, in a raid, or two
-                  episodes deep into something I promised to watch &quot;just one episode&quot; of.
+                  type, and deleting code. Away from the desk I&apos;m at the beach, deep in a long
+                  game, or two episodes past the point where I said &quot;just one more&quot;.
                 </p>
               </div>
               <dl className="ledger">
@@ -140,16 +140,12 @@ export function PaperPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt>Now playing</dt>
-                  <dd>
-                    <mark className="ph">Hollow Knight: Silksong</mark>
-                  </dd>
+                  <dt>Working on</dt>
+                  <dd>Yield, at Airwallex</dd>
                 </div>
                 <div>
-                  <dt>Watching</dt>
-                  <dd>
-                    <mark className="ph">Frieren: Beyond Journey&apos;s End</mark>
-                  </dd>
+                  <dt>Weekends</dt>
+                  <dd>A beach, any beach</dd>
                 </div>
               </dl>
             </div>
@@ -182,19 +178,10 @@ export function PaperPage() {
                         </a>
                       </span>
                     </h3>
-                    <p>
-                      A year on the Cards and spend management team, then Yield.{" "}
-                      <mark className="ph">
-                        One concrete thing from each team goes here once you tell me what you are
-                        proudest of.
-                      </mark>
-                    </p>
+                    <p>A year on the Cards and spend management team, then Yield.</p>
                     <ul className="tags">
                       <li>Cards</li>
                       <li>Yield</li>
-                      <li>
-                        <mark className="ph">Stack to confirm</mark>
-                      </li>
                     </ul>
                   </div>
                 </li>
@@ -213,10 +200,9 @@ export function PaperPage() {
                       </span>
                     </h3>
                     <p>
-                      Owned the technical direction of Escrow.com for five years: twenty-odd Python
-                      services, their databases, a React front end and the AWS underneath, held to a
-                      99.9% uptime SLA. Set the architecture, took the risky reviews, and shipped on
-                      dates the business could plan around.
+                      Led engineering for Escrow.com for five years: the services, the databases,
+                      the front end and the AWS underneath, and the dates the business planned
+                      around.
                     </p>
                     <ul className="tags">
                       <li>Python</li>
@@ -241,9 +227,8 @@ export function PaperPage() {
                       </span>
                     </h3>
                     <p>
-                      Ran a team of ten across two regions. Turned the product roadmap into work the
-                      team could deliver, coached three engineers to their next level, and took
-                      first call for production incidents.
+                      Ran a team of ten across two regions, and took first call when production
+                      broke.
                     </p>
                     <ul className="tags">
                       <li>Leadership</li>
@@ -266,9 +251,9 @@ export function PaperPage() {
                       </span>
                     </h3>
                     <p>
-                      Rebuilt the internal escalation system end to end, SQL to screen, and cut the
-                      time it took support to close a case. Started as an intern the year before and
-                      learned the codebase, the people and the on-call rota, in that order.
+                      Rebuilt the internal escalation system end to end. Started as an intern the
+                      year before and learned the codebase, the people and the on-call rota, in that
+                      order.
                     </p>
                     <ul className="tags">
                       <li>Python</li>
@@ -332,27 +317,24 @@ export function PaperPage() {
                   <h3>
                     Gaming<span className="dv">खेल</span>
                   </h3>
-                  <p className="lead">Mostly the kind with a map you fill in slowly.</p>
+                  <p className="lead">Big worlds, long stories, no hurry.</p>
                   <ol>
                     <li>
                       <i>01</i>
                       <span>
-                        <mark className="ph">Elden Ring</mark>
-                        <small>Still the benchmark</small>
+                        The Witcher 3<small>CD Projekt Red, 2015</small>
                       </span>
                     </li>
                     <li>
                       <i>02</i>
                       <span>
-                        <mark className="ph">Outer Wilds</mark>
-                        <small>Finished once. Can&apos;t again.</small>
+                        Red Dead Redemption 2<small>Rockstar, 2018</small>
                       </span>
                     </li>
                     <li>
                       <i>03</i>
                       <span>
-                        <mark className="ph">Hades II</mark>
-                        <small>Current obsession</small>
+                        God of War<small>Santa Monica Studio, 2018</small>
                       </span>
                     </li>
                   </ol>
@@ -362,60 +344,31 @@ export function PaperPage() {
                   <h3>
                     Anime<span className="dv">कथा</span>
                   </h3>
-                  <p className="lead">Give me a good sky and a quiet episode.</p>
+                  <p className="lead">Long arcs that earn their endings.</p>
                   <ol>
                     <li>
                       <i>01</i>
                       <span>
-                        <mark className="ph">Mushishi</mark>
-                        <small>Rewatch every winter</small>
+                        Vinland Saga<small>Wit Studio and MAPPA, 2019</small>
                       </span>
                     </li>
                     <li>
                       <i>02</i>
                       <span>
-                        <mark className="ph">Your Name</mark>
-                        <small>The sky, every time</small>
-                      </span>
-                    </li>
-                    <li>
-                      <i>03</i>
-                      <span>
-                        <mark className="ph">Vinland Saga</mark>
-                        <small>Season 2 especially</small>
+                        Attack on Titan<small>Wit Studio and MAPPA, 2013</small>
                       </span>
                     </li>
                   </ol>
                 </div>
                 <div>
-                  <div className="draw sm" data-draw="fern" aria-hidden="true"></div>
+                  <div className="draw sm" data-draw="beach" aria-hidden="true"></div>
                   <h3>
-                    Nature<span className="dv">वन</span>
+                    The beach<span className="dv">तट</span>
                   </h3>
-                  <p className="lead">Long walks, early starts, no signal.</p>
-                  <ol>
-                    <li>
-                      <i>01</i>
-                      <span>
-                        <mark className="ph">Overland Track</mark>
-                        <small>6 days, Tasmania</small>
-                      </span>
-                    </li>
-                    <li>
-                      <i>02</i>
-                      <span>
-                        <mark className="ph">Blue Mountains</mark>
-                        <small>The regular</small>
-                      </span>
-                    </li>
-                    <li>
-                      <i>03</i>
-                      <span>
-                        <mark className="ph">Next: Milford Track</mark>
-                        <small>Booked</small>
-                      </span>
-                    </li>
-                  </ol>
+                  <p className="lead">Salt water, sand, nowhere to be.</p>
+                  <p className="lead">
+                    Sydney&apos;s one unfair advantage. Any beach, any season, and the week resets.
+                  </p>
                 </div>
               </div>
             </div>
