@@ -22,6 +22,8 @@ export interface SceneState {
   box: readonly [number, number, number, number];
   tip: readonly [number, number];
   tipOn: number;
+  /** 1 while the pen is writing in red. */
+  tipRed: number;
   latinF: number;
   bodyF: number;
   headF: number;
@@ -138,6 +140,7 @@ async function createWebGpu(
         bodyF: 0,
         headF: 0,
         tipOn: 0,
+        tipRed: 0,
         motion: 1,
       },
       inkTex,
@@ -174,6 +177,7 @@ async function createWebGpu(
             bodyF: s.bodyF,
             headF: s.headF,
             tipOn: s.tipOn,
+            tipRed: s.tipRed,
             motion: s.motion,
           },
         });
@@ -240,6 +244,7 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
     bodyF: u("uBodyF"),
     headF: u("uHeadF"),
     tipOn: u("uTipOn"),
+    tipRed: u("uTipRed"),
     motion: u("uMotion"),
     ink: u("uInk"),
     draw: u("uDraw"),
@@ -309,6 +314,7 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
       gl.uniform1f(U.bodyF, s.bodyF);
       gl.uniform1f(U.headF, s.headF);
       gl.uniform1f(U.tipOn, s.tipOn);
+      gl.uniform1f(U.tipRed, s.tipRed);
       gl.uniform1f(U.motion, s.motion);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     },

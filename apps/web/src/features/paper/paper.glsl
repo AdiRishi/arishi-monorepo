@@ -3,7 +3,7 @@ precision highp float;
 out vec4 fragColor;
 uniform vec2 uRes; uniform vec2 uMouse; uniform vec4 uBox; uniform vec2 uTip;
 uniform float uTime; uniform float uLatinF; uniform float uBodyF; uniform float uHeadF;
-uniform float uTipOn; uniform float uMotion;
+uniform float uTipOn; uniform float uTipRed; uniform float uMotion;
 uniform sampler2D uInk; uniform sampler2D uDraw; uniform sampler2D uWash;
 
 float hash(vec2 q){ vec3 p3=fract(vec3(q.xyx)*0.1031); p3+=dot(p3,p3.yzx+33.33); return fract((p3.x+p3.y)*p3.z); }
@@ -46,7 +46,8 @@ void main(){
   float wetName=exp(-max(front-order,0.0)*7.0)*step(0.02,aName);
 
   vec4 d0=texture(uDraw,uv); vec4 db=blur5(uDraw,uv);
-  float a=max(aName,d0.r), ab=max(abName,db.r), wet=max(wetName,d0.g);
+  float a=max(aName,max(d0.r,d0.b)), ab=max(abName,max(db.r,db.b)), wet=max(wetName,d0.g);
+  float red=db.b/max(db.r+db.b,0.001);
 
   float fibre=fbm(uv*vec2(asp,1.0)*240.0);
   float cov=ab*0.65+a*0.35;
@@ -55,7 +56,10 @@ void main(){
   float gran=noise(uv*uRes*0.45);
   vec3 inkCol=vec3(0.075,0.075,0.105)+vec3(0.11)*gran;
   inkCol=mix(inkCol,vec3(0.03,0.03,0.05),pool*0.85);
-  inkCol+=vec3(0.22,0.28,0.42)*wet*pool;
+  vec3 redCol=vec3(0.60,0.15,0.11)+vec3(0.12,0.04,0.03)*gran;
+  redCol=mix(redCol,vec3(0.40,0.07,0.05),pool*0.85);
+  inkCol=mix(inkCol,redCol,red);
+  inkCol+=mix(vec3(0.22,0.28,0.42),vec3(0.38,0.16,0.12),red)*wet*pool;
 
   vec4 w0=texture(uWash,uv); vec4 wb=blur5(uWash,uv);
   float wcov=wb.a*0.7+w0.a*0.3;
@@ -65,7 +69,8 @@ void main(){
   vec3 tint=mix(vec3(1.0),w0.rgb*1.12,wstr);
   vec3 col=mix(paper(uv,asp)*tint,inkCol,ink*0.97);
   float td=length((uv-uTip)*uRes);
-  col=mix(col,vec3(0.05,0.05,0.08),smoothstep(5.0,2.0,td)*uTipOn);
+  vec3 tipCol=mix(vec3(0.05,0.05,0.08),vec3(0.45,0.08,0.06),uTipRed);
+  col=mix(col,tipCol,smoothstep(5.0,2.0,td)*uTipOn);
   col+=(hash(uv*uRes+fract(uTime)*vec2(13.0,7.0))-0.5)*0.03;
   fragColor=vec4(col,1.0);
 }

@@ -160,6 +160,18 @@ nav.top a:hover::after {
 #nib.on {
   opacity: 1;
 }
+#nib path {
+  transition: fill 0.4s;
+}
+#nib.red path:nth-of-type(1) {
+  fill: #8e2f22;
+}
+#nib.red path:nth-of-type(2) {
+  fill: #3a1511;
+}
+#nib.red path:nth-of-type(3) {
+  fill: #b04a3a;
+}
 
 main {
   position: relative;

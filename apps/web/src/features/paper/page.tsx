@@ -91,8 +91,9 @@ export function PaperPage() {
           </div>
           <h1 className="sr">Adishwar Rishi</h1>
           <p className="lede">
-            I build complex systems with the <b>simplest design that fits the real requirements.</b>{" "}
-            Nine years of payments, escrow and cards, where correctness is the product.
+            I build complex systems with the{" "}
+            <b data-mark="underline">simplest design that fits the real requirements.</b> Nine years
+            of payments, escrow and cards, where correctness is the product.
           </p>
           <p className="cue">
             <i></i>
@@ -107,8 +108,8 @@ export function PaperPage() {
               <p className="k">About</p>
             </div>
             <div className="body">
-              <h2 className="write">
-                Engineer by trade, <em>beach person</em> by weekend.
+              <h2 className="write" data-mark="tick">
+                Engineer by trade, <em data-mark="underline">beach person</em> by weekend.
               </h2>
               <div className="prose">
                 <p>
@@ -161,7 +162,7 @@ export function PaperPage() {
             </div>
             <div className="body">
               <h2 className="write">
-                Work, in <em>order of appearance.</em>
+                Work, in <em data-mark="underline">order of appearance.</em>
               </h2>
               <ul className="roles">
                 <li className="role">
@@ -185,7 +186,7 @@ export function PaperPage() {
                     </ul>
                   </div>
                 </li>
-                <li className="role">
+                <li className="role" data-mark="bracket">
                   <div className="when">
                     <b>2019 — 2024</b>Sydney
                   </div>
@@ -276,12 +277,14 @@ export function PaperPage() {
             </div>
             <div className="body">
               <h2 className="write">
-                Things I built because <em>I wanted them to exist.</em>
+                Things I built because <em data-mark="underline">I wanted them to exist.</em>
               </h2>
               <ul className="projects">
                 {projects.map((project) => (
                   <li className="proj" key={project.name}>
-                    <span className="k">{project.number}</span>
+                    <span className="k" data-mark={project.number === "01" ? "circle" : undefined}>
+                      {project.number}
+                    </span>
                     <div>
                       <h3>
                         <a href={project.href} target="_blank" rel="noopener">
@@ -309,7 +312,8 @@ export function PaperPage() {
             </div>
             <div className="body wide">
               <h2 className="write">
-                Three things I&apos;d talk about <em>for longer than you&apos;d like.</em>
+                Three things I&apos;d talk about{" "}
+                <em data-mark="underline">for longer than you&apos;d like.</em>
               </h2>
               <div className="three">
                 <div>
@@ -362,7 +366,7 @@ export function PaperPage() {
                 </div>
                 <div>
                   <div className="draw sm" data-draw="beach" aria-hidden="true"></div>
-                  <h3>
+                  <h3 data-mark="circle">
                     The beach<span className="dv">तट</span>
                   </h3>
                   <p className="lead">Salt water, sand, nowhere to be.</p>
@@ -383,12 +387,12 @@ export function PaperPage() {
             </div>
             <div className="body">
               <h2 className="write">
-                Write <em>back.</em>
+                Write <em data-mark="underline">back.</em>
               </h2>
               <p className="prose" style={{ margin: "0 0 28px" }}>
                 I read everything. Interesting problems get a fast reply.
               </p>
-              <div className="mail">
+              <div className="mail" data-mark="circle">
                 <span id="mail">adishwar.rishi@gmail.com</span>
                 <button id="copy" type="button">
                   Copy
