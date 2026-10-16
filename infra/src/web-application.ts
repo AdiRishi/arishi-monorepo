@@ -26,7 +26,7 @@ export const webApplication = Effect.fn("ApplicationPlatform.WebApplication")(fu
       ],
       lockfile: true,
     },
-    env: websiteBindings(config.environment, workers.api, workers.processor),
+    env: websiteBindings(config.environment, workers.api),
   });
 
   return web;

@@ -1,28 +1,20 @@
 # Arishi Monorepo
 
-A TypeScript monorepo for Cloudflare applications with multiple web apps, Workers, and shared resources. Alchemy owns the infrastructure graph and bindings; Effect services implement application behavior.
+Adishwar Rishi's personal website and the Cloudflare platform it runs on. The repository started from [application-platform-starter](https://github.com/AdiRishi/application-platform-starter): a TypeScript monorepo where Alchemy owns the infrastructure graph and bindings, and Effect services implement application behavior.
 
-The included CSV profiler connects a TanStack Start web app, an API Worker, and a background processor through D1, R2, Queues, and a Durable Object.
+The platform hosts one TanStack Start web app, `apps/web`, and an internal API Worker, `workers/api`.
 
-## Start a project
+## Run it locally
 
 Use Node.js 24 and Corepack:
 
 ```sh
-npx degit AdiRishi/application-platform-starter acme-platform
-cd acme-platform
 corepack enable
-pnpm install
-pnpm rename acme-platform
 pnpm install
 pnpm dev
 ```
 
-Run `rename` once on a fresh copy. Open the URL printed by Alchemy and upload `fixtures/transactions.csv` to exercise the platform.
-
-When you start your own application, follow [Remove the sample application](docs/getting-started.mdx#remove-the-sample-application).
-
-The sample is anonymous and shared: every visitor can list and download uploaded files. Replace it before handling private data.
+Open the URL printed by Alchemy.
 
 ## Read the docs
 

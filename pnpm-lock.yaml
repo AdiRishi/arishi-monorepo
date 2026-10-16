@@ -242,9 +242,6 @@ catalogs:
     clsx:
       specifier: 2.1.1
       version: 2.1.1
-    csv-parse:
-      specifier: 7.0.3
-      version: 7.0.3
     lucide-react:
       specifier: 1.51.0
       version: 1.51.0
@@ -578,19 +575,6 @@ importers:
   tooling/tsconfig: {}
 
   workers/api:
-    dependencies:
-      '@effect/platform-browser':
-        specifier: 4.0.0
-        version: 4.0.0(effect@4.0.0)
-      '@effect/sql-d1':
-        specifier: 4.0.0
-        version: 4.0.0(effect@4.0.0)
-      '@repo/contracts':
-        specifier: workspace:*
-        version: link:../../packages/contracts
-      effect:
-        specifier: 4.0.0
-        version: 4.0.0
     devDependencies:
       '@cloudflare/vitest-plugin':
         specifier: 'catalog:'
@@ -598,52 +582,6 @@ importers:
       '@cloudflare/workers-types':
         specifier: 'catalog:'
         version: 5.20261004.1
-      '@effect/vitest':
-        specifier: 4.0.0
-        version: 4.0.0(effect@4.0.0)(vitest@5.0.3)
-      '@repo/infra':
-        specifier: workspace:*
-        version: link:../../infra
-      '@repo/testing':
-        specifier: workspace:*
-        version: link:../../tooling/testing
-      '@repo/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/tsconfig
-      '@types/node':
-        specifier: 'catalog:'
-        version: 26.6.4
-      typescript:
-        specifier: 'catalog:'
-        version: 7.0.2
-      vitest:
-        specifier: 'catalog:'
-        version: 5.0.3(@types/node@26.6.4)(@vitest/browser-playwright@5.0.3)(@vitest/ui@5.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
-
-  workers/processor:
-    dependencies:
-      '@effect/platform-browser':
-        specifier: 4.0.0
-        version: 4.0.0(effect@4.0.0)
-      '@repo/contracts':
-        specifier: workspace:*
-        version: link:../../packages/contracts
-      csv-parse:
-        specifier: 'catalog:'
-        version: 7.0.3
-      effect:
-        specifier: 4.0.0
-        version: 4.0.0
-    devDependencies:
-      '@cloudflare/vitest-plugin':
-        specifier: 'catalog:'
-        version: 1.3.6(patch_hash=c1923d4ee1996c9f5ae69f2a89f5bb1ef1ad2723b90f6982a2a28cea23f9422e)(@cloudflare/workers-types@5.20261004.1)(@types/node@26.6.4)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@5.0.3)
-      '@cloudflare/workers-types':
-        specifier: 'catalog:'
-        version: 5.20261004.1
-      '@effect/vitest':
-        specifier: 4.0.0
-        version: 4.0.0(effect@4.0.0)(vitest@5.0.3)
       '@repo/infra':
         specifier: workspace:*
         version: link:../../infra
@@ -4829,9 +4767,6 @@ packages:
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
-
-  csv-parse@7.0.3:
-    resolution: {integrity: sha512-YFd3QM/yo17vH91L1IOZuvl09zM0zEEtdfTcOCKWcMdM++MNaQSyp09slXyFCLaPXvHstQFx/xC8myiFHSMUvw==}
 
   cytoscape-cose-bilkent@4.1.0:
     resolution: {integrity: sha512-wgQlVIUJF13Quxiv5e1gstZ08rnZj2XaLHGoFMYXz7SkNfCDOOteKBE6SYRfA9WxxI/iBc3ajfDoc6hb/MRAHQ==}
@@ -11960,8 +11895,6 @@ snapshots:
       css-tree: 2.2.1
 
   csstype@3.2.3: {}
-
-  csv-parse@7.0.3: {}
 
   cytoscape-cose-bilkent@4.1.0(cytoscape@3.34.3):
     dependencies:

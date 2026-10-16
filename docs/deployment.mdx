@@ -44,7 +44,7 @@ To add another persistent environment, extend the stage policy and configure its
 
 ## Destroy a stage
 
-The starter treats its example data as disposable, including in production. Destruction removes its D1 data and R2 objects.
+Destruction removes every resource in the stage. The stack declares no databases or buckets yet; give any you add a retention policy before they hold data you need to keep.
 
 ```sh
 pnpm dev:destroy

@@ -10,11 +10,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "CSV Profile" },
-      {
-        name: "description",
-        content: "Upload a CSV to inspect its shape, quality, and inferred column types.",
-      },
+      { title: "Adishwar Rishi" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),

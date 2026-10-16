@@ -44,7 +44,6 @@ catalog:
   blume: 2.1.1
   class-variance-authority: 0.7.1
   clsx: 2.1.1
-  csv-parse: 7.0.3
   effect: 4.0.0
   lucide-react: 1.51.0
   miniflare: 5.20261001.0-alpha

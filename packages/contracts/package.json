@@ -8,10 +8,6 @@
       "types": "./src/app.ts",
       "default": "./src/app.ts"
     },
-    "./artifacts": {
-      "types": "./src/artifacts.ts",
-      "default": "./src/artifacts.ts"
-    },
     "./client": {
       "types": "./src/client.ts",
       "default": "./src/client.ts"

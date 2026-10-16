@@ -1,5 +1,5 @@
 import type { WebsiteEnv } from "@repo/infra/worker-bindings";
-import { entrypoint, text, workerTest } from "@repo/testing/worker-config";
+import { text, unreachable, workerTest } from "@repo/testing/worker-config";
 import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
@@ -38,17 +38,14 @@ export default defineConfig({
           workerTest<WebsiteEnv>({
             main: "./tests/e2e/worker.ts",
             bindings: {
-              API: entrypoint("ApiStandIn"),
-              ARTIFACTS: entrypoint("ArtifactsStandIn"),
+              API: unreachable,
               ENVIRONMENT: text("test"),
-              PROCESSING: entrypoint("ProcessingStandIn"),
             },
           }),
         ],
         test: {
           name: "e2e",
           include: ["tests/e2e/**/*.test.ts"],
-          setupFiles: ["./tests/e2e/setup.ts"],
           // A file's first request loads the built Worker, which takes several
           // seconds while other suites run beside it.
           testTimeout: 60_000,

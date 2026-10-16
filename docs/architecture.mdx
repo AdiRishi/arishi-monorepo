@@ -12,51 +12,30 @@ sidebar:
 ```mermaid
 flowchart TD
   Browser --> Web[Web Worker]
-  Web -->|uploads, downloads, and reads| API[API Worker]
-  Web -->|progress RPC| Processor[Processor Worker]
-  API --> D1[(D1)]
-  API --> R2[(R2)]
-  API --> Queue[Profile jobs]
-  Queue --> Processor
-  Processor -->|source and result RPC| API
-  Processor --> Session[Profile session Durable Object]
+  Web -->|service binding| API[API Worker]
 ```
 
-The API and processor have no public `workers.dev` URLs. The web Worker reaches both through service bindings. Alchemy supplies local implementations of the same graph during development and integration tests.
+The platform currently hosts one web app: Adishwar Rishi's personal website in `apps/web`, a TanStack Start app that Alchemy deploys as a Cloudflare Website. The web Worker has a service binding to the API Worker, which has no public `workers.dev` URL and serves no routes yet. The stack declares no databases, buckets, or queues. Alchemy supplies local implementations of the same graph during development and integration tests.
 
-| Path                                | Owns                                                 |
-| ----------------------------------- | ---------------------------------------------------- |
-| `infra/src/data-plane.ts`           | API-owned D1 and R2, plus Queue resources            |
-| `infra/src/worker-bindings.ts`      | Runtime bindings and derived environment types       |
-| `infra/src/workers.ts`              | Workers, their crons, and their queue consumers      |
-| `infra/src/web-application.ts`      | TanStack Start's Alchemy Website resource            |
-| `packages/contracts/src/transport/` | Effect RPC over a service binding                    |
-| `workers/*/src/artifacts/`          | Services, repositories, and handlers for the example |
-| `workers/*/src/platform/`           | Adapters for calls to other runtimes                 |
-| `apps/web/src/features/artifacts/`  | UI, query options, and server functions              |
-| `apps/web/src/routes/`              | URLs, route loaders, and HTTP handlers               |
-| `packages/contracts/`               | Shared schemas and tagged failures                   |
-| `workers/api/migrations/`           | D1 schema migrations                                 |
+| Path                                | Owns                                             |
+| ----------------------------------- | ------------------------------------------------ |
+| `infra/src/worker-bindings.ts`      | Runtime bindings and derived environment types   |
+| `infra/src/workers.ts`              | Workers, their crons, and their queue consumers  |
+| `infra/src/web-application.ts`      | TanStack Start's Alchemy Website resource        |
+| `packages/contracts/src/transport/` | Effect RPC over a service binding                |
+| `apps/web/src/routes/`              | URLs, route loaders, and HTTP handlers           |
+| `apps/web/src/server/`              | Server-side calls from the web app to the API    |
+| `packages/contracts/`               | Shared schemas, tagged failures, and RPC helpers |
 
 ## Worker-to-Worker RPC
 
-Each Worker is a plain module. Its default export handles HTTP, cron, and queue events, and each caller gets its own `WorkerEntrypoint` serving one RPC group from `@repo/contracts`. The API serves `ArtifactsRpcs` to the web app through `ArtifactsApi` and `ProfilingRpcs` to the processor through `ProfilingApi`. The processor serves `ProcessingRpcs` through `ProcessingApi`.
+Each Worker is a plain module. Its default export handles HTTP, cron, and queue events, and each caller gets its own `WorkerEntrypoint` serving one RPC group from `@repo/contracts`.
 
 `worker-bindings.ts` binds an entrypoint with `Cloudflare.WorkerEntrypoint(worker, "Name")`. The caller builds a client with `clientOverBinding(group, { binding, service, timeout })`, and the entrypoint answers with `rpcWebHandler(group, handlers)`. Arguments, results, and tagged failures pass through the group's schemas, so a remote failure keeps its tag. A transport failure or missed deadline arrives as `RpcClientError`. Cancellation interrupts the caller's local Effect but does not stop work already executing in the receiving Worker.
 
 To add a method, add it to the caller's group and handle it in the entrypoint's handler layer.
 
-Bindings between plain modules can't form a cycle. The processor calls the API, so the API never calls the processor. The web app composes an artifact's detail from the API's record and the processor's progress.
-
-## The reference application's data flow
-
-An upload writes its source to R2 and creates a queued D1 record. A record without a dispatch timestamp is durable pending work. The API attempts delivery after responding, and a scheduled dispatcher retries pending deliveries every minute.
-
-The API exclusively owns the artifact database and source bucket. The processor consumes queue messages and calls the API to start a profile, fetch source bytes, and report completion or failure. It has no D1 or R2 binding. Sources are capped at 256 KB and travel base64-encoded through RPC.
-
-The API applies every durable status transition. Duplicate delivery is safe; completed results survive late dead letters and lost RPC responses. A failed API call leaves the queue message available for retry. The processor owns the Durable Object that stores advisory progress.
-
-The example is anonymous and shared. Every visitor can list and download files, uploads are limited to 256 KB, and artifacts have no ownership or cleanup policy. Replace it before handling private data.
+Bindings between plain modules can't form a cycle. If one Worker calls another, the callee never calls back.
 
 ## Add a runtime
 

@@ -28,7 +28,7 @@ The tests reach a Worker only as Cloudflare and its neighbours do: `exports.defa
 
 - The test entry and the tests run in one isolate, so a stand-in keeps its state in module variables and tests import its helpers directly. Reset that state in the setup file.
 - A stand-in for an RPC neighbour serves the contract's group with `rpcWebHandler`, so it can't drift from what the real Worker accepts.
-- Work a handler starts with `waitUntil` can outlive its test. Wait for it to settle before the test ends, as the API's `upload` helper waits for its profile job.
+- Work a handler starts with `waitUntil` can outlive its test. Wait for it to settle before the test ends.
 - The web app's E2E project runs the build in `apps/web/dist/`. `pnpm test` builds it first; run `pnpm build` in `apps/web` before running that project on its own.
 
 ## Integration journeys
