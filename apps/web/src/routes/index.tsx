@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/")({
-  component: Home,
-});
+export const Route = createFileRoute("/")({ component: App });
 
-function Home() {
-  return <h1>Adishwar Rishi</h1>;
+export function App() {
+  return (
+    <main>
+      <h1>Adishwar Rishi</h1>
+    </main>
+  );
 }

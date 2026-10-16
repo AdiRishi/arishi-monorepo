@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --dir ../.. dev",
+    "dev:ui": "vite dev --port 8080",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
