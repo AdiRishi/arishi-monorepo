@@ -1,11 +1,8 @@
-import { isMarkKind, markGeometry } from "./marks";
-
 /**
- * Line drawings the pen makes as the reader scrolls down, and the red marks it makes on the
- * way back up. Each drawing is a list of SVG paths in a 400 by 300 box, in the order a hand
- * would draw them. The layer strokes the revealed part of every visible item into one
- * viewport-sized mask that the paper shader renders as ink:
- * R = black ink coverage, G = how recently the ink went down, B = red ink coverage.
+ * Line drawings the pen makes as the reader scrolls. Each drawing is a list of SVG paths in a
+ * 400 by 300 box, in the order a hand would draw them. The layer strokes the revealed part of
+ * every visible drawing into one viewport-sized mask that the paper shader renders as ink:
+ * R = coverage, G = how recently the ink went down.
  */
 export interface Wash {
   readonly d: string;
@@ -199,26 +196,12 @@ interface Stroke {
   readonly len: number;
 }
 
-interface Geometry {
-  readonly box: { readonly w: number; readonly h: number };
-  readonly strokes: readonly Stroke[];
-  readonly total: number;
-}
-
-/**
- * One thing the pen draws. Drawings are black, triggered on the way down and laid out in a
- * fixed box the element's rect maps onto. Marks are red, triggered on the way back up, and
- * measured from the page the moment the pen reaches them.
- */
 interface Item {
   readonly el: HTMLElement;
-  readonly ink: "black" | "red";
-  readonly width: number;
-  readonly washes: readonly Wash[];
-  readonly trigger: "down" | "up";
-  readonly measure: () => { box: { w: number; h: number }; paths: readonly string[] };
-  geometry: Geometry | undefined;
-  state: "idle" | "armed" | "drawing" | "done";
+  readonly drawing: Drawing;
+  readonly strokes: readonly Stroke[];
+  readonly total: number;
+  state: "idle" | "drawing" | "done";
   progress: number;
   start: number;
   duration: number;
@@ -229,7 +212,6 @@ interface Item {
 export interface PenTip {
   x: number;
   y: number;
-  ink: "black" | "red";
 }
 
 export interface PenUpdate {
@@ -242,9 +224,6 @@ export interface PenUpdate {
 const SCALE = 0.5;
 
 const WASH_BLOOM = 1400;
-
-/** Per-frame scroll distance above which the reader is flinging, not reading. */
-const READING_PACE = 40;
 
 function context2d(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
   const ctx = canvas.getContext("2d");
@@ -260,61 +239,37 @@ export class DrawingLayer {
   private readonly svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   private readonly items: Item[] = [];
   private readonly reduce: boolean;
-  private readonly rule: Element | null;
   private active: Item | undefined;
   private dirty = true;
-  private lastY = scrollY;
-  private direction = 1;
 
-  constructor(root: HTMLElement, reduce: boolean) {
+  constructor(elements: Iterable<HTMLElement>, reduce: boolean) {
     this.reduce = reduce;
-    this.rule = root.querySelector(".rule");
     const { svg } = this;
     svg.setAttribute("aria-hidden", "true");
     svg.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
     document.body.appendChild(svg);
-    for (const el of root.querySelectorAll(".draw")) {
-      if (!(el instanceof HTMLElement)) continue;
+    for (const el of elements) {
       const name = el.dataset.draw;
       const drawing = name !== undefined && isDrawingName(name) ? drawings[name] : undefined;
       if (!drawing) continue;
-      const item: Item = {
+      const strokes = drawing.paths.map((d) => {
+        const measure = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        measure.setAttribute("d", d);
+        svg.appendChild(measure);
+        return { path: new Path2D(d), measure, len: measure.getTotalLength() };
+      });
+      const total = strokes.reduce((a, s) => a + s.len, 0);
+      this.items.push({
         el,
-        ink: "black",
-        width: drawing.width,
-        washes: drawing.washes,
-        trigger: "down",
-        measure: () => ({ box: { w: BOX_W, h: BOX_H }, paths: drawing.paths }),
-        geometry: undefined,
+        drawing,
+        strokes,
+        total,
         state: reduce ? "done" : "idle",
         progress: reduce ? 1 : 0,
         start: 0,
         doneAt: -1e9,
-        duration: 0,
-      };
-      if (reduce) this.measureItem(item);
-      this.items.push(item);
-    }
-    if (!reduce) {
-      for (const el of root.querySelectorAll("[data-mark]")) {
-        if (!(el instanceof HTMLElement)) continue;
-        const kind = el.dataset.mark;
-        if (kind === undefined || !isMarkKind(kind)) continue;
-        this.items.push({
-          el,
-          ink: "red",
-          width: 2.4,
-          washes: [],
-          trigger: "up",
-          measure: () => markGeometry(kind, el, this.marginEdge()),
-          geometry: undefined,
-          state: "idle",
-          progress: 0,
-          start: 0,
-          doneAt: -1e9,
-          duration: 0,
-        });
-      }
+        duration: 0.6 + total / 1400,
+      });
     }
     this.resize();
     addEventListener("resize", this.resize);
@@ -337,81 +292,39 @@ export class DrawingLayer {
     this.dirty = true;
   };
 
-  private marginEdge(): number {
-    return (this.rule?.getBoundingClientRect().right ?? 0) + 6;
-  }
-
-  private measureItem(it: Item): Geometry {
-    if (it.geometry) return it.geometry;
-    const { box, paths } = it.measure();
-    const strokes = paths.map((d) => {
-      const measure = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      measure.setAttribute("d", d);
-      this.svg.appendChild(measure);
-      return { path: new Path2D(d), measure, len: measure.getTotalLength() };
-    });
-    const total = strokes.reduce((a, s) => a + s.len, 0);
-    it.geometry = { box, strokes, total };
-    it.duration = it.ink === "red" ? 0.3 + total / 1100 : 0.6 + total / 1400;
-    return it.geometry;
-  }
-
-  private finish(it: Item, now: number) {
-    this.measureItem(it);
-    it.state = "done";
-    it.progress = 1;
-    it.doneAt = now;
-    this.dirty = true;
-  }
-
-  private begin(it: Item, now: number) {
-    if (this.measureItem(it).total === 0) {
-      this.finish(it, -1e9);
-      return;
-    }
-    it.state = "drawing";
-    it.start = now;
-    this.active = it;
-  }
-
   /** Advances the pen. Returns the tip while a drawing is in progress, and whether the mask changed. */
   update(now: number): PenUpdate {
     let tip: PenTip | null = null;
     if (!this.reduce) {
-      const vh = innerHeight;
-      const dy = scrollY - this.lastY;
-      this.lastY = scrollY;
-      if (dy !== 0) this.direction = Math.sign(dy);
-      const reading = this.direction < 0 && Math.abs(dy) < READING_PACE;
-      const atEnd = scrollY + vh >= document.documentElement.scrollHeight - 2;
       if (!this.active) {
+        const vh = innerHeight;
         for (const it of this.items) {
-          if (it.state === "done") continue;
+          if (it.state !== "idle") continue;
           const r = it.el.getBoundingClientRect();
-          if (it.trigger === "down") {
-            if (r.bottom < 0) this.finish(it, -1e9);
-            else if (r.top < vh * 0.78) {
-              this.begin(it, now);
-              if (this.active) break;
-            }
+          if (r.bottom < 0) {
+            it.state = "done";
+            it.progress = 1;
+            it.doneAt = -1e9;
+            this.dirty = true;
             continue;
           }
-          if (it.state === "idle" && (r.top < vh * 0.35 || atEnd)) it.state = "armed";
-          if (it.state === "armed" && reading && r.top < vh * 0.9 && r.bottom > vh * 0.08) {
-            this.begin(it, now);
-            if (this.active) break;
+          if (r.top < vh * 0.78) {
+            it.state = "drawing";
+            it.start = now;
+            this.active = it;
+            break;
           }
         }
       }
       if (this.active) {
         const it = this.active;
-        const r = it.el.getBoundingClientRect();
-        const gone = r.bottom < 0 || r.top > vh;
-        const raw = gone ? 1 : (now - it.start) / 1000 / it.duration;
+        const raw = (now - it.start) / 1000 / it.duration;
         it.progress = raw <= 0 ? 0 : raw >= 1 ? 1 : 1 - Math.pow(1 - raw, 2.2);
         tip = this.tipOf(it);
         if (raw >= 1) {
-          this.finish(it, now);
+          it.state = "done";
+          it.progress = 1;
+          it.doneAt = now;
           this.active = undefined;
         }
         this.dirty = true;
@@ -430,32 +343,16 @@ export class DrawingLayer {
 
   private tipOf(it: Item): PenTip {
     const r = it.el.getBoundingClientRect();
-    const { box, strokes, total } = this.measureItem(it);
-    let s = it.progress * total;
-    const last = strokes.at(-1);
-    for (const stroke of strokes) {
+    let s = it.progress * it.total;
+    const last = it.strokes.at(-1);
+    for (const stroke of it.strokes) {
       if (s <= stroke.len || stroke === last) {
         const pt = stroke.measure.getPointAtLength(Math.min(s, stroke.len));
-        return {
-          x: r.left + (pt.x / box.w) * r.width,
-          y: r.top + (pt.y / box.h) * r.height,
-          ink: it.ink,
-        };
+        return { x: r.left + (pt.x / BOX_W) * r.width, y: r.top + (pt.y / BOX_H) * r.height };
       }
       s -= stroke.len;
     }
-    return { x: r.left, y: r.top, ink: it.ink };
-  }
-
-  private place(ctx: CanvasRenderingContext2D, r: DOMRect, box: Geometry["box"]) {
-    ctx.setTransform(
-      (r.width * SCALE) / box.w,
-      0,
-      0,
-      (r.height * SCALE) / box.h,
-      r.left * SCALE,
-      r.top * SCALE,
-    );
+    return { x: r.left, y: r.top };
   }
 
   private render() {
@@ -465,19 +362,25 @@ export class DrawingLayer {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     for (const it of this.items) {
-      if (!it.geometry || it.progress <= 0) continue;
+      if (it.state === "idle" || it.progress <= 0) continue;
       const r = it.el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > innerHeight) continue;
-      const { box, strokes, total } = it.geometry;
-      this.place(ctx, r, box);
-      ctx.lineWidth = it.width;
-      const revealed = it.progress * total;
-      const wetFrom = revealed - total * 0.07;
+      ctx.setTransform(
+        (r.width * SCALE) / BOX_W,
+        0,
+        0,
+        (r.height * SCALE) / BOX_H,
+        r.left * SCALE,
+        r.top * SCALE,
+      );
+      ctx.lineWidth = it.drawing.width;
+      const revealed = it.progress * it.total;
+      const wetFrom = revealed - it.total * 0.07;
       let cum = 0;
-      for (const { path, len } of strokes) {
+      for (const { path, len } of it.strokes) {
         if (cum >= revealed) break;
         const end = Math.min(len, revealed - cum);
-        ctx.strokeStyle = it.ink === "red" ? "rgb(0,0,255)" : "rgb(255,0,0)";
+        ctx.strokeStyle = "rgb(255,0,0)";
         ctx.globalCompositeOperation = "source-over";
         ctx.setLineDash(end >= len ? [] : [end, 1e6]);
         ctx.lineDashOffset = 0;
@@ -502,14 +405,21 @@ export class DrawingLayer {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, wash.width, wash.height);
     for (const it of this.items) {
-      if (it.state !== "done" || !it.geometry || it.washes.length === 0) continue;
+      if (it.state !== "done" || it.drawing.washes.length === 0) continue;
       const r = it.el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > innerHeight) continue;
       const bloom = this.reduce ? 1 : Math.min(1, Math.max(0, (now - it.doneAt) / WASH_BLOOM));
       if (bloom <= 0) continue;
-      this.place(ctx, r, it.geometry.box);
+      ctx.setTransform(
+        (r.width * SCALE) / BOX_W,
+        0,
+        0,
+        (r.height * SCALE) / BOX_H,
+        r.left * SCALE,
+        r.top * SCALE,
+      );
       ctx.globalAlpha = 1 - Math.pow(1 - bloom, 2);
-      for (const w of it.washes) {
+      for (const w of it.drawing.washes) {
         ctx.fillStyle = w.color;
         ctx.fill(new Path2D(w.d));
       }

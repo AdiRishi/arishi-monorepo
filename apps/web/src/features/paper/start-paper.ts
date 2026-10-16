@@ -98,9 +98,8 @@ export function startPaper(root: HTMLElement): () => void {
   copy.addEventListener("click", onCopy);
 
   /* ---------- the pen ---------- */
-  function penTo(x: number, y: number, ink: "black" | "red") {
+  function penTo(x: number, y: number) {
     nib.classList.add("on");
-    nib.classList.toggle("red", ink === "red");
     nib.style.transform = `translate(${x - 4}px, ${y - 116}px) rotate(-34deg)`;
   }
   function penUp() {
@@ -120,7 +119,10 @@ export function startPaper(root: HTMLElement): () => void {
       twoLines,
     );
     if (disposed) return;
-    const drawingLayer = new DrawingLayer(root, reduce);
+    const drawingLayer = new DrawingLayer(
+      [...root.querySelectorAll(".draw")].filter((el) => el instanceof HTMLElement),
+      reduce,
+    );
     layer = drawingLayer;
     drawingLayer.update(performance.now());
     const small = Math.min(innerWidth, innerHeight) < 700;
@@ -189,9 +191,9 @@ export function startPaper(root: HTMLElement): () => void {
 
       const draw = writing ? { changed: first, tip: null } : drawingLayer.update(now);
       first = false;
-      if (writing) penTo(tip[0] * innerWidth, tip[1] * innerHeight, "black");
+      if (writing) penTo(tip[0] * innerWidth, tip[1] * innerHeight);
       else if (draw.tip) {
-        penTo(draw.tip.x, draw.tip.y, draw.tip.ink);
+        penTo(draw.tip.x, draw.tip.y);
         tip[0] = draw.tip.x / innerWidth;
         tip[1] = draw.tip.y / innerHeight;
       } else penUp();
@@ -203,7 +205,6 @@ export function startPaper(root: HTMLElement): () => void {
         box,
         tip,
         tipOn: writing || draw.tip ? 1 : 0,
-        tipRed: draw.tip?.ink === "red" ? 1 : 0,
         latinF,
         bodyF,
         headF,

@@ -1,6 +1,5 @@
 // Paper and ink. Samples the name mask (static, placed in `box`) and the drawings mask
-// (viewport-sized, redrawn as the pen moves) and renders both as the same ink. The drawings
-// mask carries black ink in R and red in B, which share one edge and pool the same way.
+// (viewport-sized, redrawn as the pen moves) and renders both as the same ink.
 
 struct P {
   res: vec2f,
@@ -12,7 +11,6 @@ struct P {
   bodyF: f32,
   headF: f32,
   tipOn: f32,
-  tipRed: f32,
   motion: f32,
 }
 @group(0) @binding(0) var<uniform> p: P;
@@ -88,10 +86,9 @@ fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
   let d0 = textureSample(drawTex, samp, uv);
   let db = blur5(drawTex, uv);
 
-  let a = max(aName, max(d0.r, d0.b));
-  let ab = max(abName, max(db.r, db.b));
+  let a = max(aName, d0.r);
+  let ab = max(abName, db.r);
   let wet = max(wetName, d0.g);
-  let red = db.b / max(db.r + db.b, 0.001);
 
   // ink physics: fibrous edge, pooling at the rim, granulation, wet sheen
   let fibre = fbm(uv * vec2f(asp, 1.0) * 240.0);
@@ -101,10 +98,7 @@ fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
   let gran = noise(uv * p.res * 0.45);
   var inkCol = vec3f(0.075, 0.075, 0.105) + vec3f(0.11) * gran;
   inkCol = mix(inkCol, vec3f(0.03, 0.03, 0.05), pool * 0.85);
-  var redCol = vec3f(0.60, 0.15, 0.11) + vec3f(0.12, 0.04, 0.03) * gran;
-  redCol = mix(redCol, vec3f(0.40, 0.07, 0.05), pool * 0.85);
-  inkCol = mix(inkCol, redCol, red);
-  inkCol += mix(vec3f(0.22, 0.28, 0.42), vec3f(0.38, 0.16, 0.12), red) * wet * pool;
+  inkCol += vec3f(0.22, 0.28, 0.42) * wet * pool;
 
   // watercolour: pigment settles into the grain and collects at the edge of each wash
   let w0 = textureSample(washTex, samp, uv);
@@ -117,8 +111,7 @@ fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
   var col = mix(paper(uv, asp) * tint, inkCol, ink * 0.97);
 
   let td = length((uv - p.tip) * p.res);
-  let tipCol = mix(vec3f(0.05, 0.05, 0.08), vec3f(0.45, 0.08, 0.06), p.tipRed);
-  col = mix(col, tipCol, smoothstep(5.0, 2.0, td) * p.tipOn);
+  col = mix(col, vec3f(0.05, 0.05, 0.08), smoothstep(5.0, 2.0, td) * p.tipOn);
 
   col += (hash(uv * p.res + fract(p.time) * vec2f(13.0, 7.0)) - 0.5) * 0.03;
   return vec4f(col, 1.0);
