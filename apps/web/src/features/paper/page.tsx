@@ -3,10 +3,38 @@ import { useEffect, useRef } from "react";
 import { startPaper } from "./start-paper";
 
 const projects = [
-  { number: "01", name: "panorama" },
-  { number: "02", name: "pakshi" },
-  { number: "03", name: "ironcage" },
-  { number: "04", name: "savings-analyser" },
+  {
+    number: "01",
+    name: "turborepo-remote-cache-cloudflare",
+    href: "https://adirishi.github.io/turborepo-remote-cache-cloudflare/",
+    source: "https://github.com/AdiRishi/turborepo-remote-cache-cloudflare",
+    description:
+      "A Turborepo remote cache that runs on Cloudflare Workers with R2 or KV behind it. Deploy it once and your whole team and CI share build artefacts.",
+  },
+  {
+    number: "02",
+    name: "cachified-adapter-cloudflare-kv",
+    href: "https://www.npmjs.com/package/cachified-adapter-cloudflare-kv",
+    source: "https://github.com/AdiRishi/cachified-adapter-cloudflare-kv",
+    description:
+      "The Cloudflare KV adapter for @epic-web/cachified. Stale-while-revalidate caching at the edge, on npm.",
+  },
+  {
+    number: "03",
+    name: "application-platform-starter",
+    href: "https://github.com/AdiRishi/application-platform-starter",
+    source: "https://github.com/AdiRishi/application-platform-starter",
+    description:
+      "A TypeScript monorepo for Cloudflare: web apps, Workers and shared resources, with Alchemy owning the infrastructure and Effect services doing the work. This site runs on it.",
+  },
+  {
+    number: "04",
+    name: "tanstack-start-starter",
+    href: "https://github.com/AdiRishi/tanstack-start-starter",
+    source: "https://github.com/AdiRishi/tanstack-start-starter",
+    description:
+      "A TanStack Start template with type-safe routing, Tailwind v4 and shadcn, strict TypeScript, and the lint setup I actually use.",
+  },
 ] as const;
 
 export function PaperPage() {
@@ -55,9 +83,7 @@ export function PaperPage() {
 
       <main>
         <section className="hero wrap" id="top">
-          <p className="eyebrow">
-            Senior software engineer · Fintech · <mark className="ph">City</mark>
-          </p>
+          <p className="eyebrow">Senior software engineer · Airwallex · Sydney</p>
           <div id="inkbox">
             <span className="sr">
               Adishwar Rishi, written by hand, with the name in Devanagari beneath
@@ -66,7 +92,7 @@ export function PaperPage() {
           <h1 className="sr">Adishwar Rishi</h1>
           <p className="lede">
             I build complex systems with the <b>simplest design that fits the real requirements.</b>{" "}
-            Eight years in fintech, where correctness is the product.
+            Nine years of payments, escrow and cards, where correctness is the product.
           </p>
           <p className="cue">
             <i></i>
@@ -86,50 +112,44 @@ export function PaperPage() {
               </h2>
               <div className="prose">
                 <p>
-                  I&apos;m Adi. For the last eight-plus years I&apos;ve built the parts of financial
-                  software that nobody sees until they break:{" "}
-                  <mark className="ph">
-                    ledgers, settlement, reconciliation, the systems that get audited later
-                  </mark>
-                  . The work taught me one thing I now apply everywhere. A system should be exactly
-                  as complex as the problem, and not one layer more.
+                  I&apos;m Adi, a senior engineer at Airwallex in Sydney. I spent my first year
+                  there on Cards and spend management and now work on Yield. Before that I led
+                  engineering for Escrow.com at Freelancer, running the systems that move money
+                  between people who have agreed not to trust each other.
                 </p>
                 <p>
-                  I like the kind of engineering where the elegant answer and the correct answer
-                  turn out to be the same thing. I&apos;m happiest when a design survives contact
-                  with a real requirement, and I&apos;m quick to delete anything that doesn&apos;t.
+                  Nine years of that teaches one thing. A system should be exactly as complex as
+                  the problem, and not one layer more. The elegant answer and the correct answer
+                  are usually the same answer, and when they aren&apos;t, the correct one wins.
                 </p>
                 <p>
-                  Away from the desk I&apos;m on a trail, in a raid, or two episodes deep into
-                  something I promised to watch &quot;just one episode&quot; of.
+                  I like serverless and the edge, TypeScript that makes the wrong thing hard to
+                  type, and deleting code. Away from the desk I&apos;m on a trail, in a raid, or
+                  two episodes deep into something I promised to watch &quot;just one
+                  episode&quot; of.
                 </p>
               </div>
               <dl className="ledger">
                 <div>
+                  <dt>Based in</dt>
+                  <dd>Sydney, Australia</dd>
+                </div>
+                <div>
+                  <dt>Studied</dt>
+                  <dd>
+                    Software Engineering, UNSW<small>2014 – 2017</small>
+                  </dd>
+                </div>
+                <div>
                   <dt>Now playing</dt>
                   <dd>
                     <mark className="ph">Hollow Knight: Silksong</mark>
-                    <small>97 h</small>
                   </dd>
                 </div>
                 <div>
                   <dt>Watching</dt>
                   <dd>
                     <mark className="ph">Frieren: Beyond Journey&apos;s End</mark>
-                    <small>S2</small>
-                  </dd>
-                </div>
-                <div>
-                  <dt>Last summit</dt>
-                  <dd>
-                    <mark className="ph">Mount Kosciuszko</mark>
-                    <small>2,228 m</small>
-                  </dd>
-                </div>
-                <div>
-                  <dt>Reading</dt>
-                  <dd>
-                    <mark className="ph">A Philosophy of Software Design</mark>
                   </dd>
                 </div>
               </dl>
@@ -151,76 +171,110 @@ export function PaperPage() {
               <ul className="roles">
                 <li className="role">
                   <div className="when">
-                    <b>2022 — now</b>3 yr 9 mo
+                    <b>2024 — now</b>Sydney
                   </div>
                   <div>
                     <h3>
                       Senior Software Engineer{" "}
                       <span>
-                        at <mark className="ph">Company</mark>
+                        at{" "}
+                        <a href="https://www.airwallex.com" target="_blank" rel="noopener">
+                          Airwallex
+                        </a>
                       </span>
                     </h3>
                     <p>
+                      A year on the Cards and spend management team, then Yield.{" "}
                       <mark className="ph">
-                        Led the redesign of the settlement pipeline so a day&apos;s books close in
-                        minutes instead of hours. Cut the on-call page rate by half by removing two
-                        services that only existed to talk to each other.
+                        One concrete thing from each team goes here once you tell me what you
+                        are proudest of.
                       </mark>
                     </p>
                     <ul className="tags">
-                      <li>TypeScript</li>
-                      <li>Postgres</li>
-                      <li>Event sourcing</li>
-                      <li>AWS</li>
+                      <li>Cards</li>
+                      <li>Yield</li>
+                      <li>
+                        <mark className="ph">Stack to confirm</mark>
+                      </li>
                     </ul>
                   </div>
                 </li>
                 <li className="role">
                   <div className="when">
-                    <b>2019 — 2022</b>3 yr
+                    <b>2019 — 2024</b>Sydney
+                  </div>
+                  <div>
+                    <h3>
+                      Senior Software Engineer, Tech Lead for Escrow.com{" "}
+                      <span>
+                        at{" "}
+                        <a href="https://www.freelancer.com" target="_blank" rel="noopener">
+                          Freelancer
+                        </a>
+                      </span>
+                    </h3>
+                    <p>
+                      Owned the technical direction of Escrow.com for five years: twenty-odd Python
+                      services, their databases, a React front end and the AWS underneath, held to a
+                      99.9% uptime SLA. Set the architecture, took the risky reviews, and shipped on
+                      dates the business could plan around.
+                    </p>
+                    <ul className="tags">
+                      <li>Python</li>
+                      <li>React</li>
+                      <li>AWS</li>
+                      <li>Postgres</li>
+                    </ul>
+                  </div>
+                </li>
+                <li className="role">
+                  <div className="when">
+                    <b>2019</b>Feb — Sep
+                  </div>
+                  <div>
+                    <h3>
+                      Engineering Team Lead{" "}
+                      <span>
+                        at{" "}
+                        <a href="https://www.freelancer.com" target="_blank" rel="noopener">
+                          Freelancer
+                        </a>
+                      </span>
+                    </h3>
+                    <p>
+                      Ran a team of ten across two regions. Turned the product roadmap into work the
+                      team could deliver, coached three engineers to their next level, and took first
+                      call for production incidents.
+                    </p>
+                    <ul className="tags">
+                      <li>Leadership</li>
+                      <li>On-call</li>
+                    </ul>
+                  </div>
+                </li>
+                <li className="role">
+                  <div className="when">
+                    <b>2017 — 2019</b>Sydney
                   </div>
                   <div>
                     <h3>
                       Software Engineer{" "}
                       <span>
-                        at <mark className="ph">Company</mark>
+                        at{" "}
+                        <a href="https://www.freelancer.com" target="_blank" rel="noopener">
+                          Freelancer
+                        </a>
                       </span>
                     </h3>
                     <p>
-                      <mark className="ph">
-                        Built and owned the ledger service behind consumer payments. Designed the
-                        double-entry model that the rest of the platform still runs on.
-                      </mark>
+                      Rebuilt the internal escalation system end to end, SQL to screen, and cut the
+                      time it took support to close a case. Started as an intern the year before and
+                      learned the codebase, the people and the on-call rota, in that order.
                     </p>
                     <ul className="tags">
-                      <li>Kotlin</li>
-                      <li>Kafka</li>
-                      <li>Kubernetes</li>
-                    </ul>
-                  </div>
-                </li>
-                <li className="role">
-                  <div className="when">
-                    <b>2017 — 2019</b>2 yr
-                  </div>
-                  <div>
-                    <h3>
-                      Engineer{" "}
-                      <span>
-                        at <mark className="ph">Company</mark>
-                      </span>
-                    </h3>
-                    <p>
-                      <mark className="ph">
-                        First real job. Shipped the onboarding flow, learned what production means,
-                        and discovered that the best code review comment is &quot;do we need
-                        this?&quot;
-                      </mark>
-                    </p>
-                    <ul className="tags">
+                      <li>Python</li>
+                      <li>SQL</li>
                       <li>React</li>
-                      <li>Node</li>
-                      <li>GraphQL</li>
                     </ul>
                   </div>
                 </li>
@@ -242,19 +296,17 @@ export function PaperPage() {
               </h2>
               <ul className="projects">
                 {projects.map((project) => (
-                  <li className="proj" key={project.number}>
+                  <li className="proj" key={project.name}>
                     <span className="k">{project.number}</span>
                     <div>
                       <h3>
-                        <a href="https://github.com/" target="_blank" rel="noopener">
+                        <a href={project.href} target="_blank" rel="noopener">
                           {project.name}
                         </a>
                       </h3>
-                      <p>
-                        <mark className="ph">What it does, in one line.</mark>
-                      </p>
+                      <p>{project.description}</p>
                     </div>
-                    <a className="go" href="https://github.com/" target="_blank" rel="noopener">
+                    <a className="go" href={project.source} target="_blank" rel="noopener">
                       Source →
                     </a>
                   </li>
@@ -385,19 +437,24 @@ export function PaperPage() {
                 I read everything. Interesting problems get a fast reply.
               </p>
               <div className="mail">
-                <span id="mail">
-                  hello@<mark className="ph">yourdomain.com</mark>
-                </span>
+                <span id="mail">adishwar.rishi@gmail.com</span>
                 <button id="copy" type="button">
                   Copy
                 </button>
               </div>
               <div className="links">
-                <a href="https://github.com/" target="_blank" rel="noopener">
+                <a href="https://github.com/AdiRishi" target="_blank" rel="noopener">
                   GitHub
                 </a>
-                <a href="https://www.linkedin.com/" target="_blank" rel="noopener">
+                <a
+                  href="https://www.linkedin.com/in/adishwar-rishi-8a832498"
+                  target="_blank"
+                  rel="noopener"
+                >
                   LinkedIn
+                </a>
+                <a href="https://x.com/AdishwarR" target="_blank" rel="noopener">
+                  X
                 </a>
                 <a href="#top">Back to the top ↑</a>
               </div>

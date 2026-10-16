@@ -14,7 +14,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Adishwar Rishi" },
       {
         name: "description",
-        content: "Adishwar Rishi, senior software engineer. Written in ink on paper.",
+        content:
+          "Adishwar Rishi, senior software engineer at Airwallex in Sydney. Nine years of payments, escrow and cards, written in ink on paper.",
       },
     ],
     links: [
