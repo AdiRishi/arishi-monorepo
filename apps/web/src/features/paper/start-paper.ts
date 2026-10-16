@@ -145,6 +145,7 @@ export function startPaper(root: HTMLElement): () => void {
     }
     if (!r0) {
       rendererEl.textContent = "CSS";
+      root.dataset.state = "ready";
       return;
     }
     const active = r0;

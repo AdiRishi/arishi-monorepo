@@ -24,12 +24,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Geist+Mono:wght@400;500&family=Tiro+Devanagari+Sanskrit&display=swap",
       },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "stylesheet", href: appCss },
       { rel: "stylesheet", href: paperCss },
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: NotFound,
 });
+
+function NotFound() {
+  return (
+    <main className="not-found">
+      <p className="eyebrow">404</p>
+      <h1>Nothing written on this page.</h1>
+      <p>
+        <a href="/">Back to the top ↑</a>
+      </p>
+    </main>
+  );
+}
 
 function RootDocument({ children }: { readonly children: React.ReactNode }) {
   return (

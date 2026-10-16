@@ -741,3 +741,28 @@ footer b {
     mask-image: none;
   }
 }
+
+.not-found {
+  min-height: 80vh;
+  display: grid;
+  align-content: center;
+  padding-inline: clamp(28px, 8vw, 96px);
+  font-family: var(--display);
+  color: var(--fg);
+}
+.not-found h1 {
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 4rem);
+  letter-spacing: -0.015em;
+  margin: 0 0 0.6em;
+}
+.not-found a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.not-found a:hover {
+  color: var(--paper-accent);
+}
