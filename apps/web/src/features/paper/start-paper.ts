@@ -3,7 +3,7 @@ import { buildInkMask } from "./ink";
 import type { Renderer, RendererPreference, SceneState } from "./renderer";
 
 // seconds from the start of the sequence
-const W = { latin: [0.35, 2.4], body: [2.6, 3.5], head: [3.55, 3.95], lift: 4.2 } as const;
+const W = { latin: [0.3, 1.7], body: [1.85, 2.45], head: [2.5, 2.8], lift: 3.0 } as const;
 const easeInOut = (t: number) => (t <= 0 ? 0 : t >= 1 ? 1 : (1 - Math.cos(t * Math.PI)) / 2);
 const easeOut = (t: number) => (t <= 0 ? 0 : t >= 1 ? 1 : 1 - Math.pow(1 - t, 3));
 const span = (t: number, [a, b]: readonly [number, number]) => (t - a) / (b - a);
@@ -27,10 +27,6 @@ export function startPaper(root: HTMLElement): () => void {
   const canvas = find(root, "#scene", HTMLCanvasElement);
   const inkbox = find(root, "#inkbox", HTMLElement);
   const nib = find(root, "#nib", SVGSVGElement);
-  const toast = find(root, "#toast", HTMLElement);
-  const rendererEl = find(root, "#renderer", HTMLElement);
-  const copy = find(root, "#copy", HTMLButtonElement);
-  const mail = find(root, "#mail", HTMLElement);
 
   // The renderer pulls in vgpu and the shaders, which only the browser needs, so the server
   // bundle never loads it.
@@ -40,15 +36,6 @@ export function startPaper(root: HTMLElement): () => void {
   let raf = 0;
   let layer: DrawingLayer | undefined;
   let renderer: Renderer | undefined;
-
-  /* ---------- pointer ---------- */
-  const mouse = { x: 0, y: 0 },
-    sm = { x: 0, y: 0 };
-  const onPointerMove = (ev: PointerEvent) => {
-    mouse.x = (ev.clientX / innerWidth) * 2 - 1;
-    mouse.y = (ev.clientY / innerHeight) * 2 - 1;
-  };
-  addEventListener("pointermove", onPointerMove, { passive: true });
 
   /* ---------- reveals ---------- */
   const io = new IntersectionObserver(
@@ -72,31 +59,6 @@ export function startPaper(root: HTMLElement): () => void {
     for (const el of root.querySelectorAll(".write")) el.classList.add("on");
   }
 
-  /* ---------- toast + copy ---------- */
-  let toastT = 0;
-  function say(text: string) {
-    toast.textContent = text;
-    toast.classList.add("show");
-    clearTimeout(toastT);
-    toastT = window.setTimeout(() => toast.classList.remove("show"), 2600);
-  }
-  const onCopy = () => {
-    const text = mail.textContent.trim();
-    const fallback = () => {
-      const r = document.createRange();
-      r.selectNodeContents(mail);
-      const s = getSelection();
-      s?.removeAllRanges();
-      s?.addRange(r);
-      say("Selected. Press copy.");
-    };
-    // The Clipboard API is missing outside secure contexts.
-    if ("clipboard" in navigator)
-      navigator.clipboard.writeText(text).then(() => say("Copied " + text), fallback);
-    else fallback();
-  };
-  copy.addEventListener("click", onCopy);
-
   /* ---------- the pen ---------- */
   function penTo(x: number, y: number) {
     nib.classList.add("on");
@@ -119,13 +81,15 @@ export function startPaper(root: HTMLElement): () => void {
       twoLines,
     );
     if (disposed) return;
+    // Device pixels per CSS pixel, capped where a third pixel per side adds nothing.
+    const scale = Math.min(devicePixelRatio, 2);
     const drawingLayer = new DrawingLayer(
       [...root.querySelectorAll(".draw")].filter((el) => el instanceof HTMLElement),
       reduce,
+      scale,
     );
     layer = drawingLayer;
     drawingLayer.update(performance.now());
-    const small = Math.min(innerWidth, innerHeight) < 700;
     const prefer: RendererPreference = new URLSearchParams(location.search).has("gl")
       ? "webgl2"
       : "auto";
@@ -136,7 +100,7 @@ export function startPaper(root: HTMLElement): () => void {
       mask,
       drawingLayer.canvas,
       drawingLayer.wash,
-      small ? 0.6 : 0.75,
+      scale,
       prefer,
     );
     if (disposed) {
@@ -144,26 +108,18 @@ export function startPaper(root: HTMLElement): () => void {
       return;
     }
     if (!r0) {
-      rendererEl.textContent = "CSS";
-      root.dataset.state = "ready";
+      root.dataset.state = "plain";
       return;
     }
     const active = r0;
     renderer = active;
-    rendererEl.textContent = active.kind === "webgpu" ? "WebGPU via vgpu" : "WebGL 2";
 
     root.dataset.state = "ready";
-    const t0 = performance.now() + 400;
-    let prev = performance.now();
-    let first = true;
+    const t0 = performance.now() + 300;
+    let lastKey = "";
 
     function frame(now: number) {
-      const dt = Math.min(0.1, (now - prev) / 1000);
-      prev = now;
       const t = reduce ? 99 : (now - t0) / 1000;
-      const k = 1 - Math.exp(-dt * 4.5);
-      sm.x += (mouse.x - sm.x) * k;
-      sm.y += (mouse.y - sm.y) * k;
 
       // name reveal fronts
       const latinF = 1.12 * easeInOut(span(t, W.latin));
@@ -189,8 +145,7 @@ export function startPaper(root: HTMLElement): () => void {
         box[1] + my * (box[3] - box[1]),
       ];
 
-      const draw = writing ? { changed: first, tip: null } : drawingLayer.update(now);
-      first = false;
+      const draw = writing ? { changed: false, tip: null } : drawingLayer.update(now);
       if (writing) penTo(tip[0] * innerWidth, tip[1] * innerHeight);
       else if (draw.tip) {
         penTo(draw.tip.x, draw.tip.y);
@@ -199,9 +154,6 @@ export function startPaper(root: HTMLElement): () => void {
       } else penUp();
 
       const state: SceneState = {
-        time: reduce ? 0 : (now - t0) / 1000,
-        motion: reduce ? 0 : 1,
-        mouse: [sm.x, -sm.y],
         box,
         tip,
         tipOn: writing || draw.tip ? 1 : 0,
@@ -210,7 +162,12 @@ export function startPaper(root: HTMLElement): () => void {
         headF,
         drawChanged: draw.changed,
       };
-      active.render(state);
+      // The scene is still between animations and scrolls, so only a change gets a frame.
+      const key = [canvas.width, canvas.height, box, tip, state.tipOn, latinF, bodyF, headF].join();
+      if (draw.changed || key !== lastKey) {
+        lastKey = key;
+        active.render(state);
+      }
       raf = requestAnimationFrame(frame);
     }
     raf = requestAnimationFrame(frame);
@@ -221,10 +178,7 @@ export function startPaper(root: HTMLElement): () => void {
   return () => {
     disposed = true;
     cancelAnimationFrame(raf);
-    removeEventListener("pointermove", onPointerMove);
     io.disconnect();
-    clearTimeout(toastT);
-    copy.removeEventListener("click", onCopy);
     layer?.dispose();
     renderer?.dispose();
   };

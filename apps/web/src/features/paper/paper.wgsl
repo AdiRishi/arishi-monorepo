@@ -3,15 +3,12 @@
 
 struct P {
   res: vec2f,
-  mouse: vec2f,
-  box: vec4f,
   tip: vec2f,
-  time: f32,
+  box: vec4f,
   latinF: f32,
   bodyF: f32,
   headF: f32,
   tipOn: f32,
-  motion: f32,
 }
 @group(0) @binding(0) var<uniform> p: P;
 @group(0) @binding(1) var inkTex: texture_2d<f32>;
@@ -112,7 +109,5 @@ fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
 
   let td = length((uv - p.tip) * p.res);
   col = mix(col, vec3f(0.05, 0.05, 0.08), smoothstep(5.0, 2.0, td) * p.tipOn);
-
-  col += (hash(uv * p.res + fract(p.time) * vec2f(13.0, 7.0)) - 0.5) * 0.03;
   return vec4f(col, 1.0);
 }

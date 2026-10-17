@@ -15,9 +15,6 @@ import paperGlsl from "./paper.glsl?raw";
 import paperWgsl from "./paper.wgsl";
 
 export interface SceneState {
-  time: number;
-  motion: number;
-  mouse: readonly [number, number];
   /** Name box in viewport fractions, top-left origin: x0, y0, x1, y1. */
   box: readonly [number, number, number, number];
   tip: readonly [number, number];
@@ -30,7 +27,6 @@ export interface SceneState {
 }
 
 export interface Renderer {
-  readonly kind: "webgpu" | "webgl2";
   render(s: SceneState): void;
   dispose(): void;
 }
@@ -130,15 +126,12 @@ async function createWebGpu(
     set: {
       p: {
         res: [1, 1],
-        mouse: [0, 0],
-        box: [0, 0, 1, 1],
         tip: [0, 0],
-        time: 0,
+        box: [0, 0, 1, 1],
         latinF: 0,
         bodyF: 0,
         headF: 0,
         tipOn: 0,
-        motion: 1,
       },
       inkTex,
       drawTex,
@@ -156,7 +149,6 @@ async function createWebGpu(
   const washes = dynamic(washTex, wash, "washTex");
 
   return {
-    kind: "webgpu",
     render(s) {
       if (s.drawChanged) {
         drawings.update();
@@ -166,15 +158,12 @@ async function createWebGpu(
         paperFx.set({
           p: {
             res: [canvas.width, canvas.height],
-            mouse: s.mouse,
-            box: s.box,
             tip: s.tip,
-            time: s.time,
+            box: s.box,
             latinF: s.latinF,
             bodyF: s.bodyF,
             headF: s.headF,
             tipOn: s.tipOn,
-            motion: s.motion,
           },
         });
         fr.pass(surf, paperFx);
@@ -232,15 +221,12 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
   const u = (n: string) => gl.getUniformLocation(pr, n);
   const U = {
     res: u("uRes"),
-    mouse: u("uMouse"),
     box: u("uBox"),
     tip: u("uTip"),
-    time: u("uTime"),
     latinF: u("uLatinF"),
     bodyF: u("uBodyF"),
     headF: u("uHeadF"),
     tipOn: u("uTipOn"),
-    motion: u("uMotion"),
     ink: u("uInk"),
     draw: u("uDraw"),
     wash: u("uWash"),
@@ -284,7 +270,6 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
   addEventListener("resize", resize);
 
   return {
-    kind: "webgl2",
     render(s) {
       resize();
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -301,15 +286,12 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
       gl.uniform1i(U.wash, 2);
       if (s.drawChanged) gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, wash);
       gl.uniform2f(U.res, canvas.width, canvas.height);
-      gl.uniform2f(U.mouse, s.mouse[0], s.mouse[1]);
       gl.uniform4f(U.box, s.box[0], s.box[1], s.box[2], s.box[3]);
       gl.uniform2f(U.tip, s.tip[0], s.tip[1]);
-      gl.uniform1f(U.time, s.time);
       gl.uniform1f(U.latinF, s.latinF);
       gl.uniform1f(U.bodyF, s.bodyF);
       gl.uniform1f(U.headF, s.headF);
       gl.uniform1f(U.tipOn, s.tipOn);
-      gl.uniform1f(U.motion, s.motion);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     },
     dispose() {

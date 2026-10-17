@@ -15,7 +15,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Adishwar Rishi, senior software engineer at Airwallex in Sydney. Nine years of payments, escrow and cards, written in ink on paper.",
+          "Adishwar Rishi is a senior software engineer at Airwallex in Sydney. He has worked on payments software since 2017.",
       },
     ],
     links: [
@@ -38,9 +38,9 @@ function NotFound() {
   return (
     <main className="not-found">
       <p className="eyebrow">404</p>
-      <h1>Nothing written on this page.</h1>
+      <h1>There&apos;s no page at this address.</h1>
       <p>
-        <a href="/">Back to the top ↑</a>
+        <a href="/">Go to the home page</a>
       </p>
     </main>
   );

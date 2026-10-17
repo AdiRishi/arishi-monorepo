@@ -165,22 +165,32 @@ export const drawings = {
       { d: "M240 253 l70 -8 l6 18 l-70 8 Z", color: INK.teal },
     ],
   },
-  envelope: {
+  plane: {
     width: 3,
     paths: [
-      "M62 92 L338 92 L338 230 L62 230 Z",
-      "M62 92 L200 184 L338 92",
-      "M62 230 L166 160 M338 230 L234 160",
-      "M286 108 h40 v46 h-40 z",
-      "M292 122 q8 -6 16 0 t16 0 M292 136 q8 -6 16 0 t16 0",
-      "M214 184 A14 14 0 1 1 186 184 A14 14 0 1 1 214 184",
-      "M194 178 l12 12 M206 178 l-12 12",
+      "M30 262 C80 258 112 222 140 196 C176 162 196 112 160 108 C124 104 128 168 176 164 C204 162 216 140 226 126",
+      "M350 64 L232 104 L274 114 Z",
+      "M350 64 L274 114 L290 150 Z",
+      "M274 114 L262 138 L290 150",
     ],
     washes: [
-      { d: "M66 96 L342 96 L342 234 L66 234 Z", color: "rgba(150,170,190,.22)" },
-      { d: "M290 112 h40 v46 h-40 z", color: INK.teal },
-      { d: "M216 186 A14 14 0 1 1 188 186 A14 14 0 1 1 216 186", color: INK.brick },
+      { d: "M354 68 L236 108 L278 118 Z", color: "rgba(239,230,214,.92)" },
+      { d: "M354 68 L278 118 L294 154 Z", color: INK.bluegrey },
+      { d: "M278 118 L266 142 L294 154 Z", color: INK.indigo },
     ],
+  },
+  signature: {
+    width: 4,
+    paths: [
+      "M172 118 C150 90 100 96 86 134 C72 172 92 216 128 206 C156 200 172 164 176 132",
+      "M178 108 C172 150 166 186 160 208 C158 226 178 220 196 196",
+      "M250 158 C236 138 206 142 196 170 C186 200 206 220 230 208 C250 198 258 172 260 150",
+      "M262 76 C262 130 256 180 252 206 C250 226 270 218 286 196",
+      "M304 160 C300 180 296 198 298 208 C300 222 318 212 336 190",
+      "M306 130 l4 -4",
+      "M70 242 C140 232 250 238 350 220",
+    ],
+    washes: [],
   },
 } satisfies Record<string, Drawing>;
 
@@ -221,8 +231,6 @@ export interface PenUpdate {
   tip: PenTip | null;
 }
 
-const SCALE = 0.5;
-
 const WASH_BLOOM = 1400;
 
 function context2d(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
@@ -239,11 +247,14 @@ export class DrawingLayer {
   private readonly svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   private readonly items: Item[] = [];
   private readonly reduce: boolean;
+  /** Mask pixels per CSS pixel. */
+  private readonly scale: number;
   private active: Item | undefined;
   private dirty = true;
 
-  constructor(elements: Iterable<HTMLElement>, reduce: boolean) {
+  constructor(elements: Iterable<HTMLElement>, reduce: boolean, scale: number) {
     this.reduce = reduce;
+    this.scale = scale;
     const { svg } = this;
     svg.setAttribute("aria-hidden", "true");
     svg.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
@@ -283,8 +294,8 @@ export class DrawingLayer {
   }
 
   private readonly resize = () => {
-    this.canvas.width = this.wash.width = Math.max(1, Math.round(innerWidth * SCALE));
-    this.canvas.height = this.wash.height = Math.max(1, Math.round(innerHeight * SCALE));
+    this.canvas.width = this.wash.width = Math.max(1, Math.round(innerWidth * this.scale));
+    this.canvas.height = this.wash.height = Math.max(1, Math.round(innerHeight * this.scale));
     this.dirty = true;
   };
 
@@ -365,13 +376,14 @@ export class DrawingLayer {
       if (it.state === "idle" || it.progress <= 0) continue;
       const r = it.el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > innerHeight) continue;
+      const { scale } = this;
       ctx.setTransform(
-        (r.width * SCALE) / BOX_W,
+        (r.width * scale) / BOX_W,
         0,
         0,
-        (r.height * SCALE) / BOX_H,
-        r.left * SCALE,
-        r.top * SCALE,
+        (r.height * scale) / BOX_H,
+        r.left * scale,
+        r.top * scale,
       );
       ctx.lineWidth = it.drawing.width;
       const revealed = it.progress * it.total;
@@ -410,13 +422,14 @@ export class DrawingLayer {
       if (r.bottom < 0 || r.top > innerHeight) continue;
       const bloom = this.reduce ? 1 : Math.min(1, Math.max(0, (now - it.doneAt) / WASH_BLOOM));
       if (bloom <= 0) continue;
+      const { scale } = this;
       ctx.setTransform(
-        (r.width * SCALE) / BOX_W,
+        (r.width * scale) / BOX_W,
         0,
         0,
-        (r.height * SCALE) / BOX_H,
-        r.left * SCALE,
-        r.top * SCALE,
+        (r.height * scale) / BOX_H,
+        r.left * scale,
+        r.top * scale,
       );
       ctx.globalAlpha = 1 - Math.pow(1 - bloom, 2);
       for (const w of it.drawing.washes) {

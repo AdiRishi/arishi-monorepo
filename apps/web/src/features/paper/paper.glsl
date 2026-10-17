@@ -1,9 +1,8 @@
 #version 300 es
 precision highp float;
 out vec4 fragColor;
-uniform vec2 uRes; uniform vec2 uMouse; uniform vec4 uBox; uniform vec2 uTip;
-uniform float uTime; uniform float uLatinF; uniform float uBodyF; uniform float uHeadF;
-uniform float uTipOn; uniform float uMotion;
+uniform vec2 uRes; uniform vec4 uBox; uniform vec2 uTip;
+uniform float uLatinF; uniform float uBodyF; uniform float uHeadF; uniform float uTipOn;
 uniform sampler2D uInk; uniform sampler2D uDraw; uniform sampler2D uWash;
 
 float hash(vec2 q){ vec3 p3=fract(vec3(q.xyx)*0.1031); p3+=dot(p3,p3.yzx+33.33); return fract((p3.x+p3.y)*p3.z); }
@@ -66,6 +65,5 @@ void main(){
   vec3 col=mix(paper(uv,asp)*tint,inkCol,ink*0.97);
   float td=length((uv-uTip)*uRes);
   col=mix(col,vec3(0.05,0.05,0.08),smoothstep(5.0,2.0,td)*uTipOn);
-  col+=(hash(uv*uRes+fract(uTime)*vec2(13.0,7.0))-0.5)*0.03;
   fragColor=vec4(col,1.0);
 }

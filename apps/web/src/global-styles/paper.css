@@ -1,4 +1,4 @@
-/* Layout: one sheet of handmade paper. Ink text, a red margin rule, and line drawings the pen makes as the reader scrolls. */
+/* Layout: one sheet of handmade paper, written as a letter. Ink text, a red margin rule, and line drawings the pen makes as the reader scrolls. */
 :root {
   --fg: #17161c;
   --mute: rgba(23, 22, 28, 0.58);
@@ -135,7 +135,15 @@ nav.top a:hover::after {
 }
 @media (max-width: 760px) {
   nav.top {
-    display: none;
+    top: 0;
+    right: 0;
+    left: 0;
+    justify-content: space-between;
+    gap: 10px;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 12px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    background: linear-gradient(var(--paper) 70%, transparent);
   }
   .brand {
     display: none;
@@ -166,9 +174,9 @@ main {
   z-index: 2;
 }
 .wrap {
-  max-width: 1160px;
+  max-width: 1240px;
   margin-inline: auto;
-  padding-inline: clamp(28px, 8vw, 96px);
+  padding-inline: clamp(28px, 6vw, 80px);
 }
 .hero {
   min-height: 92vh;
@@ -176,6 +184,12 @@ main {
   align-content: center;
   padding-block: 14vh 8vh;
   position: relative;
+}
+@media (max-width: 760px) {
+  .hero {
+    min-height: 0;
+    padding-block: 16vh 10vh;
+  }
 }
 .eyebrow {
   font-family: var(--mono);
@@ -195,6 +209,33 @@ main {
     aspect-ratio: 1.25/1;
   }
 }
+/* The pen writes the name. Without a renderer the name is set in type instead. */
+#inkbox h1 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  margin: 0;
+}
+[data-state="plain"] #inkbox h1 {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(3.2rem, 11vw, 9rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  padding-top: 0.3em;
+}
+[data-state="plain"] #inkbox {
+  aspect-ratio: auto !important;
+}
 .sr {
   position: absolute;
   width: 1px;
@@ -203,18 +244,68 @@ main {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+.letterhead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px 48px;
+  align-items: end;
+  margin-top: 14px;
+}
 .lede {
   max-width: 38ch;
   font-size: clamp(1.1rem, 1.5vw, 1.4rem);
   line-height: 1.45;
-  margin: 14px 0 0;
+  margin: 0;
   font-weight: 300;
 }
 .lede b {
   font-weight: 400;
 }
+.from {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  text-align: right;
+}
+.from a:first-child {
+  text-transform: none;
+  letter-spacing: 0.04em;
+  font-size: 13px;
+  color: var(--fg);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  margin-bottom: 6px;
+}
+.from a:hover {
+  color: var(--paper-accent);
+}
+@media (max-width: 900px) {
+  .letterhead {
+    grid-template-columns: 1fr;
+  }
+  .from {
+    align-items: flex-start;
+    text-align: left;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    align-items: baseline;
+  }
+  .from a:first-child {
+    margin-bottom: 0;
+    flex-basis: 100%;
+  }
+}
 .cue {
   margin: 48px 0 1em;
+  animation: fadeIn 1.2s ease 3s both;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -237,8 +328,8 @@ main {
 }
 .sec .grid {
   display: grid;
-  grid-template-columns: 130px minmax(0, 1fr) 300px;
-  gap: 24px 36px;
+  grid-template-columns: 120px minmax(0, 1fr) 340px;
+  gap: 24px 32px;
   align-items: start;
 }
 .side .vj {
@@ -310,15 +401,9 @@ h2 em {
 .prose p {
   margin: 0 0 1.1em;
 }
-.ph {
-  border-bottom: 1px dashed rgba(178, 58, 42, 0.6);
-  padding-bottom: 1px;
-  background: none;
-  color: inherit;
-}
 @media (max-width: 1200px) {
   .sec .grid {
-    grid-template-columns: 130px minmax(0, 1fr);
+    grid-template-columns: 120px minmax(0, 1fr);
   }
   .sec .grid > .draw {
     grid-column: 2;
@@ -592,87 +677,63 @@ h2 em {
 .contact h2 {
   font-size: clamp(2.4rem, 6.5vw, 5.5rem);
 }
-.mail {
-  display: inline-flex;
-  align-items: center;
-  gap: 18px;
-  margin-top: 10px;
-  font-family: var(--mono);
-  font-size: clamp(0.95rem, 1.8vw, 1.25rem);
-  letter-spacing: 0.04em;
-  border: 1px solid var(--strong);
-  padding: 16px 20px;
-  user-select: all;
+.reach {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
 }
-.mail button {
+.reach a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 20px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.reach .name {
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.reach .handle {
+  font-weight: 300;
+  color: var(--mute);
+  overflow-wrap: anywhere;
+}
+.reach a:hover .name {
+  color: var(--paper-accent);
+}
+@media (max-width: 520px) {
+  .reach a {
+    grid-template-columns: 1fr;
+  }
+}
+.signoff {
+  margin-top: 64px;
+  max-width: 62ch;
+}
+.signoff p {
+  margin: 0;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.25rem;
+}
+.signoff .draw.sig {
+  max-width: 300px;
+  margin: -12px 0 -24px -16px;
+}
+.signoff .k {
   font-family: var(--mono);
+  font-style: normal;
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--mute);
-  user-select: none;
-  padding: 4px 0;
 }
-.mail button:hover {
+.signoff .k a:hover {
   color: var(--paper-accent);
 }
-.links {
-  display: flex;
-  gap: 28px;
-  margin-top: 28px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mute);
-  flex-wrap: wrap;
-}
-.links a:hover {
-  color: var(--paper-accent);
-}
-footer {
-  padding: 0 0 70px;
-  margin-top: 110px;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mute);
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-footer b {
-  color: var(--fg);
-  font-weight: 500;
-}
-
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: calc(48px + env(safe-area-inset-bottom, 0px));
-  transform: translate(-50%, 16px);
-  z-index: 60;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: 1px solid var(--strong);
-  background: var(--paper);
-  color: var(--ink);
-  padding: 12px 18px;
-  opacity: 0;
-  transition:
-    opacity 0.3s,
-    transform 0.3s;
-  pointer-events: none;
-}
-.toast.show {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
 .rv {
   transition:
     opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
@@ -682,30 +743,6 @@ footer b {
   opacity: 0;
   transform: translateY(22px);
 }
-[data-state="boot"] .eyebrow,
-[data-state="boot"] .lede,
-[data-state="boot"] .cue,
-[data-state="boot"] nav.top,
-[data-state="boot"] .brand,
-[data-state="boot"] .rule {
-  opacity: 0;
-}
-[data-state="ready"] .eyebrow {
-  animation: fadeIn 1s ease 0.2s both;
-}
-[data-state="ready"] .lede {
-  animation: fadeUp 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 3.9s both;
-}
-[data-state="ready"] .cue {
-  animation: fadeIn 1.2s ease 4.6s both;
-}
-[data-state="ready"] nav.top,
-[data-state="ready"] .brand {
-  animation: fadeIn 1s ease 1s both;
-}
-[data-state="ready"] .rule {
-  animation: fadeIn 1.4s ease 2s both;
-}
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -714,23 +751,11 @@ footer b {
     opacity: 1;
   }
 }
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  [data-state="boot"] *,
-  [data-state="ready"] * {
-    animation: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-    transform: none !important;
+  .cue,
+  .rv {
+    animation: none;
+    transition: none;
   }
   .rv.wait {
     opacity: 1;

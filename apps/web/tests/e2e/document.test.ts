@@ -8,7 +8,7 @@ it("renders the site's name on the home page", async () => {
   expect(await response.text()).toMatch(/<h1[^>]*>Adishwar Rishi<\/h1>/u);
 });
 
-it("renders the home page in its boot state so the intro stays hidden until the pen starts", async () => {
+it("renders the home page in its boot state so the typeset name waits for the pen", async () => {
   const response = await exports.default.fetch("https://web.test/");
 
   expect(await response.text()).toMatch(/<div[^>]*data-state="boot"[^>]*>/u);
