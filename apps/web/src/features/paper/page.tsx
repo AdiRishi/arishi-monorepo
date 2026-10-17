@@ -45,6 +45,17 @@ const projects = [
   },
 ] as const;
 
+const channels = [
+  {
+    name: "LinkedIn",
+    handle: "Adishwar Rishi",
+    href: "https://www.linkedin.com/in/adishwar-rishi-8a832498",
+  },
+  { name: "X", handle: "@AdishwarR", href: "https://x.com/AdishwarR" },
+  { name: "GitHub", handle: "AdiRishi", href: "https://github.com/AdiRishi" },
+  { name: "Email", handle: "adishwar.rishi@gmail.com", href: "mailto:adishwar.rishi@gmail.com" },
+] as const;
+
 export function PaperPage() {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -89,7 +100,6 @@ export function PaperPage() {
           <circle cx="25.5" cy="94.5" r="1.8" fill="#6b5a2e" />
         </g>
       </svg>
-      <div className="toast" id="toast"></div>
 
       <main>
         <section className="hero wrap" id="top">
@@ -391,32 +401,25 @@ export function PaperPage() {
             </div>
             <div className="body">
               <h2 className="write">
-                Write <em>back.</em>
+                Get in <em>touch.</em>
               </h2>
               <p className="prose" style={{ margin: "0 0 28px" }}>
-                I read everything. Interesting problems get a fast reply.
+                Any of these will reach me.
               </p>
-              <div className="mail">
-                <span id="mail">adishwar.rishi@gmail.com</span>
-                <button id="copy" type="button">
-                  Copy
-                </button>
-              </div>
-              <div className="links">
-                <a href="https://github.com/AdiRishi" target="_blank" rel="noopener">
-                  GitHub
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/adishwar-rishi-8a832498"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  LinkedIn
-                </a>
-                <a href="https://x.com/AdishwarR" target="_blank" rel="noopener">
-                  X
-                </a>
-              </div>
+              <ul className="reach">
+                {channels.map((channel) => (
+                  <li key={channel.name}>
+                    <a
+                      href={channel.href}
+                      target={channel.href.startsWith("mailto:") ? undefined : "_blank"}
+                      rel="noopener"
+                    >
+                      <span className="name">{channel.name}</span>
+                      <span className="handle">{channel.handle}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
               <div className="signoff">
                 <p>Yours,</p>
                 <div className="draw sig" data-draw="signature" aria-hidden="true"></div>
@@ -425,14 +428,8 @@ export function PaperPage() {
                 </p>
               </div>
             </div>
-            <div className="draw" data-draw="envelope" aria-hidden="true"></div>
+            <div className="draw" data-draw="plane" aria-hidden="true"></div>
           </div>
-          <footer>
-            <span>
-              Paper, ink and drawings rendered live · <b id="renderer">…</b> · no images
-            </span>
-            <span>Set in Newsreader and Tiro Devanagari Sanskrit</span>
-          </footer>
         </section>
       </main>
     </div>

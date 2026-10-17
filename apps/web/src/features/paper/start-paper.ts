@@ -27,10 +27,6 @@ export function startPaper(root: HTMLElement): () => void {
   const canvas = find(root, "#scene", HTMLCanvasElement);
   const inkbox = find(root, "#inkbox", HTMLElement);
   const nib = find(root, "#nib", SVGSVGElement);
-  const toast = find(root, "#toast", HTMLElement);
-  const rendererEl = find(root, "#renderer", HTMLElement);
-  const copy = find(root, "#copy", HTMLButtonElement);
-  const mail = find(root, "#mail", HTMLElement);
 
   // The renderer pulls in vgpu and the shaders, which only the browser needs, so the server
   // bundle never loads it.
@@ -62,31 +58,6 @@ export function startPaper(root: HTMLElement): () => void {
   } else {
     for (const el of root.querySelectorAll(".write")) el.classList.add("on");
   }
-
-  /* ---------- toast + copy ---------- */
-  let toastT = 0;
-  function say(text: string) {
-    toast.textContent = text;
-    toast.classList.add("show");
-    clearTimeout(toastT);
-    toastT = window.setTimeout(() => toast.classList.remove("show"), 2600);
-  }
-  const onCopy = () => {
-    const text = mail.textContent.trim();
-    const fallback = () => {
-      const r = document.createRange();
-      r.selectNodeContents(mail);
-      const s = getSelection();
-      s?.removeAllRanges();
-      s?.addRange(r);
-      say("Selected. Press copy.");
-    };
-    // The Clipboard API is missing outside secure contexts.
-    if ("clipboard" in navigator)
-      navigator.clipboard.writeText(text).then(() => say("Copied " + text), fallback);
-    else fallback();
-  };
-  copy.addEventListener("click", onCopy);
 
   /* ---------- the pen ---------- */
   function penTo(x: number, y: number) {
@@ -137,13 +108,11 @@ export function startPaper(root: HTMLElement): () => void {
       return;
     }
     if (!r0) {
-      rendererEl.textContent = "CSS";
       root.dataset.state = "plain";
       return;
     }
     const active = r0;
     renderer = active;
-    rendererEl.textContent = active.kind === "webgpu" ? "WebGPU via vgpu" : "WebGL 2";
 
     root.dataset.state = "ready";
     const t0 = performance.now() + 300;
@@ -194,16 +163,7 @@ export function startPaper(root: HTMLElement): () => void {
         drawChanged: draw.changed,
       };
       // The scene is still between animations and scrolls, so only a change gets a frame.
-      const key = [
-        canvas.width,
-        canvas.height,
-        box,
-        tip,
-        state.tipOn,
-        latinF,
-        bodyF,
-        headF,
-      ].join();
+      const key = [canvas.width, canvas.height, box, tip, state.tipOn, latinF, bodyF, headF].join();
       if (draw.changed || key !== lastKey) {
         lastKey = key;
         active.render(state);
@@ -219,8 +179,6 @@ export function startPaper(root: HTMLElement): () => void {
     disposed = true;
     cancelAnimationFrame(raf);
     io.disconnect();
-    clearTimeout(toastT);
-    copy.removeEventListener("click", onCopy);
     layer?.dispose();
     renderer?.dispose();
   };

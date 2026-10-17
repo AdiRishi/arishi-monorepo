@@ -27,7 +27,6 @@ export interface SceneState {
 }
 
 export interface Renderer {
-  readonly kind: "webgpu" | "webgl2";
   render(s: SceneState): void;
   dispose(): void;
 }
@@ -150,7 +149,6 @@ async function createWebGpu(
   const washes = dynamic(washTex, wash, "washTex");
 
   return {
-    kind: "webgpu",
     render(s) {
       if (s.drawChanged) {
         drawings.update();
@@ -272,7 +270,6 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
   addEventListener("resize", resize);
 
   return {
-    kind: "webgl2",
     render(s) {
       resize();
       gl.viewport(0, 0, canvas.width, canvas.height);

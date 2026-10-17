@@ -677,43 +677,37 @@ h2 em {
 .contact h2 {
   font-size: clamp(2.4rem, 6.5vw, 5.5rem);
 }
-.mail {
-  display: inline-flex;
-  align-items: center;
-  gap: 18px;
-  margin-top: 10px;
-  font-family: var(--mono);
-  font-size: clamp(0.95rem, 1.8vw, 1.25rem);
-  letter-spacing: 0.04em;
-  border: 1px solid var(--strong);
-  padding: 16px 20px;
-  user-select: all;
+.reach {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
 }
-.mail button {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.reach a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 20px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.reach .name {
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.reach .handle {
+  font-weight: 300;
   color: var(--mute);
-  user-select: none;
-  padding: 4px 0;
+  overflow-wrap: anywhere;
 }
-.mail button:hover {
+.reach a:hover .name {
   color: var(--paper-accent);
 }
-.links {
-  display: flex;
-  gap: 28px;
-  margin-top: 28px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mute);
-  flex-wrap: wrap;
-}
-.links a:hover {
-  color: var(--paper-accent);
+@media (max-width: 520px) {
+  .reach a {
+    grid-template-columns: 1fr;
+  }
 }
 .signoff {
   margin-top: 64px;
@@ -740,49 +734,6 @@ h2 em {
 .signoff .k a:hover {
   color: var(--paper-accent);
 }
-footer {
-  padding: 0 0 70px;
-  margin-top: 110px;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mute);
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-footer b {
-  color: var(--fg);
-  font-weight: 500;
-}
-
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: calc(48px + env(safe-area-inset-bottom, 0px));
-  transform: translate(-50%, 16px);
-  z-index: 60;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: 1px solid var(--strong);
-  background: var(--paper);
-  color: var(--ink);
-  padding: 12px 18px;
-  opacity: 0;
-  transition:
-    opacity 0.3s,
-    transform 0.3s;
-  pointer-events: none;
-}
-.toast.show {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
 .rv {
   transition:
     opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
