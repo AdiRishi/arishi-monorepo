@@ -5,35 +5,43 @@ import { startPaper } from "./start-paper";
 const projects = [
   {
     number: "01",
+    name: "Moss",
+    href: "https://github.com/AdiRishi/moss-meditation",
+    source: "https://github.com/AdiRishi/moss-meditation",
+    description:
+      "A meditation timer for iOS and Android, in development. Sessions end with a soft sound instead of an alarm, and your history stays on the phone.",
+  },
+  {
+    number: "02",
     name: "turborepo-remote-cache-cloudflare",
     href: "https://adirishi.github.io/turborepo-remote-cache-cloudflare/",
     source: "https://github.com/AdiRishi/turborepo-remote-cache-cloudflare",
     description:
-      "A Turborepo remote cache that runs on Cloudflare Workers with R2 or KV behind it. Deploy it once and your whole team and CI share build artefacts.",
+      "A Turborepo remote cache you deploy to your own Cloudflare account. It stores artefacts in R2 or KV. This is my most-used project, with about 250 stars.",
   },
   {
-    number: "02",
+    number: "03",
     name: "cachified-adapter-cloudflare-kv",
     href: "https://www.npmjs.com/package/cachified-adapter-cloudflare-kv",
     source: "https://github.com/AdiRishi/cachified-adapter-cloudflare-kv",
     description:
-      "The Cloudflare KV adapter for @epic-web/cachified. Stale-while-revalidate caching at the edge, on npm.",
-  },
-  {
-    number: "03",
-    name: "application-platform-starter",
-    href: "https://github.com/AdiRishi/application-platform-starter",
-    source: "https://github.com/AdiRishi/application-platform-starter",
-    description:
-      "A TypeScript monorepo for Cloudflare: web apps, Workers and shared resources, with Alchemy owning the infrastructure and Effect services doing the work. This site runs on it.",
+      "The official Cloudflare KV adapter for @epic-web/cachified. It gets about 1,600 npm downloads a month.",
   },
   {
     number: "04",
-    name: "tanstack-start-starter",
-    href: "https://github.com/AdiRishi/tanstack-start-starter",
-    source: "https://github.com/AdiRishi/tanstack-start-starter",
+    name: "RenderMD",
+    href: "https://www.render-md.com",
+    source: "https://github.com/AdiRishi/render-md",
     description:
-      "A TanStack Start template with type-safe routing, Tailwind v4 and shadcn, strict TypeScript, and the lint setup I actually use.",
+      "Paste markdown or a GitHub link and read it typeset, with math, Mermaid diagrams and code highlighting. Your documents never leave the browser.",
+  },
+  {
+    number: "05",
+    name: "promptrc",
+    href: "https://promptrc.app",
+    source: "https://github.com/AdiRishi/promptrc",
+    description:
+      "A library for the AI prompts that worked, driven from the keyboard like a terminal app. Prompts can have fill-in blanks, and benchmarks record which models pass.",
   },
 ] as const;
 
@@ -91,9 +99,8 @@ export function PaperPage() {
           </div>
           <div className="letterhead">
             <p className="lede">
-              I build complex systems with the{" "}
-              <b>simplest design that fits the real requirements.</b> Nine years of payments, escrow
-              and cards, where correctness is the product.
+              I&apos;ve written payments software for nine years. Five of those were at Escrow.com,
+              and I&apos;ve been at Airwallex since 2024.
             </p>
             <p className="from">
               <a href="mailto:adishwar.rishi@gmail.com">adishwar.rishi@gmail.com</a>
@@ -114,7 +121,7 @@ export function PaperPage() {
           </div>
           <p className="cue">
             <i></i>
-            <span>Keep reading. The pen keeps going.</span>
+            <span>Scroll for the rest</span>
           </p>
         </section>
 
@@ -126,25 +133,17 @@ export function PaperPage() {
             </div>
             <div className="body">
               <h2 className="write">
-                Engineer by trade, <em>beach person</em> by weekend.
+                Hi, I&apos;m <em>Adi.</em>
               </h2>
               <div className="prose">
                 <p>
-                  I&apos;m Adi, a senior engineer at Airwallex in Sydney. I spent my first year
-                  there on Cards and spend management and now work on Yield. Before that I led
-                  engineering for Escrow.com at Freelancer, running the systems that move money
-                  between people who have agreed not to trust each other.
+                  I&apos;m a senior engineer at Airwallex. I spent my first year on the Cards and
+                  spend management team and now work on Yield. Before that I was at Freelancer for
+                  eight years. I started there as an intern, and for my last five years I led
+                  engineering for Escrow.com, which holds a buyer&apos;s money until the seller
+                  delivers.
                 </p>
-                <p>
-                  Nine years of that teaches one thing. A system should be exactly as complex as the
-                  problem, and not one layer more. The elegant answer and the correct answer are
-                  usually the same answer, and when they aren&apos;t, the correct one wins.
-                </p>
-                <p>
-                  I like serverless and the edge, TypeScript that makes the wrong thing hard to
-                  type, and deleting code. Away from the desk I&apos;m at the beach, deep in a long
-                  game, or two episodes past the point where I said &quot;just one more&quot;.
-                </p>
+                <p>In my spare time I build a lot of things with AI.</p>
               </div>
               <dl className="ledger">
                 <div>
@@ -161,10 +160,6 @@ export function PaperPage() {
                   <dt>Working on</dt>
                   <dd>Yield, at Airwallex</dd>
                 </div>
-                <div>
-                  <dt>Weekends</dt>
-                  <dd>A beach, any beach</dd>
-                </div>
               </dl>
             </div>
             <div className="draw" data-draw="mountains" aria-hidden="true"></div>
@@ -179,7 +174,7 @@ export function PaperPage() {
             </div>
             <div className="body">
               <h2 className="write">
-                Work, in <em>order of appearance.</em>
+                Work, <em>newest first.</em>
               </h2>
               <ul className="roles">
                 <li className="role">
@@ -196,7 +191,7 @@ export function PaperPage() {
                         </a>
                       </span>
                     </h3>
-                    <p>A year on the Cards and spend management team, then Yield.</p>
+                    <p>One year on Cards and spend management, then Yield.</p>
                     <ul className="tags">
                       <li>Cards</li>
                       <li>Yield</li>
@@ -218,9 +213,8 @@ export function PaperPage() {
                       </span>
                     </h3>
                     <p>
-                      Led engineering for Escrow.com for five years: the services, the databases,
-                      the front end and the AWS underneath, and the dates the business planned
-                      around.
+                      Led the engineering team for Escrow.com. I owned the backend services, the
+                      React front end and the AWS infrastructure.
                     </p>
                     <ul className="tags">
                       <li>Python</li>
@@ -245,8 +239,8 @@ export function PaperPage() {
                       </span>
                     </h3>
                     <p>
-                      Ran a team of ten across two regions, and took first call when production
-                      broke.
+                      Managed ten engineers across two regions and took first call on production
+                      incidents.
                     </p>
                     <ul className="tags">
                       <li>Leadership</li>
@@ -269,9 +263,8 @@ export function PaperPage() {
                       </span>
                     </h3>
                     <p>
-                      Rebuilt the internal escalation system end to end. Started as an intern the
-                      year before and learned the codebase, the people and the on-call rota, in that
-                      order.
+                      Rebuilt the internal escalation system end to end. I&apos;d joined as an
+                      intern the year before.
                     </p>
                     <ul className="tags">
                       <li>Python</li>
@@ -294,7 +287,7 @@ export function PaperPage() {
             </div>
             <div className="body">
               <h2 className="write">
-                Things I built because <em>I wanted them to exist.</em>
+                Side projects, <em>all on GitHub.</em>
               </h2>
               <ul className="projects">
                 {projects.map((project) => (
@@ -327,7 +320,7 @@ export function PaperPage() {
             </div>
             <div className="body wide">
               <h2 className="write">
-                Three things I&apos;d talk about <em>for longer than you&apos;d like.</em>
+                Games, anime <em>and the beach.</em>
               </h2>
               <div className="three">
                 <div>
@@ -335,7 +328,7 @@ export function PaperPage() {
                   <h3>
                     Gaming<span className="dv">खेल</span>
                   </h3>
-                  <p className="lead">Big worlds, long stories, no hurry.</p>
+                  <p className="lead">Single-player games with a long story.</p>
                   <ol>
                     <li>
                       <i>01</i>
@@ -362,7 +355,7 @@ export function PaperPage() {
                   <h3>
                     Anime<span className="dv">कथा</span>
                   </h3>
-                  <p className="lead">Long arcs that earn their endings.</p>
+                  <p className="lead">Two I&apos;d recommend.</p>
                   <ol>
                     <li>
                       <i>01</i>
@@ -383,10 +376,7 @@ export function PaperPage() {
                   <h3>
                     The beach<span className="dv">तट</span>
                   </h3>
-                  <p className="lead">Salt water, sand, nowhere to be.</p>
-                  <p className="lead">
-                    Sydney&apos;s one unfair advantage. Any beach, any season, and the week resets.
-                  </p>
+                  <p className="lead">Most weekends I&apos;m at a beach.</p>
                 </div>
               </div>
             </div>
