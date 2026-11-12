@@ -11,6 +11,4 @@ Workers are plain modules: `Cloudflare.Worker` points `main` at a Worker's
 
 Integration journeys follow [Alchemy's testing guide](https://alchemy.run/testing/testing-a-stack/).
 `pnpm test:integration` runs them against local providers with `dev: true` and
-must not create cloud resources. Keep Vitest's `sequence.hooks` set to `"list"`:
-`destroy(Stack)` must run before Alchemy's fallback runtime cleanup.
-[Write tests](../docs/testing.mdx) covers the rest.
+must not create cloud resources. [Write tests](../docs/testing.mdx) covers the rest.

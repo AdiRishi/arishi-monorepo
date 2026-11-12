@@ -1623,7 +1623,7 @@ export const Objects_6 = Schema.StructWithRest(
 export type ChatStreamToolCall = {
   readonly "function"?: { readonly "arguments"?: string; readonly "name"?: string | null }
   readonly "id"?: string | null
-  readonly "index": number
+  readonly "index"?: number
   readonly "type"?: "function" | null
 }
 export const ChatStreamToolCall = Schema.Struct({
@@ -1634,8 +1634,10 @@ export const ChatStreamToolCall = Schema.Struct({
     }).annotate({ "description": "Function call details" })
   ),
   "id": Schema.optionalKey(Schema.Union([Schema.String, Schema.Null])),
-  "index": Schema.Number.annotate({ "description": "Tool call index in the array" }).check(
-    Schema.isInt().annotate({ "expected": "an integer" })
+  "index": Schema.optionalKey(
+    Schema.Number.annotate({ "description": "Tool call index in the array" }).check(
+      Schema.isInt().annotate({ "expected": "an integer" })
+    )
   ),
   "type": Schema.optionalKey(Schema.Union([Schema.Literal("function"), Schema.Null]))
 }).annotate({ "description": "Tool call delta for streaming responses", "identifier": "ChatStreamToolCall" })
@@ -1669,7 +1671,7 @@ export const ChatTokenLogprob = Schema.Struct({
 }).annotate({ "description": "Token log probability information", "identifier": "ChatTokenLogprob" })
 export type ChatToolCall = {
   readonly "function": { readonly "arguments": string; readonly "name": string }
-  readonly "id": string
+  readonly "id"?: string
   readonly "type": "function"
 }
 export const ChatToolCall = Schema.Struct({
@@ -1677,7 +1679,7 @@ export const ChatToolCall = Schema.Struct({
     "arguments": Schema.String.annotate({ "description": "Function arguments as JSON string" }),
     "name": Schema.String.annotate({ "description": "Function name to call" })
   }),
-  "id": Schema.String.annotate({ "description": "Tool call identifier" }),
+  "id": Schema.optionalKey(Schema.String.annotate({ "description": "Tool call identifier" })),
   "type": Schema.Literal("function")
 }).annotate({ "description": "Tool call made by the assistant", "identifier": "ChatToolCall" })
 export type Union_ = {
@@ -27880,42 +27882,6 @@ export const CreateAudioTranscriptionsParams = Schema.Struct({
 })
 export type CreateAudioTranscriptionsRequestJson = STTRequest
 export const CreateAudioTranscriptionsRequestJson = STTRequest
-export type CreateAudioTranscriptionsRequestFormData = {
-  readonly "file": string
-  readonly "language"?: string
-  readonly "model": string
-  readonly "response_format"?: "json" | "verbose_json"
-  readonly "temperature"?: number
-  readonly "timestamp_granularities[]"?: ReadonlyArray<"word" | "segment">
-}
-export const CreateAudioTranscriptionsRequestFormData = Schema.Struct({
-  "file": Schema.String.annotate({
-    "description":
-      "The audio file to transcribe. The format is derived from the filename extension or the file part content type. Max 25 MB; send larger files as base64 JSON via input_audio.",
-    "format": "binary"
-  }),
-  "language": Schema.optionalKey(
-    Schema.String.annotate({ "description": "The language of the input audio (ISO-639-1)." })
-  ),
-  "model": Schema.String.annotate({ "description": "The model to use for transcription." }),
-  "response_format": Schema.optionalKey(
-    Schema.Literals(["json", "verbose_json"]).annotate({
-      "description":
-        "The response format. \"json\" (default) returns { text, usage }; \"verbose_json\" additionally returns task, language, duration, and segment-level timestamps (OpenAI-compatible providers only)."
-    })
-  ),
-  "temperature": Schema.optionalKey(
-    Schema.Number.annotate({ "description": "The sampling temperature." }).check(
-      Schema.isFinite().annotate({ "expected": "a finite number" })
-    )
-  ),
-  "timestamp_granularities[]": Schema.optionalKey(
-    Schema.Array(Schema.Literals(["word", "segment"])).annotate({
-      "description":
-        "Timestamp detail levels to include when response_format is \"verbose_json\". \"word\" additionally returns word-level timestamps in the words array."
-    })
-  )
-})
 export type CreateAudioTranscriptions200 = STTResponse
 export const CreateAudioTranscriptions200 = STTResponse
 export type CreateAudioTranscriptions400 = BadRequestResponse
@@ -32916,7 +32882,7 @@ export const make = (
           "X-OpenRouter-Title": options.params?.["X-OpenRouter-Title"] ?? undefined,
           "X-OpenRouter-Categories": options.params?.["X-OpenRouter-Categories"] ?? undefined
         }),
-        HttpClientRequest.bodyFormData(options.payload as any),
+        HttpClientRequest.bodyJsonUnsafe(options.payload),
         withResponse(options.config)(HttpClientResponse.matchStatus({
           "2xx": decodeSuccess(CreateAudioTranscriptions200),
           "400": decodeError("CreateAudioTranscriptions400", CreateAudioTranscriptions400),
@@ -34629,7 +34595,7 @@ export interface OpenRouterClient {
   readonly "createAudioTranscriptions": <Config extends OperationConfig>(
     options: {
       readonly params?: typeof CreateAudioTranscriptionsParams.Encoded | undefined
-      readonly payload: typeof CreateAudioTranscriptionsRequestFormData.Encoded
+      readonly payload: typeof CreateAudioTranscriptionsRequestJson.Encoded
       readonly config?: Config | undefined
     }
   ) => Effect.Effect<

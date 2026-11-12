@@ -107,7 +107,7 @@ Before you save the token in GitHub, put it in `infra/.env` with the account ID 
 The plan fails in CI if the account has no Alchemy state store, because the CLI cannot prompt there. If you have not run `pnpm dev` or a deploy against this account before, create the store once from your machine:
 
 ```sh
-pnpm --filter @repo/infra exec alchemy provider cloudflare bootstrap
+pnpm --filter @repo/infra exec alchemy state bootstrap
 ```
 
 ## Attach the custom domain

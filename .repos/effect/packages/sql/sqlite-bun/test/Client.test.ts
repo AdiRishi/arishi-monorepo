@@ -1,11 +1,30 @@
 import { assert, describe, it } from "@effect/vitest"
-import { Cause, Duration, Effect, Exit } from "effect"
+import { Cause, Deferred, Duration, Effect, Exit, Fiber } from "effect"
 import { Reactivity } from "effect/reactivity"
+import { SqlError } from "effect/sql/SqlError"
+import { TestClock } from "effect/testing"
 import { rejects } from "node:assert/strict"
-import { rm, stat } from "node:fs/promises"
+import { mkdtemp, rm, stat } from "node:fs/promises"
+import { tmpdir } from "node:os"
+import { join } from "node:path"
 import { pathToFileURL } from "node:url"
 
 const isBun = "bun" in process.versions
+
+const makeLockedDatabase = Effect.gen(function*() {
+  const { Database } = yield* Effect.promise(() => import("bun:sqlite"))
+  const dir = yield* Effect.acquireRelease(
+    Effect.promise(() => mkdtemp(join(tmpdir(), "effect-sqlite-bun-"))),
+    (dir) => Effect.promise(() => rm(dir, { recursive: true, force: true }))
+  )
+  const filename = join(dir, "test.db")
+  const lock = yield* Effect.acquireRelease(
+    Effect.sync(() => new Database(filename)),
+    (db) => Effect.sync(() => db.close())
+  )
+  lock.run("BEGIN IMMEDIATE")
+  return { filename, unlock: () => lock.run("ROLLBACK") }
+})
 
 describe("Client", () => {
   it.effect("should work", () => Effect.void)
@@ -63,6 +82,21 @@ describe("Client", () => {
         snapshot.close()
       }
     }).pipe(Effect.provide(Reactivity.layer)))
+
+  it.effect.skipIf(!isBun)(
+    "fails exports from a fiber that outlives its transaction",
+    () =>
+      Effect.gen(function*() {
+        const { SqliteClient } = yield* Effect.promise(() => import("@effect/sql-sqlite-bun"))
+        const sql = yield* SqliteClient.make({ filename: ":memory:" })
+        const go = yield* Deferred.make<void>()
+        const stale = yield* sql.withTransaction(Effect.forkChild(Effect.andThen(Deferred.await(go), sql.export)))
+        yield* Deferred.succeed(go, undefined)
+        const error = yield* Effect.flip(Fiber.join(stale))
+        assert.instanceOf(error, SqlError)
+        assert.strictEqual(error.reason.message, "SqlClient: the transaction has already ended")
+      }).pipe(Effect.provide(Reactivity.layer))
+  )
 
   it.effect.skipIf(!isBun)(
     "recovers a failed deferred commit without losing an in-memory database",
@@ -162,17 +196,11 @@ describe("Client", () => {
       const filename = `/tmp/effect-sqlite-bun-uri-missing-${crypto.randomUUID()}.db`
       yield* Effect.acquireRelease(Effect.void, () => Effect.promise(() => rm(filename, { force: true })))
 
-      yield* Effect.promise(async () => {
-        await rejects(
-          Effect.runPromise(
-            Effect.scoped(SqliteClient.make({ filename: pathToFileURL(filename).href, create: false })).pipe(
-              Effect.provide(Reactivity.layer)
-            )
-          ),
-          /unable to open database file/i
-        )
-        await rejects(stat(filename), { code: "ENOENT" })
-      })
+      const error = yield* Effect.flip(
+        Effect.scoped(SqliteClient.make({ filename: pathToFileURL(filename).href, create: false }))
+      )
+      assert.strictEqual(error.reason._tag, "ConnectionError")
+      yield* Effect.promise(() => rejects(stat(filename), { code: "ENOENT" }))
     }).pipe(Effect.provide(Reactivity.layer)))
 
   it.effect.skipIf(!isBun)("create implies readwrite for file: URIs", () =>
@@ -184,5 +212,28 @@ describe("Client", () => {
       yield* sql`CREATE TABLE test (id INTEGER PRIMARY KEY)`
       yield* sql`INSERT INTO test (id) VALUES (1)`
       assert.deepStrictEqual(yield* sql`SELECT * FROM test`, [{ id: 1 }])
+    }).pipe(Effect.provide(Reactivity.layer)))
+
+  it.effect.skipIf(!isBun)("retries enabling WAL while the database is locked", () =>
+    Effect.gen(function*() {
+      const { SqliteClient } = yield* Effect.promise(() => import("@effect/sql-sqlite-bun"))
+      const { filename, unlock } = yield* makeLockedDatabase
+      const fiber = yield* SqliteClient.make({ filename }).pipe(Effect.forkChild({ startImmediately: true }))
+      unlock()
+      yield* TestClock.adjust("10 millis")
+      const sql = yield* Fiber.join(fiber)
+      assert.deepStrictEqual(yield* sql`PRAGMA journal_mode`, [{ journal_mode: "wal" }])
+    }).pipe(Effect.provide(Reactivity.layer)))
+
+  it.effect.skipIf(!isBun)("fails to enable WAL with a typed error after busyTimeout", () =>
+    Effect.gen(function*() {
+      const { SqliteClient } = yield* Effect.promise(() => import("@effect/sql-sqlite-bun"))
+      const { filename } = yield* makeLockedDatabase
+      const fiber = yield* SqliteClient.make({ filename, busyTimeout: "1 second" }).pipe(
+        Effect.forkChild({ startImmediately: true })
+      )
+      yield* TestClock.adjust("2 seconds")
+      const error = yield* Effect.flip(Fiber.join(fiber))
+      assert.strictEqual(error.reason._tag, "LockTimeoutError")
     }).pipe(Effect.provide(Reactivity.layer)))
 })
