@@ -33,4 +33,4 @@ The tests reach a Worker only as Cloudflare and its neighbours do: `exports.defa
 
 ## Integration journeys
 
-`infra/tests/integration/local-stack.test.ts` runs the stack with Alchemy and then the Playwright journeys beside it. It calls `Test.make` itself, because Alchemy's cleanup hook must run after `afterAll(destroy(Stack))`. A journey starts from an empty stack, so it creates what it needs.
+`infra/tests/integration/local-stack.test.ts` runs the stack with Alchemy and then the Playwright journeys beside it. A journey starts from an empty stack, so it creates what it needs.

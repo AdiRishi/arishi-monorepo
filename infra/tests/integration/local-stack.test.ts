@@ -1,5 +1,5 @@
-import * as Cloudflare from "alchemy/Cloudflare";
-import * as Test from "alchemy/Test/Vitest";
+import * as Cloudflare from "@alchemy.run/cloudflare";
+import * as Test from "@alchemy.run/test/Vitest";
 import * as Effect from "effect/Effect";
 import { HttpClient, HttpClientResponse } from "effect/http";
 import { ChildProcess, ChildProcessSpawner } from "effect/process";
@@ -11,8 +11,7 @@ import Stack from "../../alchemy.run.ts";
 
 /*
  * Runs the whole stack locally, as `pnpm dev` does, then follows people
- * through it with the Playwright journeys in `journeys/`. Test.make stays in
- * this file: Alchemy's cleanup hook must run after `afterAll(destroy(Stack))`.
+ * through it with the Playwright journeys in `journeys/`.
  */
 
 const { test, beforeAll, afterAll, deploy, destroy } = Test.make({

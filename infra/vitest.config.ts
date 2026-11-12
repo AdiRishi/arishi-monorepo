@@ -13,9 +13,6 @@ export default defineConfig({
         test: {
           name: "integration",
           include: ["tests/integration/*.test.ts"],
-          // Alchemy registers its cleanup after our destroy hook. Run hooks in
-          // registration order so destroy(Stack) can still use the local runtime.
-          sequence: { hooks: "list" },
           fileParallelism: false,
         },
       },

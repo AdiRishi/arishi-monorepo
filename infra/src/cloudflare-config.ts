@@ -3,7 +3,7 @@
  * Alchemy's local runtime pins workerd, which refuses compatibility dates after
  * its build, so the date can move no later than that pin under `pnpm dev`.
  */
-export const workerCompatibility = { date: "2026-09-18" };
+export const workerCompatibility = { date: "2026-10-26" };
 
 export const workerObservability = {
   enabled: true,
