@@ -17,12 +17,10 @@ catalog:
   "@base-ui/react": 1.9.0
   "@cloudflare/vitest-plugin": 1.7.0
   "@cloudflare/workers-types": 5.20261110.1
-  "@effect/platform-browser": 4.1.3
   "@effect/platform-bun": 4.1.3
   "@effect/platform-node": 4.1.3
   "@effect/platform-node-shared": 4.1.3
   "@effect/sql-d1": 4.1.3
-  "@effect/sql-sqlite-do": 4.1.3
   "@effect/tsgo": 0.67.7
   "@effect/vitest": 4.1.3
   "@fontsource-variable/inter": 5.3.0
@@ -32,7 +30,6 @@ catalog:
   "@tanstack/devtools-vite": 0.8.6
   "@tanstack/react-devtools": 0.10.14
   "@tanstack/react-query": 5.107.1
-  "@tanstack/react-query-devtools": 5.107.1
   "@tanstack/react-router": 1.170.46
   "@tanstack/react-router-devtools": 1.167.3
   "@tanstack/react-router-ssr-query": 1.167.3
@@ -68,7 +65,6 @@ catalog:
   vite: 8.3.8
   vitest: 5.1.0
   vitest-browser-react: 2.3.0
-  web-vitals: 6.2.3
   yaml: 2.9.1
 
 allowBuilds:
@@ -87,12 +83,10 @@ minimumReleaseAge: 1440
 # depends on Effect packages with caret ranges. Hold every Effect package, direct
 # or transitive, to the catalog's version.
 overrides:
-  "@effect/platform-browser": "catalog:"
   "@effect/platform-bun": "catalog:"
   "@effect/platform-node": "catalog:"
   "@effect/platform-node-shared": "catalog:"
   "@effect/sql-d1": "catalog:"
-  "@effect/sql-sqlite-do": "catalog:"
   "@effect/vitest": "catalog:"
   effect: "catalog:"
 

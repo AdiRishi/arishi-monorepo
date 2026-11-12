@@ -39,7 +39,6 @@
   "devDependencies": {
     "@alchemy.run/test": "catalog:",
     "@cloudflare/workers-types": "catalog:",
-    "@effect/platform-browser": "catalog:",
     "@effect/vitest": "catalog:",
     "@playwright/test": "catalog:",
     "@repo/tsconfig": "workspace:*",
