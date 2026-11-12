@@ -13,12 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/setup@v2
-        with:
-          runtime: node@24
-          cache: true
-          install: false
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - run: pnpm check
       - run: pnpm typecheck
       - run: pnpm --filter @repo/web exec playwright install --with-deps chromium
@@ -38,12 +33,7 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/setup@v2
-        with:
-          runtime: node@24
-          cache: true
-          install: false
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - run: pnpm --filter @repo/infra exec alchemy provider check-env --provider Cloudflare
       - run: pnpm plan
       - run: pnpm prod

@@ -6,7 +6,7 @@ The platform hosts one TanStack Start web app, `apps/web`, and an internal API W
 
 ## Run it locally
 
-Use Node.js 24 and Corepack:
+Use Node.js 26 and Corepack:
 
 ```sh
 corepack enable
