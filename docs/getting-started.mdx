@@ -14,6 +14,17 @@ corepack enable
 pnpm install
 ```
 
+## Share the build cache
+
+Turbo reads and writes a shared remote cache at `turbo-cache.adishwar-rishi.com`, configured under `remoteCache` in `turbo.json`. A task that already ran in CI or on another machine with the same inputs replays from the cache. Export the cache credentials in your shell profile:
+
+```sh
+export TURBO_TOKEN=<token>
+export TURBO_REMOTE_CACHE_SIGNATURE_KEY=<signing key>
+```
+
+Turbo signs each upload with the key and rejects downloads without a valid signature, so every machine needs the same key. Without `TURBO_TOKEN`, Turbo prints `Remote caching disabled` and uses the local cache only.
+
 ## Run the application
 
 From the repository root:

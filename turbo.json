@@ -3,6 +3,11 @@
   "ui": "stream",
   "globalDependencies": [".node-version", "pnpm-workspace.yaml"],
   "globalPassThroughEnv": ["ALCHEMY_*", "CLOUDFLARE_*"],
+  "remoteCache": {
+    "apiUrl": "https://turbo-cache.adishwar-rishi.com",
+    "teamId": "team_arishi_monorepo",
+    "signature": true
+  },
   "tasks": {
     "transit": {
       "dependsOn": ["^transit"]
