@@ -15,6 +15,9 @@ workspace by relative path, as `@repo/infra` imports `workers/*`, lists those
 paths in its own `transit` inputs in `turbo.json`. Without them, a cached
 result survives a change it should not.
 
+Build interactive UI from ui-sdk components. Before writing or checking UI,
+follow the ui-sdk skill and read `apps/web/AGENTS.md`.
+
 Run `pnpm check`, `pnpm typecheck`, and `pnpm test` before committing.
 
 `.repos/` contains read-only source references. When writing Effect code, read

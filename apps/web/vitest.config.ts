@@ -1,6 +1,7 @@
 import type { WebsiteEnv } from "@repo/infra/worker-bindings";
 import { text, unreachable, workerTest } from "@repo/testing/worker-config";
 import tailwindcss from "@tailwindcss/vite";
+import { wgslVitePlugin } from "@vgpu/wgsl/loader-vite";
 import viteReact from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vitest/config";
@@ -20,7 +21,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [tailwindcss(), viteReact()],
+        plugins: [tailwindcss(), viteReact(), wgslVitePlugin()],
         test: {
           name: "browser",
           include: ["tests/**/*.test.tsx"],

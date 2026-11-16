@@ -1,0 +1,24 @@
+---
+title: Build the interface with ui-sdk and test it through the agent bridge
+description: Interactive components come from ui-sdk, and tests and agents use them through its agent bridge.
+sidebar:
+  label: Interface
+---
+
+The web app builds every interactive component from [ui-sdk](https://ui-sdk.dev). Its React components bring keyboard handling, focus, ARIA and server rendering, and no styles. The app styles them with Tailwind through their `data-*` state attributes. Links and text stay plain HTML.
+
+ui-sdk also ships an **agent bridge**: `createAgent()` lists the page's components by accessible name, with their state and actions (`snapshot`), and runs those actions through each component's API (`act`). The app uses the bridge in three places:
+
+- **Browser agents.** The app registers the bridge's tools with WebMCP, so an agent built into the browser can read and use the page.
+- **Coding agents.** In development the page exposes the bridge as `window.agent`. An agent checking a change evaluates `agent.snapshot()` and `agent.act()` in the page. That returns names and state, where a screenshot returns pixels.
+- **Tests.** Browser tests render the page in Chromium and drive its controls through the bridge and the keyboard. Each test asserts the names an agent and a screen reader rely on. An unnamed control fails the snapshot assertion.
+
+[Write tests](/testing#interface-tests) has the rules for interface tests.
+
+## Considered options
+
+shadcn/ui on Base UI was the previous library. The app used none of its components, and it has no agent bridge, so tests and agents had to find controls through the DOM.
+
+Driving the page with Playwright-style clicks and screenshots works with any library. It is slower for agents, and its assertions follow markup rather than the names people and agents use.
+
+ui-sdk is in beta. Its components ship docs for the installed version in `node_modules/@ui-sdk/react/docs/`, and the repository pins the version in the pnpm catalog.

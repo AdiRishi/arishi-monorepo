@@ -3,7 +3,8 @@ import { type QueryClient } from "@tanstack/react-query";
 import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import paperCss from "@/global-styles/paper.css?url";
+import { Toasts } from "@/components/toasts";
+
 import appCss from "@/global-styles/tailwind.css?url";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
@@ -27,7 +28,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "stylesheet", href: appCss },
-      { rel: "stylesheet", href: paperCss },
     ],
   }),
   shellComponent: RootDocument,
@@ -36,11 +36,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function NotFound() {
   return (
-    <main className="not-found">
-      <p className="eyebrow">404</p>
-      <h1>There&apos;s no page at this address.</h1>
+    <main className="grid min-h-[80vh] content-center px-[clamp(28px,8vw,96px)]">
+      <p className="mb-[18px] font-mono text-caption tracking-[0.2em] text-mute uppercase">404</p>
+      <h1 className="mb-[0.6em] text-[clamp(2rem,5vw,4rem)] font-light tracking-[-0.015em]">
+        There&apos;s no page at this address.
+      </h1>
       <p>
-        <a href="/">Go to the home page</a>
+        <a
+          href="/"
+          className="font-mono text-caption tracking-label text-mute uppercase hover:text-accent"
+        >
+          Go to the home page
+        </a>
       </p>
     </main>
   );
@@ -54,6 +61,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <Toasts />
         <TanStackDevtools
           config={{ position: "bottom-right" }}
           plugins={[{ name: "Tanstack Router", render: <TanStackRouterDevtoolsPanel /> }]}
