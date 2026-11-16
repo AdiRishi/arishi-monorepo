@@ -8,23 +8,23 @@ import { useEffect, useState } from "react";
 
 import { sections } from "./content";
 
-/** The section crossing a band just above the middle of the window, or null above the first. */
+const readingBand = { rootMargin: "-40% 0px -59% 0px" };
+
 function useSectionInView(ids: readonly string[]) {
   const [current, setCurrent] = useState<string | null>(null);
 
   useEffect(() => {
+    const inBand = new Set<string>();
     const observers = ids.flatMap((id) => {
       const section = document.getElementById(id);
       if (!section) return [];
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) setCurrent(id);
-            else setCurrent((shown) => (shown === id ? null : shown));
-          }
-        },
-        { rootMargin: "-40% 0px -59% 0px" },
-      );
+      const observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) inBand.add(id);
+          else inBand.delete(id);
+        }
+        setCurrent(ids.findLast((candidate) => inBand.has(candidate)) ?? null);
+      }, readingBand);
       observer.observe(section);
       return [observer];
     });

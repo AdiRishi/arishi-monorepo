@@ -109,3 +109,18 @@ it("marks the section the reader has scrolled to in the navigation", async () =>
     .toHaveAttribute("aria-current", "page");
   await expect.element(nav.getByRole("link", { name: "Work" })).not.toHaveAttribute("aria-current");
 });
+
+it("keeps a section marked after the reader dips into the next one and scrolls back", async () => {
+  await renderPage();
+  const nav = page.getByRole("navigation", { name: "Sections" });
+  const work = nav.getByRole("link", { name: "Work" });
+  const projectsTop = document.getElementById("projects")?.offsetTop ?? 0;
+
+  scrollTo(0, projectsTop - innerHeight * 0.405);
+  await expect
+    .element(nav.getByRole("link", { name: "Projects" }))
+    .toHaveAttribute("aria-current", "page");
+  scrollTo(0, projectsTop - innerHeight * 0.45);
+
+  await expect.element(work).toHaveAttribute("aria-current", "page");
+});
