@@ -78,7 +78,7 @@ export const projects = [
     href: "https://www.render-md.com",
     source: "https://github.com/AdiRishi/render-md",
     description:
-      "Paste markdown or a GitHub link and read it typeset, with maths, Mermaid diagrams and highlighted code. I built it because I disliked every result for “render markdown online”. Your documents never leave the browser.",
+      "Paste Markdown or a GitHub link and read it typeset, with maths, Mermaid diagrams and highlighted code. I built it because I disliked every result for “render markdown online”. Your documents never leave the browser.",
   },
   {
     name: "promptrc",

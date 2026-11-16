@@ -36,10 +36,10 @@ function Header() {
     <header className="veil fixed inset-x-0 top-0 z-6 pt-[env(safe-area-inset-top,0px)] pb-4">
       <div className={wrap}>
         <div className={`h-14 items-center md:h-16 ${columns}`}>
-          <div className="flex items-center justify-between gap-8 md:col-start-2">
+          <div className="flex items-center justify-between gap-4 md:col-start-2">
             <a
               href="#top"
-              className={`hidden font-mono text-label text-ink uppercase transition-[opacity,visibility] duration-300 md:block ${pastName ? "" : "invisible opacity-0"}`}
+              className={`hidden font-mono text-label whitespace-nowrap text-ink uppercase transition-[opacity,visibility] duration-300 md:block ${pastName ? "" : "invisible opacity-0"}`}
             >
               {name.latin}
             </a>
@@ -69,10 +69,10 @@ function Letterhead() {
             <time dateTime={written.dateTime}>{written.label}</time>
           </address>
           <div id="inkbox" className="@container relative mt-9 w-full md:mt-7">
-            <h1 className="penned pt-[0.05em] pl-[0.1em] text-[25.06cqw] leading-[0.92] font-light italic sm:text-[16.06cqw] sm:whitespace-nowrap">
+            <h1 className="penned pt-[0.05em] pl-[0.1em] text-[25.06cqw] leading-[0.92] font-light italic sm:relative sm:top-[0.02em] sm:text-[16.06cqw] sm:whitespace-nowrap">
               {name.latin}
             </h1>
-            <Hindi className="penned block pl-[0.07em] text-[8.5cqw] leading-[1.2] sm:text-[4.82cqw]">
+            <Hindi className="penned block pl-[0.07em] text-[8.5cqw] leading-[1.2] sm:relative sm:top-[0.18em] sm:text-[4.82cqw]">
               {name.devanagari}
             </Hindi>
           </div>
@@ -151,7 +151,7 @@ function Footer() {
         <p
           className={`${label} flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-line pt-5 md:col-start-2`}
         >
-          <span>Set in Newsreader, Geist Mono and Tiro Devanagari</span>
+          <span className="text-balance">Set in Newsreader, Geist Mono and Tiro Devanagari</span>
           <a href="#top" className="whitespace-nowrap transition-colors hover:text-accent">
             Back to the top
             <Arrow glyph="↑" />
@@ -242,7 +242,7 @@ export function PaperPage() {
           sketch="payments"
         >
           <WorkHistory />
-          <p className="mt-5 text-note text-mute">
+          <p className="mt-5 text-note text-pretty text-mute">
             I studied software engineering at UNSW from 2014 to 2017.
           </p>
         </Section>
@@ -286,12 +286,14 @@ export function PaperPage() {
             <>
               <p>
                 When I’m not writing code, I’m usually out for a walk in the park or deep in a long
-                single-player game. <cite>The Witcher 3</cite>, <cite>Red Dead Redemption 2</cite>{" "}
-                and <cite>God of War</cite> are my favourites.
+                single-player game. <cite className="whitespace-nowrap">The Witcher 3</cite>,{" "}
+                <cite className="whitespace-nowrap">Red Dead Redemption 2</cite> and{" "}
+                <cite className="whitespace-nowrap">God of War</cite> are my favourites.
               </p>
               <p>
-                I watch anime too. The two I’d recommend are <cite>Vinland Saga</cite> and{" "}
-                <cite>Attack on Titan</cite>.
+                I watch anime too. The two I’d recommend are{" "}
+                <cite className="whitespace-nowrap">Vinland Saga</cite> and{" "}
+                <cite className="whitespace-nowrap">Attack on Titan</cite>.
               </p>
             </>
           }

@@ -39,7 +39,7 @@
     display: none;
   }
   @media (scripting: none) {
-    .penned {
+    [data-state="boot"] .penned {
       opacity: 1;
       animation: none;
     }
