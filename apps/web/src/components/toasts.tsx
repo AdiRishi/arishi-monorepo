@@ -11,8 +11,8 @@ export function Toasts() {
     >
       {() => (
         <Toast className="border border-line bg-paper px-5 py-4 shadow-[0_10px_30px_-12px_rgb(23_22_28/0.35)] transition-[opacity,translate] duration-300 select-none data-ending-style:translate-y-2 data-ending-style:opacity-0 data-starting-style:translate-y-2 data-starting-style:opacity-0 motion-reduce:transition-none">
-          <ToastTitle className="font-mono text-caption tracking-label text-ink uppercase in-data-[type=error]:text-accent" />
-          <ToastDescription className="mt-1 font-light text-mute" />
+          <ToastTitle className="font-mono text-label text-ink uppercase in-data-[type=error]:text-accent" />
+          <ToastDescription className="mt-1 text-note text-mute" />
         </Toast>
       )}
     </ToastRegion>

@@ -37,7 +37,5 @@ it("renders the section navigation and the work history on the server", async ()
   expect(await attributesOf(html, '[data-slot="timeline-item"]', ["role", "tabindex"])).toEqual([
     { role: "listitem", tabindex: "0" },
     { role: "listitem", tabindex: "-1" },
-    { role: "listitem", tabindex: "-1" },
-    { role: "listitem", tabindex: "-1" },
   ]);
 });

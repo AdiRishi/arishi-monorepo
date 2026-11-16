@@ -22,12 +22,16 @@ export interface SceneState {
   latinF: number;
   bodyF: number;
   headF: number;
+  /** How far the page has scrolled, in viewport heights. */
+  scroll: number;
   /** True when the drawings canvas changed since the last frame. */
   drawChanged: boolean;
 }
 
 export interface Renderer {
   render(s: SceneState): void;
+  /** Replaces the name mask, for when the name is laid out again at another width. */
+  setName(name: RawImage): void;
   dispose(): void;
 }
 
@@ -81,25 +85,26 @@ async function createWebGpu(
     ]);
     return t;
   };
-  const inkTex = texture(gpu, {
-    kind: "2d",
-    size: [name.width, name.height],
-    format: "rgba8unorm",
-    usage: ["texture_binding", "copy_dst"],
-    label: "name",
-  });
-  gpu.gpu.queue.writeTexture({ texture: inkTex.gpu }, name.data, { bytesPerRow: name.width * 4 }, [
-    name.width,
-    name.height,
-  ]);
+  const uploadName = (image: RawImage): Texture => {
+    const t = texture(gpu, {
+      kind: "2d",
+      size: [image.width, image.height],
+      format: "rgba8unorm",
+      usage: ["texture_binding", "copy_dst"],
+      label: "name",
+    });
+    gpu.gpu.queue.writeTexture({ texture: t.gpu }, image.data, { bytesPerRow: image.width * 4 }, [
+      image.width,
+      image.height,
+    ]);
+    return t;
+  };
+  let inkTex = uploadName(name);
   // a canvas-backed texture that follows the canvas size
   const dynamic = (initial: Texture, src: HTMLCanvasElement, bind: string) => {
     let tex = initial;
     const label = bind;
     return {
-      get tex() {
-        return tex;
-      },
       update() {
         if (tex.gpu.width !== src.width || tex.gpu.height !== src.height) {
           const next = upload(src, label);
@@ -132,6 +137,7 @@ async function createWebGpu(
         bodyF: 0,
         headF: 0,
         tipOn: 0,
+        scroll: 0,
       },
       inkTex,
       drawTex,
@@ -164,10 +170,17 @@ async function createWebGpu(
             bodyF: s.bodyF,
             headF: s.headF,
             tipOn: s.tipOn,
+            scroll: s.scroll,
           },
         });
         fr.pass(surf, paperFx);
       });
+    },
+    setName(image) {
+      const next = uploadName(image);
+      paperFx.set({ inkTex: next });
+      inkTex.destroy();
+      inkTex = next;
     },
     dispose() {
       paperFx.dispose();
@@ -227,17 +240,12 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
     bodyF: u("uBodyF"),
     headF: u("uHeadF"),
     tipOn: u("uTipOn"),
+    scroll: u("uScroll"),
     ink: u("uInk"),
     draw: u("uDraw"),
     wash: u("uWash"),
   };
-  const makeTex = (src: HTMLCanvasElement | RawImage) => {
-    const t = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, t);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  const fill = (src: HTMLCanvasElement | RawImage) => {
     if (src instanceof HTMLCanvasElement)
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src);
     else
@@ -252,6 +260,15 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
         gl.UNSIGNED_BYTE,
         src.data,
       );
+  };
+  const makeTex = (src: HTMLCanvasElement | RawImage) => {
+    const t = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, t);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    fill(src);
     return t;
   };
   const inkTex = makeTex(name),
@@ -292,7 +309,13 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
       gl.uniform1f(U.bodyF, s.bodyF);
       gl.uniform1f(U.headF, s.headF);
       gl.uniform1f(U.tipOn, s.tipOn);
+      gl.uniform1f(U.scroll, s.scroll);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
+    },
+    setName(image) {
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, inkTex);
+      fill(image);
     },
     dispose() {
       removeEventListener("resize", resize);

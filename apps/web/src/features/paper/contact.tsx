@@ -2,18 +2,18 @@ import { Button } from "@ui-sdk/react/button";
 import { toast } from "@ui-sdk/react/toast";
 
 import { email, profiles } from "./content";
+import { Arrow, label } from "./section";
 
-const row =
-  "col-span-full grid grid-cols-subgrid items-baseline gap-y-1 border-b border-line py-[18px]";
-const name = "text-[clamp(1.3rem,2.2vw,1.8rem)] leading-[1.1] tracking-[-0.01em]";
-const handle = "font-light wrap-anywhere text-mute xs:text-right";
+const row = "flex items-baseline justify-between gap-x-4 border-b border-line xs:gap-x-6";
+const value =
+  "text-[clamp(1.125rem,5.8vw,1.375rem)] leading-[1.2] tracking-[-0.01em] transition-colors group-hover:text-accent md:text-title";
 
 async function copyEmail() {
   try {
     await navigator.clipboard.writeText(email);
     toast.success("Email address copied", { id: "copy-email", description: email });
   } catch {
-    toast.error("Couldn't copy the address", {
+    toast.error("Couldn’t copy the address", {
       id: "copy-email",
       description: `Write to ${email}.`,
     });
@@ -22,36 +22,36 @@ async function copyEmail() {
 
 export function ContactList() {
   return (
-    <ul className="grid grid-cols-1 gap-x-5 border-t border-line xs:grid-cols-[minmax(0,1fr)_auto_auto]">
-      {profiles.map((profile) => (
-        <li key={profile.name} className={row}>
-          <a
-            href={profile.href}
-            target="_blank"
-            rel="noopener"
-            className="group col-span-2 grid grid-cols-subgrid items-baseline gap-y-1"
-          >
-            <span className={`${name} group-hover:text-accent`}>{profile.name}</span>
-            <span className={handle}>{profile.handle}</span>
-          </a>
-        </li>
-      ))}
-      <li className={row}>
+    <ul className="border-t border-line">
+      <li className={`${row} flex-wrap`}>
         <a
           href={`mailto:${email}`}
-          className="group col-span-2 grid grid-cols-subgrid items-baseline gap-y-1"
+          aria-label={`Email ${email}`}
+          className={`group py-4 whitespace-nowrap ${value}`}
         >
-          <span className={`${name} group-hover:text-accent`}>Email</span>
-          <span className={handle}>{email}</span>
+          {email}
         </a>
         <Button
           aria-label="Copy email address"
           onClick={copyEmail}
-          className="justify-self-start py-1 font-mono text-label tracking-label text-mute uppercase hover:text-accent data-pending:cursor-progress xs:justify-self-end"
+          className="-mr-2 ml-auto px-2 py-2 font-mono text-label text-ink uppercase transition-colors hover:text-accent data-pending:cursor-progress"
         >
           Copy
         </Button>
       </li>
+      {profiles.map((profile) => (
+        <li key={profile.name}>
+          <a href={profile.href} target="_blank" rel="noopener" className={`group py-4 ${row}`}>
+            <span className={`${value} wrap-anywhere`}>{profile.handle}</span>
+            <span
+              className={`${label} whitespace-nowrap transition-colors group-hover:text-accent`}
+            >
+              {profile.name}
+              <Arrow glyph="↗" />
+            </span>
+          </a>
+        </li>
+      ))}
     </ul>
   );
 }

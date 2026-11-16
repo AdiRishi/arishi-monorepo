@@ -1,3 +1,4 @@
+import { name } from "./content";
 import { DrawingLayer } from "./drawings";
 import { buildInkMask } from "./ink";
 import type { Renderer, RendererPreference, SceneState } from "./renderer";
@@ -24,6 +25,7 @@ function find<T extends Element>(
  */
 export function startPaper(root: HTMLElement): () => void {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const narrow = matchMedia("(max-width: 639px)");
   const canvas = find(root, "#scene", HTMLCanvasElement);
   const inkbox = find(root, "#inkbox", HTMLElement);
   const nib = find(root, "#nib", SVGSVGElement);
@@ -36,28 +38,7 @@ export function startPaper(root: HTMLElement): () => void {
   let raf = 0;
   let layer: DrawingLayer | undefined;
   let renderer: Renderer | undefined;
-
-  /* ---------- reveals ---------- */
-  const io = new IntersectionObserver(
-    (es) => {
-      for (const en of es) {
-        if (!en.isIntersecting) continue;
-        en.target.classList.remove("wait");
-        en.target.classList.add("on");
-        io.unobserve(en.target);
-      }
-    },
-    { rootMargin: "0px 0px -12% 0px" },
-  );
-  if (!reduce) {
-    for (const el of root.querySelectorAll(".rv")) {
-      if (el.getBoundingClientRect().top > innerHeight * 0.92) el.classList.add("wait");
-      io.observe(el);
-    }
-    for (const el of root.querySelectorAll(".write")) io.observe(el);
-  } else {
-    for (const el of root.querySelectorAll(".write")) el.classList.add("on");
-  }
+  let stopRelaying = () => {};
 
   /* ---------- the pen ---------- */
   function penTo(x: number, y: number) {
@@ -69,32 +50,43 @@ export function startPaper(root: HTMLElement): () => void {
   }
 
   /* ---------- the writing ---------- */
+  let laidNarrow = narrow.matches;
+  async function layName() {
+    laidNarrow = narrow.matches;
+    const mask = await buildInkMask(name.latin, name.devanagari, 2048, laidNarrow);
+    if (!disposed) inkbox.style.aspectRatio = `${mask.width} / ${mask.height}`;
+    return mask;
+  }
+
   async function start() {
+    try {
+      await write();
+    } finally {
+      // Whatever stopped the pen, the name must still be on the page. Its box goes back to the
+      // stylesheet's ratio, which follows the viewport without the pen to lay it out again.
+      if (!disposed && root.dataset.state === "boot") {
+        root.dataset.state = "plain";
+        inkbox.style.aspectRatio = "";
+      }
+    }
+  }
+
+  async function write() {
     if (disposed) return;
-    const twoLines = innerWidth < 640;
-    inkbox.style.aspectRatio = twoLines ? "1.25 / 1" : "2.4 / 1";
-    const mask = await buildInkMask(
-      "Adishwar Rishi",
-      "अदिश्वर ऋषि",
-      2048,
-      twoLines ? 1.25 : 2.4,
-      twoLines,
-    );
+    let mask = await layName();
     if (disposed) return;
-    // Device pixels per CSS pixel, capped where a third pixel per side adds nothing.
-    const scale = Math.min(devicePixelRatio, 2);
     const drawingLayer = new DrawingLayer(
       [...root.querySelectorAll(".draw")].filter((el) => el instanceof HTMLElement),
       reduce,
-      scale,
     );
     layer = drawingLayer;
-    drawingLayer.update(performance.now());
     const prefer: RendererPreference = new URLSearchParams(location.search).has("gl")
       ? "webgl2"
       : "auto";
     const { createRenderer } = await rendererModule;
     if (disposed) return;
+    // Device pixels per CSS pixel, capped where a third pixel per side adds nothing.
+    const scale = Math.min(devicePixelRatio, 2);
     const r0 = await createRenderer(
       canvas,
       mask,
@@ -107,16 +99,29 @@ export function startPaper(root: HTMLElement): () => void {
       r0?.dispose();
       return;
     }
-    if (!r0) {
-      root.dataset.state = "plain";
-      return;
-    }
+    if (!r0) return;
     const active = r0;
     renderer = active;
 
     root.dataset.state = "ready";
     const t0 = performance.now() + 300;
     let lastKey = "";
+
+    // The name sits on one line or two, so crossing the breakpoint lays it out again.
+    const relay = () => {
+      layName()
+        .then((relaid) => {
+          if (disposed) return;
+          mask = relaid;
+          active.setName(relaid);
+          lastKey = "";
+        })
+        .catch(reportError);
+    };
+    narrow.addEventListener("change", relay);
+    stopRelaying = () => narrow.removeEventListener("change", relay);
+    // The viewport may have crossed the breakpoint while the renderer was loading.
+    if (narrow.matches !== laidNarrow) relay();
 
     function frame(now: number) {
       const t = reduce ? 99 : (now - t0) / 1000;
@@ -125,7 +130,9 @@ export function startPaper(root: HTMLElement): () => void {
       const latinF = 1.12 * easeInOut(span(t, W.latin));
       const bodyF = 1.14 * easeInOut(span(t, W.body));
       const headF = 1.03 * easeOut(span(t, W.head));
-      const writing = t > 0 && t < W.lift;
+      // The sketches wait their turn, so the pen never leaves the name half written.
+      const naming = t < W.lift;
+      const writing = naming && t > 0;
 
       const r = inkbox.getBoundingClientRect();
       const box: [number, number, number, number] = [
@@ -145,7 +152,7 @@ export function startPaper(root: HTMLElement): () => void {
         box[1] + my * (box[3] - box[1]),
       ];
 
-      const draw = writing ? { changed: false, tip: null } : drawingLayer.update(now);
+      const draw = naming ? { changed: false, tip: null } : drawingLayer.update(now);
       if (writing) penTo(tip[0] * innerWidth, tip[1] * innerHeight);
       else if (draw.tip) {
         penTo(draw.tip.x, draw.tip.y);
@@ -153,6 +160,8 @@ export function startPaper(root: HTMLElement): () => void {
         tip[1] = draw.tip.y / innerHeight;
       } else penUp();
 
+      // Whole device pixels, so the paper's grain does not shimmer as the page moves.
+      const scroll = Math.round(scrollY * scale) / canvas.height;
       const state: SceneState = {
         box,
         tip,
@@ -160,10 +169,21 @@ export function startPaper(root: HTMLElement): () => void {
         latinF,
         bodyF,
         headF,
+        scroll,
         drawChanged: draw.changed,
       };
       // The scene is still between animations and scrolls, so only a change gets a frame.
-      const key = [canvas.width, canvas.height, box, tip, state.tipOn, latinF, bodyF, headF].join();
+      const key = [
+        canvas.width,
+        canvas.height,
+        box,
+        tip,
+        state.tipOn,
+        latinF,
+        bodyF,
+        headF,
+        scroll,
+      ].join();
       if (draw.changed || key !== lastKey) {
         lastKey = key;
         active.render(state);
@@ -178,7 +198,7 @@ export function startPaper(root: HTMLElement): () => void {
   return () => {
     disposed = true;
     cancelAnimationFrame(raf);
-    io.disconnect();
+    stopRelaying();
     layer?.dispose();
     renderer?.dispose();
   };

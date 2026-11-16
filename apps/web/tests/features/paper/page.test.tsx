@@ -39,10 +39,10 @@ it("lets an agent read the page and copy the email address", async () => {
     "About",
     "Work",
     "Projects",
-    "Off the clock",
     "Contact",
+    "P.S.",
   ]);
-  expect(onPage[1]?.text).toContain("Engineering Team Lead at Freelancer");
+  expect(onPage[1]?.text).toContain("Freelancer.com");
 
   const result = await agent.act({ steps: [{ ref: "Copy email address", action: "press" }] });
 
@@ -63,20 +63,20 @@ it("tells the reader where to write when the browser refuses the clipboard", asy
 
   await expect
     .element(page.getByRole("region", { name: "Notifications" }))
-    .toHaveTextContent("Couldn't copy the addressWrite to adishwar.rishi@gmail.com.");
+    .toHaveTextContent("Couldn’t copy the addressWrite to adishwar.rishi@gmail.com.");
 });
 
-it("names each role by its title and describes it by its dates and summary", async () => {
+it("names each employer and describes it by its dates and story", async () => {
   await renderPage();
 
-  const role = page
+  const employer = page
     .getByRole("list", { name: "Work history" })
-    .getByRole("listitem", { name: "Engineering Team Lead at Freelancer" });
+    .getByRole("listitem", { name: "Airwallex" });
 
   await expect
-    .element(role)
+    .element(employer)
     .toHaveAccessibleDescription(
-      "2019 Managed ten engineers across two regions and took first call on production incidents.",
+      "2024–now I started on the cards team, which builds card issuing and spend management. Now I’m on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. I’ve also been setting up coding agents in our codebases and building the tooling around them.",
     );
 });
 
@@ -123,4 +123,14 @@ it("keeps a section marked after the reader dips into the next one and scrolls b
   scrollTo(0, projectsTop - innerHeight * 0.45);
 
   await expect.element(work).toHaveAttribute("aria-current", "page");
+});
+
+it("marks the last section once the page can scroll no further", async () => {
+  await renderPage();
+
+  scrollTo(0, document.documentElement.scrollHeight);
+
+  await expect
+    .element(page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: "P.S." }))
+    .toHaveAttribute("aria-current", "page");
 });

@@ -5,11 +5,10 @@
 
 @theme {
   --color-*: initial;
-  --color-paper: #efe6d6;
+  --color-paper: #f1e9da;
   --color-ink: #17161c;
-  --color-mute: rgb(23 22 28 / 0.66);
-  --color-line: rgb(23 22 28 / 0.24);
-  --color-strong: rgb(23 22 28 / 0.5);
+  --color-mute: rgb(23 22 28 / 0.72);
+  --color-line: rgb(23 22 28 / 0.2);
   --color-accent: #b23a2a;
 
   --font-*: initial;
@@ -19,9 +18,24 @@
   --default-font-family: var(--font-display);
   --default-mono-font-family: var(--font-mono);
 
-  --text-label: 10.5px;
-  --text-caption: 11px;
-  --tracking-label: 0.16em;
+  /* Monospace has two sizes: capitals for labels, lower case for dates and addresses. */
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.5;
+  --text-label--letter-spacing: 0.14em;
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.6;
+  --text-meta--letter-spacing: 0.02em;
+
+  --text-note: 1rem;
+  --text-note--line-height: 1.55;
+  --text-body: clamp(1.125rem, 1.3vw, 1.1875rem);
+  --text-body--line-height: 1.6;
+  --text-title: clamp(1.375rem, 2vw, 1.625rem);
+  --text-title--line-height: 1.2;
+  --text-title--letter-spacing: -0.01em;
+  --text-heading: clamp(2.125rem, 3.6vw, 3.25rem);
+  --text-heading--line-height: 1.05;
+  --text-heading--letter-spacing: -0.015em;
 
   --breakpoint-*: initial;
   --breakpoint-xs: 35rem;
@@ -29,13 +43,6 @@
   --breakpoint-md: 47.5rem;
   --breakpoint-lg: 56.25rem;
   --breakpoint-xl: 75rem;
-
-  --animate-cue: fade-in 1.2s ease 3s both;
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-  }
 }
 
 @layer base {
@@ -51,9 +58,10 @@
   body {
     background: var(--color-paper);
     color: var(--color-ink);
-    font-size: 18px;
-    line-height: 1.55;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
   ::selection {
@@ -61,7 +69,7 @@
     color: var(--color-paper);
   }
   :focus-visible {
-    outline: 1px solid var(--color-accent);
+    outline: 1.5px solid var(--color-accent);
     outline-offset: 4px;
   }
 }

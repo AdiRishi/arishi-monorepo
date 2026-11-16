@@ -1,10 +1,17 @@
 export const sections = {
-  about: "About",
-  work: "Work",
-  projects: "Projects",
-  offclock: "Off the clock",
-  contact: "Contact",
+  about: { name: "About", hindi: "परिचय" },
+  work: { name: "Work", hindi: "कार्य" },
+  projects: { name: "Projects", hindi: "रचना" },
+  contact: { name: "Contact", hindi: "संपर्क" },
+  ps: { name: "P.S.", hindi: "पुनश्च" },
 } as const;
+
+export const name = { latin: "Adishwar Rishi", devanagari: "आदीश्वर ऋषि" } as const;
+
+export const place = "Sydney, Australia";
+
+/** When the letter was last rewritten. Change it with the copy. */
+export const written = { dateTime: "2026-11", label: "November 2026" } as const;
 
 export const email = "adishwar.rishi@gmail.com";
 
@@ -18,117 +25,87 @@ export const profiles = [
   { name: "X", handle: "@AdishwarR", href: "https://x.com/AdishwarR" },
 ] as const;
 
-export const roles = [
+export const employers = [
   {
-    title: "Senior Software Engineer",
     company: "Airwallex",
-    companyHref: "https://www.airwallex.com",
+    href: "https://www.airwallex.com",
     dateTime: "2024",
-    when: "2024 — now",
-    where: "Sydney",
-    description: "One year on Cards and spend management, then Yield.",
-    tags: ["Cards", "Yield"],
+    when: "2024–now",
+    story:
+      "I started on the cards team, which builds card issuing and spend management. Now I’m on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. I’ve also been setting up coding agents in our codebases and building the tooling around them.",
+    roles: [{ title: "Senior Software Engineer", when: "2024–now" }],
   },
   {
-    title: "Senior Software Engineer, Tech Lead for Escrow.com",
-    company: "Freelancer",
-    companyHref: "https://www.freelancer.com",
-    dateTime: "2019",
-    when: "2019 — 2024",
-    where: "Sydney",
-    description:
-      "Led the engineering team for Escrow.com. I owned the backend services, the React front end and the AWS infrastructure.",
-    tags: ["Python", "React", "AWS", "Postgres"],
-  },
-  {
-    title: "Engineering Team Lead",
-    company: "Freelancer",
-    companyHref: "https://www.freelancer.com",
-    dateTime: "2019-02",
-    when: "2019",
-    where: "Feb — Sep",
-    description:
-      "Managed ten engineers across two regions and took first call on production incidents.",
-    tags: ["Leadership", "On-call"],
-  },
-  {
-    title: "Software Engineer",
-    company: "Freelancer",
-    companyHref: "https://www.freelancer.com",
-    dateTime: "2017",
-    when: "2017 — 2019",
-    where: "Sydney",
-    description:
-      "Rebuilt the internal escalation system end to end. I'd joined as an intern the year before.",
-    tags: ["Python", "SQL", "React"],
+    company: "Freelancer.com",
+    href: "https://www.freelancer.com",
+    dateTime: "2016",
+    when: "2016–2024",
+    story:
+      "I joined as an intern and stayed eight years. I rebuilt the internal escalation system, then spent eight months managing ten engineers across two regions and taking the first call when production broke. Most of my time went to Escrow.com, which holds a buyer’s money until the seller delivers. I owned its backend services, its React front end and its AWS infrastructure.",
+    roles: [
+      { title: "Senior Software Engineer, Tech Lead for Escrow.com", when: "2019–2024" },
+      { title: "Engineering Team Lead", when: "2019" },
+      { title: "Software Engineer", when: "2017–2019" },
+      { title: "Intern", when: "2016" },
+    ],
   },
 ] as const;
 
 export const projects = [
   {
+    name: "Turborepo remote cache",
+    href: "https://turborepo-remote-cache.dev",
+    source: "https://github.com/AdiRishi/turborepo-remote-cache-cloudflare",
+    description:
+      "A Turborepo remote cache you host yourself, so your build artefacts stay in your own storage. It began on Cloudflare Workers and now also runs on Lambda, Vercel, Netlify, Node, Bun and Deno. It’s my most used project, with about 250 stars, and every repository of my own builds with it.",
+  },
+  {
+    name: "dotagents",
+    href: "https://github.com/AdiRishi/dotagents",
+    source: "https://github.com/AdiRishi/dotagents",
+    description:
+      "How I like software built, written down for my coding agents. It holds the rules and skills that Claude Code, Codex and Cursor start from on every machine I use, and I change it constantly. Take whatever is useful.",
+  },
+  {
     name: "Moss",
     href: "https://github.com/AdiRishi/moss-meditation",
     source: "https://github.com/AdiRishi/moss-meditation",
     description:
-      "A meditation timer for iOS and Android, in development. Sessions end with a soft sound instead of an alarm, and your history stays on the phone.",
-  },
-  {
-    name: "turborepo-remote-cache-cloudflare",
-    href: "https://adirishi.github.io/turborepo-remote-cache-cloudflare/",
-    source: "https://github.com/AdiRishi/turborepo-remote-cache-cloudflare",
-    description:
-      "A Turborepo remote cache you deploy to your own Cloudflare account. It stores artefacts in R2 or KV. This is my most-used project, with about 250 stars.",
-  },
-  {
-    name: "cachified-adapter-cloudflare-kv",
-    href: "https://www.npmjs.com/package/cachified-adapter-cloudflare-kv",
-    source: "https://github.com/AdiRishi/cachified-adapter-cloudflare-kv",
-    description:
-      "The official Cloudflare KV adapter for @epic-web/cachified. It gets about 1,600 npm downloads a month.",
+      "A meditation timer for iOS and Android. I wanted something simple and peaceful, so I’m making my own. It isn’t finished yet.",
   },
   {
     name: "RenderMD",
     href: "https://www.render-md.com",
     source: "https://github.com/AdiRishi/render-md",
     description:
-      "Paste markdown or a GitHub link and read it typeset, with math, Mermaid diagrams and code highlighting. Your documents never leave the browser.",
+      "Paste Markdown or a GitHub link and read it typeset, with maths, Mermaid diagrams and highlighted code. I built it because I disliked every result for “render markdown online”. Your documents never leave the browser.",
   },
   {
     name: "promptrc",
     href: "https://promptrc.app",
     source: "https://github.com/AdiRishi/promptrc",
     description:
-      "A library for the AI prompts that worked, driven from the keyboard like a terminal app. Prompts can have fill-in blanks, and benchmarks record which models pass.",
+      "Where I keep the prompts and patterns that worked. I started it while I was learning to work with AI agents and needed somewhere to save them. You drive it from the keyboard, like a terminal app.",
+  },
+  {
+    name: "cachified KV adapter",
+    href: "https://www.npmjs.com/package/cachified-adapter-cloudflare-kv",
+    source: "https://github.com/AdiRishi/cachified-adapter-cloudflare-kv",
+    description:
+      "The Cloudflare KV adapter for @epic-web/cachified, and the one its README lists. There wasn’t one, so I wrote it. It gets about 2,000 downloads a month on npm.",
   },
 ] as const;
 
-export const pastimes = [
+export const starters = [
   {
-    name: "Gaming",
-    hindi: "खेल",
-    drawing: "controller",
-    lead: "Single-player games with a long story.",
-    favourites: [
-      { title: "The Witcher 3", credit: "CD Projekt Red, 2015" },
-      { title: "Red Dead Redemption 2", credit: "Rockstar, 2018" },
-      { title: "God of War", credit: "Santa Monica Studio, 2018" },
-    ],
+    name: "a Cloudflare application platform",
+    href: "https://github.com/AdiRishi/application-platform-starter",
   },
+  { name: "Electron with Effect", href: "https://github.com/AdiRishi/electron-effect-starter" },
+  { name: "Expo with Uniwind", href: "https://github.com/AdiRishi/expo-uniwind-starter" },
+  { name: "TanStack Start", href: "https://github.com/AdiRishi/tanstack-start-starter" },
   {
-    name: "Anime",
-    hindi: "कथा",
-    drawing: "cat",
-    lead: "Two I'd recommend.",
-    favourites: [
-      { title: "Vinland Saga", credit: "Wit Studio and MAPPA, 2019" },
-      { title: "Attack on Titan", credit: "Wit Studio and MAPPA, 2013" },
-    ],
-  },
-  {
-    name: "The beach",
-    hindi: "तट",
-    drawing: "beach",
-    lead: "Most weekends I'm at a beach.",
-    favourites: [],
+    name: "TanStack Start with SpacetimeDB",
+    href: "https://github.com/AdiRishi/tanstack-spacetimedb-starter",
   },
 ] as const;
