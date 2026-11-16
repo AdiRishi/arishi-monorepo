@@ -1,20 +1,50 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ContactList } from "./contact";
 import { email, name, place, projects, starters, written } from "./content";
 import { SectionNav } from "./nav";
-import { Section, columns, inlineLink, label, ledgerRow, meta, wrap } from "./section";
+import {
+  Arrow,
+  Hindi,
+  Section,
+  columns,
+  inlineLink,
+  label,
+  ledgerRow,
+  meta,
+  wrap,
+} from "./section";
 import { startPaper } from "./start-paper";
 import { WorkHistory } from "./work";
 
 function Header() {
+  const [pastName, setPastName] = useState(false);
+
+  useEffect(() => {
+    const inkbox = document.getElementById("inkbox");
+    if (!inkbox) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setPastName(entry !== undefined && !entry.isIntersecting),
+      { rootMargin: "-64px 0px 0px 0px" },
+    );
+    observer.observe(inkbox);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <header className="veil fixed inset-x-0 top-0 z-6 pt-[env(safe-area-inset-top,0px)] pb-5">
-      <div className={`flex h-14 items-center justify-between gap-8 md:h-16 ${wrap}`}>
-        <a href="#top" className="hidden font-mono text-label text-ink uppercase md:block">
-          {name.latin}
-        </a>
-        <SectionNav />
+    <header className="veil fixed inset-x-0 top-0 z-6 pt-[env(safe-area-inset-top,0px)] pb-4">
+      <div className={wrap}>
+        <div className={`h-14 items-center md:h-16 ${columns}`}>
+          <div className="flex items-center justify-between gap-8 md:col-start-2">
+            <a
+              href="#top"
+              className={`hidden font-mono text-label text-ink uppercase transition-[opacity,visibility] duration-300 md:block ${pastName ? "" : "invisible opacity-0"}`}
+            >
+              {name.latin}
+            </a>
+            <SectionNav />
+          </div>
+        </div>
       </div>
     </header>
   );
@@ -37,16 +67,19 @@ function Letterhead() {
             <br />
             <time dateTime={written.dateTime}>{written.label}</time>
           </address>
-          <div id="inkbox" className="relative mt-9 w-full md:mt-7">
-            <h1>{name.latin}</h1>
+          <div id="inkbox" className="relative mt-9 w-full md:mt-7 typeset:aspect-auto!">
+            <h1 className="sr-only typeset:not-sr-only typeset:text-[clamp(3.2rem,11vw,9rem)] typeset:leading-[0.95] typeset:font-light typeset:tracking-[-0.02em] typeset:italic">
+              {name.latin}
+            </h1>
+            <Hindi className="sr-only block typeset:not-sr-only typeset:mt-3 typeset:text-[clamp(1.5rem,3.4vw,2.75rem)]">
+              {name.devanagari}
+            </Hindi>
           </div>
         </div>
       </div>
     </section>
   );
 }
-
-const projectLink = "py-1 whitespace-nowrap transition-colors hover:text-accent";
 
 function Projects() {
   return (
@@ -59,28 +92,20 @@ function Projects() {
                 {project.name}
               </a>
             </h3>
-            <p className={`${label} mt-1.5 flex gap-5`}>
-              {project.href !== project.source && (
+            {project.href !== project.source && (
+              <p className={`${label} mt-1.5`}>
                 <a
-                  href={project.href}
+                  href={project.source}
                   target="_blank"
                   rel="noopener"
-                  aria-label={`Visit ${project.name}`}
-                  className={projectLink}
+                  aria-label={`Source for ${project.name}`}
+                  className="py-1 whitespace-nowrap transition-colors hover:text-accent"
                 >
-                  Visit ↗
+                  Source
+                  <Arrow glyph="↗" />
                 </a>
-              )}
-              <a
-                href={project.source}
-                target="_blank"
-                rel="noopener"
-                aria-label={`Source for ${project.name}`}
-                className={projectLink}
-              >
-                Source ↗
-              </a>
-            </p>
+              </p>
+            )}
           </div>
           <p className="max-w-[60ch]">{project.description}</p>
         </li>
@@ -107,10 +132,12 @@ function Projects() {
 
 function SignOff() {
   return (
-    <div className="mt-14">
+    <div className="mt-12">
       <p className="text-title font-light italic">Yours,</p>
-      <p className="signed draw mt-1 h-[88px] w-[168px]" data-word="Adi">
-        <span>Adi</span>
+      <p className="draw mt-1 h-[88px] w-[168px]" data-word="Adi">
+        <span className="sr-only typeset:not-sr-only typeset:text-[3.5rem] typeset:leading-none typeset:font-light typeset:italic">
+          Adi
+        </span>
       </p>
     </div>
   );
@@ -123,9 +150,10 @@ function Footer() {
         <p
           className={`${label} flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-line pt-5 md:col-start-2`}
         >
-          <span>Set in Newsreader and Geist Mono</span>
+          <span>Set in Newsreader, Geist Mono and Tiro Devanagari</span>
           <a href="#top" className="whitespace-nowrap transition-colors hover:text-accent">
-            Back to the top ↑
+            Back to the top
+            <Arrow glyph="↑" />
           </a>
         </p>
       </div>
@@ -192,7 +220,7 @@ export function PaperPage() {
               <p>
                 I&apos;m a product engineer in Sydney, currently at Airwallex. I like to own a whole
                 product, so I work on the backend, the web app and the mobile app, and I stay to
-                look after it once it ships. I enjoy the looking after as much as the building.
+                look after it once it ships. I enjoy that part as much as building it.
               </p>
               <p>
                 Lately a lot of my time goes to coding agents, at work and at home. I&apos;m slowly
@@ -209,17 +237,12 @@ export function PaperPage() {
               I&apos;ve worked at <em>two companies.</em>
             </>
           }
-          intro={
-            <p>
-              Both of them move other people&apos;s money, and I&apos;ve been a product engineer at
-              both. The newest is first.
-            </p>
-          }
+          intro={<p>Both of them look after other people&apos;s money.</p>}
           sketch="payments"
         >
           <WorkHistory />
           <p className="mt-5 text-note text-mute">
-            Before all that I studied software engineering at UNSW, from 2014 to 2017.
+            I studied software engineering at UNSW from 2014 to 2017.
           </p>
         </Section>
         <Section
@@ -248,23 +271,25 @@ export function PaperPage() {
           }
           intro={<p>Any of these will reach me.</p>}
           sketch="plane"
-        >
-          <ContactList />
-          <SignOff />
-        </Section>
+          beside={
+            <>
+              <ContactList />
+              <SignOff />
+            </>
+          }
+        />
         <Section
           id="ps"
           heading={<em>P.S.</em>}
           intro={
             <>
               <p>
-                When I&apos;m not building something I&apos;m usually out walking in the park, or
-                deep in a long single-player game. <cite>The Witcher 3</cite>,{" "}
-                <cite>Red Dead Redemption 2</cite> and <cite>God of War</cite> are the three
-                I&apos;d start again tomorrow.
+                When I&apos;m not writing code, I&apos;m usually out for a walk in the park or deep
+                in a long single-player game. <cite>The Witcher 3</cite>,{" "}
+                <cite>Red Dead Redemption 2</cite> and <cite>God of War</cite> are my favourites.
               </p>
               <p>
-                I watch anime too. If you only watch two, make them <cite>Vinland Saga</cite> and{" "}
+                I watch anime too. The two I&apos;d recommend are <cite>Vinland Saga</cite> and{" "}
                 <cite>Attack on Titan</cite>.
               </p>
             </>

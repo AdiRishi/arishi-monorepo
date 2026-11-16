@@ -25,6 +25,7 @@ function find<T extends Element>(
  */
 export function startPaper(root: HTMLElement): () => void {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const narrow = matchMedia("(max-width: 639px)");
   const canvas = find(root, "#scene", HTMLCanvasElement);
   const inkbox = find(root, "#inkbox", HTMLElement);
   const nib = find(root, "#nib", SVGSVGElement);
@@ -37,23 +38,7 @@ export function startPaper(root: HTMLElement): () => void {
   let raf = 0;
   let layer: DrawingLayer | undefined;
   let renderer: Renderer | undefined;
-
-  /* ---------- reveals ---------- */
-  const io = new IntersectionObserver(
-    (es) => {
-      for (const en of es) {
-        if (!en.isIntersecting) continue;
-        en.target.classList.add("on");
-        io.unobserve(en.target);
-      }
-    },
-    { rootMargin: "0px 0px -12% 0px" },
-  );
-  if (!reduce) {
-    for (const el of root.querySelectorAll(".write")) io.observe(el);
-  } else {
-    for (const el of root.querySelectorAll(".write")) el.classList.add("on");
-  }
+  let stopRelaying = () => {};
 
   /* ---------- the pen ---------- */
   function penTo(x: number, y: number) {
@@ -65,25 +50,37 @@ export function startPaper(root: HTMLElement): () => void {
   }
 
   /* ---------- the writing ---------- */
+  async function layName() {
+    const mask = await buildInkMask(name.latin, name.devanagari, 2048, narrow.matches);
+    if (!disposed) inkbox.style.aspectRatio = `${mask.width} / ${mask.height}`;
+    return mask;
+  }
+
   async function start() {
+    try {
+      await write();
+    } finally {
+      // Whatever stopped the pen, the name must still be on the page.
+      if (!disposed && root.dataset.state === "boot") root.dataset.state = "plain";
+    }
+  }
+
+  async function write() {
     if (disposed) return;
-    const mask = await buildInkMask(name.latin, name.devanagari, 2048, innerWidth < 640);
+    let mask = await layName();
     if (disposed) return;
-    inkbox.style.aspectRatio = `${mask.width} / ${mask.height}`;
-    // Device pixels per CSS pixel, capped where a third pixel per side adds nothing.
-    const scale = Math.min(devicePixelRatio, 2);
     const drawingLayer = new DrawingLayer(
       [...root.querySelectorAll(".draw")].filter((el) => el instanceof HTMLElement),
       reduce,
-      scale,
     );
     layer = drawingLayer;
-    drawingLayer.update(performance.now());
     const prefer: RendererPreference = new URLSearchParams(location.search).has("gl")
       ? "webgl2"
       : "auto";
     const { createRenderer } = await rendererModule;
     if (disposed) return;
+    // Device pixels per CSS pixel, capped where a third pixel per side adds nothing.
+    const scale = Math.min(devicePixelRatio, 2);
     const r0 = await createRenderer(
       canvas,
       mask,
@@ -96,16 +93,27 @@ export function startPaper(root: HTMLElement): () => void {
       r0?.dispose();
       return;
     }
-    if (!r0) {
-      root.dataset.state = "plain";
-      return;
-    }
+    if (!r0) return;
     const active = r0;
     renderer = active;
 
     root.dataset.state = "ready";
     const t0 = performance.now() + 300;
     let lastKey = "";
+
+    // The name sits on one line or two, so crossing the breakpoint lays it out again.
+    const relay = () => {
+      layName()
+        .then((relaid) => {
+          if (disposed) return;
+          mask = relaid;
+          active.setName(relaid);
+          lastKey = "";
+        })
+        .catch(reportError);
+    };
+    narrow.addEventListener("change", relay);
+    stopRelaying = () => narrow.removeEventListener("change", relay);
 
     function frame(now: number) {
       const t = reduce ? 99 : (now - t0) / 1000;
@@ -114,7 +122,9 @@ export function startPaper(root: HTMLElement): () => void {
       const latinF = 1.12 * easeInOut(span(t, W.latin));
       const bodyF = 1.14 * easeInOut(span(t, W.body));
       const headF = 1.03 * easeOut(span(t, W.head));
-      const writing = t > 0 && t < W.lift;
+      // The sketches wait their turn, so the pen never leaves the name half written.
+      const naming = t < W.lift;
+      const writing = naming && t > 0;
 
       const r = inkbox.getBoundingClientRect();
       const box: [number, number, number, number] = [
@@ -134,7 +144,7 @@ export function startPaper(root: HTMLElement): () => void {
         box[1] + my * (box[3] - box[1]),
       ];
 
-      const draw = writing ? { changed: false, tip: null } : drawingLayer.update(now);
+      const draw = naming ? { changed: false, tip: null } : drawingLayer.update(now);
       if (writing) penTo(tip[0] * innerWidth, tip[1] * innerHeight);
       else if (draw.tip) {
         penTo(draw.tip.x, draw.tip.y);
@@ -180,7 +190,7 @@ export function startPaper(root: HTMLElement): () => void {
   return () => {
     disposed = true;
     cancelAnimationFrame(raf);
-    io.disconnect();
+    stopRelaying();
     layer?.dispose();
     renderer?.dispose();
   };

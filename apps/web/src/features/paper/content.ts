@@ -31,9 +31,8 @@ export const employers = [
     href: "https://www.airwallex.com",
     dateTime: "2024",
     when: "2024–now",
-    where: "Sydney",
     story:
-      "I started on the cards team, which builds card issuing and spend management. I'm now on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. On both teams I've worked across the backend, the web app and the mobile app. I also set up the coding agents in our codebases and build the tooling around them.",
+      "I started on the cards team, which builds card issuing and spend management. Now I'm on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. Lately I also set up the coding agents in our codebases and build the tooling around them.",
     roles: [{ title: "Senior Software Engineer", when: "2024–now" }],
   },
   {
@@ -41,9 +40,8 @@ export const employers = [
     href: "https://www.freelancer.com",
     dateTime: "2016",
     when: "2016–2024",
-    where: "Sydney",
     story:
-      "I joined as an intern and stayed eight years. As a software engineer I rebuilt the internal escalation system from front to back. In 2019 I spent eight months managing ten engineers across two regions and taking the first call when production broke. After that I led engineering for Escrow.com for five years. Escrow.com holds a buyer's money until the seller delivers, and I owned its backend services, its React front end and its AWS infrastructure.",
+      "I joined as an intern and stayed eight years. As a software engineer I rebuilt the internal escalation system. In 2019 I spent eight months managing ten engineers across two regions and taking the first call when production broke. After that I spent five years as tech lead for Escrow.com, which holds a buyer's money until the seller delivers. I owned its backend services, its React front end and its AWS infrastructure.",
     roles: [
       { title: "Senior Software Engineer, Tech Lead for Escrow.com", when: "2019–2024" },
       { title: "Engineering Team Lead", when: "2019" },
@@ -56,11 +54,10 @@ export const employers = [
 export const projects = [
   {
     name: "Turborepo remote cache",
-    packageName: "turborepo-remote-cache-cloudflare",
-    href: "https://adirishi.github.io/turborepo-remote-cache-cloudflare/",
+    href: "https://turborepo-remote-cache.dev",
     source: "https://github.com/AdiRishi/turborepo-remote-cache-cloudflare",
     description:
-      "A Turborepo remote cache you host yourself, so your build artefacts stay in your own storage. It began on Cloudflare Workers and now runs on Lambda, Vercel, Node and a few others. It's my most used project, with about 250 stars, and every repository of my own builds with it.",
+      "A Turborepo remote cache you host yourself, so your build artefacts stay in your own storage. It began on Cloudflare Workers and now also runs on Lambda, Vercel, Netlify, Node, Bun and Deno. It's my most used project, with about 250 stars, and every repository of my own builds with it.",
   },
   {
     name: "dotagents",
@@ -92,11 +89,10 @@ export const projects = [
   },
   {
     name: "cachified KV adapter",
-    packageName: "cachified-adapter-cloudflare-kv",
     href: "https://www.npmjs.com/package/cachified-adapter-cloudflare-kv",
     source: "https://github.com/AdiRishi/cachified-adapter-cloudflare-kv",
     description:
-      "The official Cloudflare KV adapter for @epic-web/cachified. One didn't exist and I wanted one. It gets about 2,000 downloads a month on npm.",
+      "The Cloudflare KV adapter for @epic-web/cachified, and the one its README lists. There wasn't one, so I wrote it. It gets about 2,000 downloads a month on npm.",
   },
 ] as const;
 

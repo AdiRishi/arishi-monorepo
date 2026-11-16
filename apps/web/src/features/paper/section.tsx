@@ -9,7 +9,7 @@ export const meta = "font-mono text-meta text-mute tabular-nums";
 export const prose = "max-w-[60ch] space-y-[1em]";
 /** A list row: a name column, then the text about it. Work and Projects share it. */
 export const ledgerRow =
-  "grid grid-cols-1 items-baseline gap-x-12 gap-y-3 border-b border-line py-7 lg:grid-cols-[272px_minmax(0,1fr)]";
+  "grid grid-cols-1 items-baseline gap-x-12 gap-y-4 border-b border-line py-7 lg:grid-cols-[272px_minmax(0,1fr)]";
 export const inlineLink =
   "underline decoration-line decoration-1 underline-offset-[0.2em] transition-colors hover:text-accent hover:decoration-accent";
 
@@ -21,10 +21,15 @@ export function Hindi({ className, children }: { className: string; children: st
   );
 }
 
+/** A mark that tells sighted readers where a link goes. Its link's text already says so. */
+export function Arrow({ glyph }: { glyph: "↗" | "↑" }) {
+  return <span aria-hidden="true"> {glyph}</span>;
+}
+
 export function Sketch({ name, className = "" }: { name: SketchName; className?: string }) {
   return (
     <div
-      className={`draw relative aspect-4/3 ${className}`}
+      className={`draw relative aspect-4/3 typeset:hidden ${className}`}
       data-sketch={name}
       aria-hidden="true"
     />
@@ -36,12 +41,16 @@ export function Section({
   heading,
   intro,
   sketch,
+  beside,
   children,
 }: {
   id: keyof typeof sections;
   heading: React.ReactNode;
   intro: React.ReactNode;
   sketch: SketchName;
+  /** Sits under the introduction, beside the sketch. */
+  beside?: React.ReactNode;
+  /** Runs the full width of the body, under the introduction and the sketch. */
   children?: React.ReactNode;
 }) {
   const { name, hindi } = sections[id];
@@ -53,12 +62,16 @@ export function Section({
           <span className={`${label} md:mt-1.5 md:block`}>{name}</span>
         </p>
         <div className="min-w-0">
-          <div className="grid grid-cols-1 items-start gap-x-12 gap-y-7 xl:grid-cols-[minmax(0,1fr)_300px]">
-            <div>
-              <h2 className="write mb-[0.55em] text-heading font-light text-balance">{heading}</h2>
+          <div className="grid grid-cols-1 items-start gap-x-8 gap-y-7 md:grid-cols-[minmax(0,1fr)_176px] lg:grid-cols-[minmax(0,1fr)_240px] xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-x-12">
+            <div className="min-w-0">
+              <h2 className="mb-[0.55em] text-heading font-light text-balance">{heading}</h2>
               <div className={prose}>{intro}</div>
             </div>
-            <Sketch name={sketch} className="w-[min(64%,240px)] md:w-[260px] xl:-mt-2 xl:w-full" />
+            <Sketch
+              name={sketch}
+              className="w-[min(64%,240px)] md:col-start-2 md:row-span-2 md:row-start-1 md:w-full xl:-mt-2"
+            />
+            {beside && <div className="min-w-0 md:col-start-1 md:row-start-2">{beside}</div>}
           </div>
           {children && <div className="mt-10 md:mt-12">{children}</div>}
         </div>

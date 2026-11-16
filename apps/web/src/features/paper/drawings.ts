@@ -188,6 +188,11 @@ export interface PenUpdate {
   tip: PenTip | null;
 }
 
+/**
+ * Mask pixels per CSS pixel. The shader thresholds the mask into ink, which hardens every pixel
+ * edge, so the mask is always two pixels per CSS pixel and a 1x screen still gets smooth lines.
+ */
+const MASK_SCALE = 2;
 const WASH_BLOOM = 1400;
 const WORD_FONT = 'italic 300 100px "Newsreader"';
 /** Font size and baseline of a written word, as fractions of its element's height. */
@@ -210,14 +215,12 @@ export class DrawingLayer {
   private readonly svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   private readonly items: Item[] = [];
   private readonly reduce: boolean;
-  /** Mask pixels per CSS pixel. */
-  private readonly scale: number;
+  private readonly scale = MASK_SCALE;
   private active: Item | undefined;
   private dirty = true;
 
-  constructor(elements: Iterable<HTMLElement>, reduce: boolean, scale: number) {
+  constructor(elements: Iterable<HTMLElement>, reduce: boolean) {
     this.reduce = reduce;
-    this.scale = scale;
     const { svg } = this;
     svg.setAttribute("aria-hidden", "true");
     svg.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";

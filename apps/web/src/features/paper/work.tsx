@@ -12,34 +12,30 @@ import { inlineLink, ledgerRow, meta } from "./section";
 export function WorkHistory() {
   return (
     <Timeline aria-label="Work history" className="border-t border-line">
-      {employers.map((employer) => (
-        <TimelineItem key={employer.company} className={ledgerRow}>
+      {employers.map(({ company, href, dateTime, when, story, roles }) => (
+        <TimelineItem key={company} className={ledgerRow}>
           <div>
             <TimelineTitle
               render={({ children, ...props }) => <h3 {...props}>{children}</h3>}
               className="text-title"
             >
-              <a href={employer.href} target="_blank" rel="noopener" className={inlineLink}>
-                {employer.company}
+              <a href={href} target="_blank" rel="noopener" className={inlineLink}>
+                {company}
               </a>
             </TimelineTitle>
             <p className={`${meta} mt-1.5`}>
-              <TimelineTime dateTime={employer.dateTime}>{employer.when}</TimelineTime>
-              {" · "}
-              {employer.where}
+              <TimelineTime dateTime={dateTime}>{when}</TimelineTime>
             </p>
+            <ol className="mt-4 space-y-2.5">
+              {roles.map((role) => (
+                <li key={role.title} className="text-note leading-[1.35]">
+                  {role.title}
+                  {roles.length > 1 && <span className={`${meta} block`}>{role.when}</span>}
+                </li>
+              ))}
+            </ol>
           </div>
-          <TimelineDescription className="max-w-[60ch] lg:row-span-2">
-            {employer.story}
-          </TimelineDescription>
-          <ol className="space-y-2.5 lg:mt-2">
-            {employer.roles.map((role) => (
-              <li key={role.title} className="text-note leading-[1.35]">
-                {role.title}
-                <span className={`${meta} block`}>{role.when}</span>
-              </li>
-            ))}
-          </ol>
+          <TimelineDescription className="max-w-[60ch]">{story}</TimelineDescription>
         </TimelineItem>
       ))}
     </Timeline>

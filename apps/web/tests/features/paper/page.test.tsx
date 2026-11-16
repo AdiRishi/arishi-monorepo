@@ -76,7 +76,7 @@ it("names each employer and describes it by its dates and story", async () => {
   await expect
     .element(employer)
     .toHaveAccessibleDescription(
-      "2024–now I started on the cards team, which builds card issuing and spend management. I'm now on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. On both teams I've worked across the backend, the web app and the mobile app. I also set up the coding agents in our codebases and build the tooling around them.",
+      "2024–now I started on the cards team, which builds card issuing and spend management. Now I'm on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. Lately I also set up the coding agents in our codebases and build the tooling around them.",
     );
 });
 
@@ -123,4 +123,14 @@ it("keeps a section marked after the reader dips into the next one and scrolls b
   scrollTo(0, projectsTop - innerHeight * 0.45);
 
   await expect.element(work).toHaveAttribute("aria-current", "page");
+});
+
+it("marks the last section once the page can scroll no further", async () => {
+  await renderPage();
+
+  scrollTo(0, document.documentElement.scrollHeight);
+
+  await expect
+    .element(page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: "P.S." }))
+    .toHaveAttribute("aria-current", "page");
 });

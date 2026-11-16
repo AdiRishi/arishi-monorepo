@@ -16,13 +16,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { name: "theme-color", content: "#efe6d6" },
+      { name: "theme-color", content: "#f1e9da" },
       { title },
       { name: "description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:url", content: "https://adishwar-rishi.com/" },
       { property: "og:image", content: "https://adishwar-rishi.com/og.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content:
+          "The name Adishwar Rishi written in ink on paper, in Latin and Devanagari, above a pen sketch of Sydney Harbour.",
+      },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [

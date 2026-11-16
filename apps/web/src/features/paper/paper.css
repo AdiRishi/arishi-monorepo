@@ -1,11 +1,10 @@
-/* State that start-paper.ts sets on the page: the pen, the written name, and the reveals. */
+/* State that start-paper.ts sets on the page: the pen and the box the name is written in. */
 @layer components {
   #nib {
     transform-origin: 4px 116px;
     opacity: 0;
-    transition:
-      opacity 0.35s,
-      transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+    /* No transition on the transform: the pen is placed every frame and must stay on its ink. */
+    transition: opacity 0.2s;
     will-change: transform;
   }
   #nib.on {
@@ -21,61 +20,11 @@
       aspect-ratio: 1.75 / 1;
     }
   }
-  #inkbox h1,
-  .signed span {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: 0;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-  /* The pen writes the name and the signature. Without a renderer both are set in type instead. */
-  [data-state="plain"] #inkbox {
-    aspect-ratio: auto !important;
-  }
-  [data-state="plain"] #inkbox h1,
-  [data-state="plain"] .signed span {
-    position: static;
-    width: auto;
-    height: auto;
-    overflow: visible;
-    clip-path: none;
-    white-space: normal;
-    font-style: italic;
-    font-weight: 300;
-    letter-spacing: -0.02em;
-  }
-  [data-state="plain"] #inkbox h1 {
-    font-size: clamp(3.2rem, 11vw, 9rem);
-    line-height: 0.95;
-  }
-  [data-state="plain"] .signed span {
-    font-size: 3.5rem;
-    line-height: 1;
-  }
 
-  /* Paper that the page scrolls under: blurred so the fibre still reads, fading out below. */
+  /* Paper that the page scrolls under, fading out below. */
   .veil {
-    background: color-mix(in srgb, var(--color-paper) 80%, transparent);
-    backdrop-filter: blur(12px);
-    mask-image: linear-gradient(#000 68%, transparent);
-  }
-
-  .write {
-    mask-image: linear-gradient(90deg, #000 85%, transparent);
-    mask-size: 0% 100%;
-    mask-repeat: no-repeat;
-    transition: mask-size 1.4s cubic-bezier(0.3, 0.6, 0.2, 1);
-  }
-  .write.on {
-    mask-size: 130% 100%;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .write {
-      mask-image: none;
-    }
+    background: color-mix(in srgb, var(--color-paper) 92%, transparent);
+    backdrop-filter: blur(6px);
+    mask-image: linear-gradient(#000 76%, transparent);
   }
 }

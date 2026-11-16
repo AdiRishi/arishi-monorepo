@@ -2,10 +2,10 @@ import { Button } from "@ui-sdk/react/button";
 import { toast } from "@ui-sdk/react/toast";
 
 import { email, profiles } from "./content";
-import { label } from "./section";
+import { Arrow, label } from "./section";
 
 const row = "flex items-baseline justify-between gap-x-6 border-b border-line";
-const value = "text-title wrap-anywhere transition-colors group-hover:text-accent";
+const value = "text-title transition-colors group-hover:text-accent";
 
 async function copyEmail() {
   try {
@@ -21,17 +21,17 @@ async function copyEmail() {
 
 export function ContactList() {
   return (
-    <ul className="max-w-[680px] border-t border-line">
-      <li className={row}>
+    <ul className="border-t border-line">
+      <li className={`${row} flex-wrap`}>
         <a
           href={`mailto:${email}`}
           aria-label={`Email ${email}`}
-          className={`group flex-1 py-4 ${value}`}
+          className={`group py-4 whitespace-nowrap ${value}`}
         >
           {email}
         </a>
-        <span className={`${label} flex items-baseline gap-4`}>
-          <span className="hidden xs:inline">Email</span>
+        <span className={`${label} ml-auto flex items-baseline gap-4`}>
+          <span className="hidden xs:inline md:hidden lg:inline">Email</span>
           <Button
             aria-label="Copy email address"
             onClick={copyEmail}
@@ -44,11 +44,12 @@ export function ContactList() {
       {profiles.map((profile) => (
         <li key={profile.name}>
           <a href={profile.href} target="_blank" rel="noopener" className={`group py-4 ${row}`}>
-            <span className={value}>{profile.handle}</span>
+            <span className={`${value} wrap-anywhere`}>{profile.handle}</span>
             <span
               className={`${label} whitespace-nowrap transition-colors group-hover:text-accent`}
             >
-              {profile.name} ↗
+              {profile.name}
+              <Arrow glyph="↗" />
             </span>
           </a>
         </li>
