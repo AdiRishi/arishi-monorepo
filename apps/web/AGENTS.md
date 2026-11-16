@@ -5,9 +5,6 @@ Vite) with file-based routing from TanStack Router and TanStack Query wired into
 SSR through `@tanstack/react-router-ssr-query`. Alchemy deploys it as a
 Cloudflare Website.
 
-Before designing or restyling a page, load the `frontend-design` skill in
-`.agents/skills/frontend-design/` at the repository root.
-
 ## Run the app
 
 - `pnpm dev` at the repository root runs the whole stack through Alchemy. Use
