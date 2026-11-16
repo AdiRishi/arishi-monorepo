@@ -1,7 +1,8 @@
 /**
- * Line drawings the pen makes as the reader scrolls. Each drawing is a list of SVG paths in a
- * 400 by 300 box, in the order a hand would draw them. The layer strokes the revealed part of
- * every visible drawing into one viewport-sized mask that the paper shader renders as ink:
+ * What the pen makes as the reader scrolls: line sketches with a watercolour wash, and words
+ * written in the same italic as the name. Each sketch is a list of SVG paths in a 400 by 300 box,
+ * in the order a hand would draw them. The layer strokes the revealed part of everything visible
+ * into one viewport-sized mask that the paper shader renders as ink:
  * R = coverage, G = how recently the ink went down.
  */
 export interface Wash {
@@ -9,164 +10,97 @@ export interface Wash {
   readonly color: string;
 }
 
-export interface Drawing {
+export interface Sketch {
   readonly paths: readonly string[];
-  readonly width: number;
   /** Watercolour under the ink, filled after the lines are down. */
   readonly washes: readonly Wash[];
 }
 
-export const INK = {
-  bluegrey: "rgba(96,124,160,.55)",
-  ochre: "rgba(214,160,70,.6)",
-  sage: "rgba(120,150,100,.55)",
-  brick: "rgba(178,58,42,.62)",
-  indigo: "rgba(70,80,130,.5)",
-  teal: "rgba(90,150,150,.5)",
-  warmgrey: "rgba(150,135,115,.45)",
-  night: "rgba(70,80,130,.16)",
+const WASH = {
+  bluegrey: "rgba(96,124,160,.3)",
+  ochre: "rgba(214,160,70,.36)",
+  sage: "rgba(120,150,100,.32)",
+  brick: "rgba(178,58,42,.3)",
 };
 
-export const BOX_W = 400,
+const BOX_W = 400,
   BOX_H = 300;
+const LINE_WIDTH = 2;
 
-export const drawings = {
-  mountains: {
-    width: 3,
+export const sketches = {
+  sydney: {
     paths: [
-      "M10 242 L390 242",
-      "M0 236 L58 188 L108 214 L162 156 L228 204 L302 170 L400 238",
-      "M22 238 L96 122 L142 172 L202 78 L252 150 L294 108 L382 238",
-      "M188 100 L202 78 L214 100 M182 112 L196 96 M208 96 L222 112",
-      "M336 66 A24 24 0 1 1 288 66 A24 24 0 1 1 336 66",
-      "M62 72 q9 -9 18 0 M80 72 q9 -9 18 0",
-      "M110 54 q8 -8 16 0 M126 54 q8 -8 16 0",
+      "M8 238 L392 238",
+      "M12 204 L160 204",
+      "M26 204 Q86 108 146 204",
+      "M36 204 Q86 152 136 204",
+      "M50 204 V173 M68 204 V160 M86 204 V156 M104 204 V160 M122 204 V173",
+      "M22 238 V186 L30 186 V204 M150 238 V186 L142 186 V204",
+      "M180 238 L186 226 L372 226 L378 238",
+      "M198 226 C200 170 226 122 264 98 C259 118 259 140 261 158",
+      "M242 226 C246 188 264 152 292 134 C289 152 290 170 293 187",
+      "M278 226 C282 204 294 180 312 168 C310 188 316 210 324 226",
+      "M368 226 C366 196 352 168 330 152 C334 178 332 206 324 226",
+      "M348 62 A18 18 0 1 1 312 62 A18 18 0 1 1 348 62",
+      "M60 74 q8 -8 16 0 M76 74 q8 -8 16 0",
+      "M118 54 q7 -7 14 0 M132 54 q7 -7 14 0",
+      "M44 256 q9 -5 18 0 t18 0 M206 260 q9 -5 18 0 t18 0 t18 0 M318 254 q9 -5 18 0 t18 0",
     ],
     washes: [
       {
-        d: "M4 240 L62 192 L112 218 L166 160 L232 208 L306 174 L400 242 L400 246 L4 246 Z",
-        color: INK.bluegrey,
+        d: "M2 243 C80 238 150 246 230 241 C300 237 350 244 398 240 L394 268 C320 274 250 266 170 271 C100 275 50 268 6 272 Z",
+        color: WASH.bluegrey,
       },
-      { d: "M26 242 L100 126 L146 176 L206 82 L256 154 L298 112 L386 242 Z", color: INK.warmgrey },
-      { d: "M338 70 A22 22 0 1 1 294 70 A22 22 0 1 1 338 70", color: INK.ochre },
-      { d: "M14 246 L392 246 L392 262 L14 262 Z", color: INK.sage },
+      { d: "M352 66 A19 19 0 1 1 314 66 A19 19 0 1 1 352 66", color: WASH.ochre },
     ],
   },
-  scales: {
-    width: 3,
+  payments: {
     paths: [
-      "M150 254 L250 254",
-      "M200 254 L200 72",
-      "M190 66 A10 10 0 1 1 210 66 A10 10 0 1 1 190 66",
-      "M84 96 L316 96",
-      "M84 96 L52 182 M84 96 L116 182",
-      "M40 182 Q84 222 128 182",
-      "M316 96 L284 182 M316 96 L348 182",
-      "M272 182 Q316 222 360 182",
-      "M66 184 l8 -10 l8 10 M90 184 l8 -10 l8 10",
-      "M300 184 l10 -14 l10 14",
+      "M54 110 L228 82 Q240 81 242 92 L256 179 Q258 191 246 193 L72 221 Q60 222 58 211 L44 124 Q43 112 54 110 Z",
+      "M70 142 Q69 138 73 137 L97 134 Q101 133 101 137 L104 155 Q105 159 101 159 L77 163 Q73 164 72 160 Z",
+      "M71 151 L83 149 M91 148 L103 146",
+      "M78 193 L101 190 M113 188 L137 184 M149 182 L173 178 M184 176 L208 173",
+      "M205 114 Q214 123 208 134 M216 105 Q232 120 221 140",
+      "M262 206 A44 13 0 1 0 350 206 A44 13 0 1 0 262 206",
+      "M262 206 V220 A44 13 0 0 0 350 220 V206",
+      "M262 220 V234 A44 13 0 0 0 350 234 V220",
+      "M262 234 V248 A44 13 0 0 0 350 248 V234",
+      "M306 204 C304 188 308 172 306 156",
+      "M306 162 C292 160 282 148 284 134 C298 136 308 148 306 162",
+      "M306 176 C320 176 332 166 332 152 C318 152 306 162 306 176",
     ],
     washes: [
-      { d: "M44 186 Q88 226 132 186 Z", color: INK.ochre },
-      { d: "M276 186 Q320 226 364 186 Z", color: INK.ochre },
-      { d: "M154 250 L254 250 L254 262 L154 262 Z", color: INK.bluegrey },
-      { d: "M193 69 A10 10 0 1 1 213 69 A10 10 0 1 1 193 69", color: INK.brick },
-    ],
-  },
-  cube: {
-    width: 3,
-    paths: [
-      "M200 62 L276 106 L276 194 L200 238 L124 194 L124 106 Z",
-      "M124 106 L200 150 L276 106",
-      "M200 150 L200 238",
-      "M300 206 L336 226 L336 268 L300 288 L264 268 L264 226 Z",
-      "M264 226 L300 246 L336 226 M300 246 L300 288",
-      "M96 96 L96 204 M90 96 l12 0 M90 204 l12 0",
-      "M60 150 l24 0",
-    ],
-    washes: [
-      { d: "M204 66 L280 110 L204 154 L128 110 Z", color: INK.teal },
-      { d: "M128 110 L204 154 L204 242 L128 198 Z", color: INK.indigo },
-      { d: "M204 154 L280 110 L280 198 L204 242 Z", color: INK.ochre },
-      { d: "M304 210 L340 230 L304 250 L268 230 Z", color: INK.teal },
-    ],
-  },
-  controller: {
-    width: 3,
-    paths: [
-      "M112 118 Q112 92 138 92 L262 92 Q288 92 288 118 L302 198 Q306 226 280 226 Q256 226 246 206 L236 190 L164 190 L154 206 Q144 226 120 226 Q94 226 98 198 Z",
-      "M140 146 h40 M160 126 v40",
-      "M236 128 A7 7 0 1 1 236 142 A7 7 0 1 1 236 128",
-      "M256 146 A7 7 0 1 1 256 160 A7 7 0 1 1 256 146",
-      "M236 164 A7 7 0 1 1 236 178 A7 7 0 1 1 236 164",
-      "M216 146 A7 7 0 1 1 216 160 A7 7 0 1 1 216 146",
-      "M164 172 A11 11 0 1 1 186 172 A11 11 0 1 1 164 172",
-      "M212 180 A11 11 0 1 1 234 180 A11 11 0 1 1 212 180",
-      "M186 112 h28",
-    ],
-    washes: [
+      { d: "M50 117 L236 83 L259 185 L71 227 Z", color: WASH.bluegrey },
+      { d: "M71 140 L103 135 L107 160 L75 165 Z", color: WASH.ochre },
       {
-        d: "M116 122 Q116 96 142 96 L266 96 Q292 96 292 122 L306 202 Q310 230 284 230 Q260 230 250 210 L240 194 L168 194 L158 210 Q148 230 124 230 Q98 230 102 202 Z",
-        color: INK.bluegrey,
-      },
-      { d: "M239 131 A7 7 0 1 1 239 145 A7 7 0 1 1 239 131", color: INK.brick },
-      { d: "M259 149 A7 7 0 1 1 259 163 A7 7 0 1 1 259 149", color: INK.ochre },
-      { d: "M239 167 A7 7 0 1 1 239 181 A7 7 0 1 1 239 167", color: INK.sage },
-      { d: "M219 149 A7 7 0 1 1 219 163 A7 7 0 1 1 219 149", color: INK.teal },
-    ],
-  },
-  cat: {
-    width: 3,
-    paths: [
-      "M20 232 L380 232",
-      "M20 252 L380 252 M80 232 v20 M160 232 v20 M240 232 v20 M320 232 v20",
-      "M232 232 Q214 176 250 150 Q286 176 268 232",
-      "M236 150 Q250 118 264 150",
-      "M238 150 L234 130 L248 140",
-      "M262 150 L266 130 L252 140",
-      "M268 226 Q302 214 296 184 Q290 162 274 172",
-      "M118 68 A42 42 0 1 0 150 128 A34 34 0 1 1 118 68",
-      "M60 60 l0 10 M55 65 l10 0 M330 90 l0 8 M326 94 l8 0 M300 40 l0 8 M296 44 l8 0",
-    ],
-    washes: [
-      { d: "M24 24 L376 24 L376 226 L24 226 Z", color: INK.night },
-      { d: "M121 72 A42 42 0 1 0 153 132 A34 34 0 1 1 121 72", color: INK.ochre },
-      { d: "M236 234 Q218 180 254 154 Q290 180 272 234 Z", color: INK.warmgrey },
-      { d: "M24 236 L376 236 L376 256 L24 256 Z", color: INK.warmgrey },
-    ],
-  },
-  beach: {
-    width: 3,
-    paths: [
-      "M10 140 L390 140",
-      "M30 168 q22 -10 44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0",
-      "M70 190 q22 -9 44 0 t44 0 t44 0 t44 0 t44 0 t44 0 t44 0",
-      "M0 208 Q130 222 230 212 Q330 202 400 214",
-      "M340 78 A30 30 0 1 1 280 78 A30 30 0 1 1 340 78",
-      "M58 214 Q130 150 202 214",
-      "M94 178 L104 214 M166 178 L156 214 M130 160 L130 214",
-      "M130 214 L120 284",
-      "M236 250 l70 -8 l6 18 l-70 8 Z",
-      "M60 96 q8 -8 16 0 M76 96 q8 -8 16 0",
-      "M106 80 q7 -7 14 0 M120 80 q7 -7 14 0",
-    ],
-    washes: [
-      {
-        d: "M4 144 L396 144 L396 216 Q330 206 230 216 Q130 226 4 212 Z",
-        color: "rgba(96,124,160,.36)",
+        d: "M258 208 C262 192 352 192 354 208 L356 250 C340 268 276 268 260 250 Z",
+        color: WASH.ochre,
       },
       {
-        d: "M4 212 Q130 226 230 216 Q330 206 396 216 L396 292 L4 292 Z",
-        color: "rgba(214,160,70,.3)",
+        d: "M306 164 C290 162 280 148 282 132 C300 134 312 148 306 164 M306 178 C322 180 336 168 334 150 C318 150 304 162 306 178",
+        color: WASH.sage,
       },
-      { d: "M342 82 A30 30 0 1 1 282 82 A30 30 0 1 1 342 82", color: INK.ochre },
-      { d: "M62 216 Q134 154 206 216 Z", color: INK.brick },
-      { d: "M98 180 L108 216 L160 216 L170 180 Q134 166 98 180 Z", color: "rgba(239,230,214,.92)" },
-      { d: "M240 253 l70 -8 l6 18 l-70 8 Z", color: INK.teal },
+    ],
+  },
+  laptop: {
+    paths: [
+      "M110 190 L110 84 Q110 72 122 72 L278 72 Q290 72 290 84 L290 190",
+      "M96 190 L304 190 L326 216 L74 216 Z",
+      "M74 216 V221 Q74 226 80 226 L320 226 Q326 226 326 221 V216",
+      "M130 98 L141 106 L130 114 M148 114 H164",
+      "M130 136 H196 M130 152 H232 M130 168 H178",
+      "M340 176 L344 216 Q345 226 354 226 L370 226 Q379 226 380 216 L384 176 Z",
+      "M383 186 Q398 186 396 200 Q394 212 381 210",
+      "M354 162 q-6 -8 0 -16 q6 -8 0 -16 M368 162 q-6 -8 0 -16",
+      "M30 228 L64 228 M336 228 L398 228",
+    ],
+    washes: [
+      { d: "M114 78 L292 74 L294 188 L112 192 Z", color: WASH.bluegrey },
+      { d: "M342 180 L388 178 L382 222 Q378 230 356 228 L346 222 Z", color: WASH.brick },
+      { d: "M128 96 L168 96 L168 118 L128 118 Z", color: WASH.ochre },
     ],
   },
   plane: {
-    width: 3,
     paths: [
       "M30 262 C80 258 112 222 140 196 C176 162 196 112 160 108 C124 104 128 168 176 164 C204 162 216 140 226 126",
       "M350 64 L232 104 L274 114 Z",
@@ -174,30 +108,40 @@ export const drawings = {
       "M274 114 L262 138 L290 150",
     ],
     washes: [
-      { d: "M354 68 L236 108 L278 118 Z", color: "rgba(239,230,214,.92)" },
-      { d: "M354 68 L278 118 L294 154 Z", color: INK.bluegrey },
-      { d: "M278 118 L266 142 L294 154 Z", color: INK.indigo },
+      { d: "M352 70 L276 118 L294 154 Z", color: WASH.bluegrey },
+      { d: "M278 118 L266 142 L294 154 Z", color: WASH.brick },
     ],
   },
-  signature: {
-    width: 4,
+  park: {
     paths: [
-      "M172 118 C150 90 100 96 86 134 C72 172 92 216 128 206 C156 200 172 164 176 132",
-      "M178 108 C172 150 166 186 160 208 C158 226 178 220 196 196",
-      "M250 158 C236 138 206 142 196 170 C186 200 206 220 230 208 C250 198 258 172 260 150",
-      "M262 76 C262 130 256 180 252 206 C250 226 270 218 286 196",
-      "M304 160 C300 180 296 198 298 208 C300 222 318 212 336 190",
-      "M306 130 l4 -4",
-      "M70 242 C140 232 250 238 350 220",
+      "M16 238 L384 238",
+      "M112 238 C116 214 110 194 116 170 M136 238 C132 214 138 194 132 170",
+      "M88 172 C58 168 54 128 82 118 C78 84 120 68 140 90 C164 70 200 96 184 126 C208 140 194 176 164 172 C148 186 104 186 88 172 Z",
+      "M124 170 C124 156 118 148 108 142 M126 160 C130 150 138 146 148 142",
+      "M218 208 L338 208 M222 186 L334 186 M222 196 L334 196",
+      "M228 208 V238 M328 208 V238 M226 208 V180 M330 208 V180",
+      "M276 80 q8 -8 16 0 M292 80 q8 -8 16 0",
+      "M322 58 q7 -7 14 0 M336 58 q7 -7 14 0",
+      "M52 238 l4 -9 l4 9 M176 238 l4 -9 l4 9 M356 238 l4 -9 l4 9",
     ],
-    washes: [],
+    washes: [
+      {
+        d: "M84 176 C50 170 48 126 78 114 C76 78 124 64 144 86 C170 66 208 96 190 128 C214 144 198 182 166 176 C148 192 104 190 84 176 Z",
+        color: WASH.sage,
+      },
+      { d: "M218 182 L340 180 L342 212 L220 214 Z", color: WASH.ochre },
+      {
+        d: "M8 242 C100 238 220 246 392 240 L388 256 C260 262 120 256 12 260 Z",
+        color: "rgba(120,150,100,.2)",
+      },
+    ],
   },
-} satisfies Record<string, Drawing>;
+} satisfies Record<string, Sketch>;
 
-type DrawingName = keyof typeof drawings;
+export type SketchName = keyof typeof sketches;
 
-function isDrawingName(name: string): name is DrawingName {
-  return Object.hasOwn(drawings, name);
+function isSketchName(name: string): name is SketchName {
+  return Object.hasOwn(sketches, name);
 }
 
 interface Stroke {
@@ -206,18 +150,31 @@ interface Stroke {
   readonly len: number;
 }
 
-interface Item {
+interface Progress {
   readonly el: HTMLElement;
-  readonly drawing: Drawing;
-  readonly strokes: readonly Stroke[];
-  readonly total: number;
   state: "idle" | "drawing" | "done";
   progress: number;
   start: number;
-  duration: number;
+  /** Seconds the pen takes. */
+  readonly duration: number;
   /** When the lines finished, so the wash can bloom in afterwards. */
   doneAt: number;
 }
+
+interface SketchItem extends Progress {
+  readonly kind: "sketch";
+  readonly sketch: Sketch;
+  readonly strokes: readonly Stroke[];
+  readonly total: number;
+}
+
+/** A word in the name's italic, sized to its element's height and revealed left to right. */
+interface WordItem extends Progress {
+  readonly kind: "word";
+  readonly text: string;
+}
+
+type Item = SketchItem | WordItem;
 
 export interface PenTip {
   x: number;
@@ -232,6 +189,12 @@ export interface PenUpdate {
 }
 
 const WASH_BLOOM = 1400;
+const WORD_FONT = 'italic 300 100px "Newsreader"';
+/** Font size and baseline of a written word, as fractions of its element's height. */
+const WORD_SIZE = 0.8,
+  WORD_BASELINE = 0.76;
+/** How far the reveal edge leans, as a fraction of the height, to follow the italic. */
+const WORD_LEAN = 0.1;
 
 function context2d(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
   const ctx = canvas.getContext("2d");
@@ -259,11 +222,24 @@ export class DrawingLayer {
     svg.setAttribute("aria-hidden", "true");
     svg.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
     document.body.appendChild(svg);
+    const progress = { state: reduce ? "done" : "idle", progress: reduce ? 1 : 0 } as const;
     for (const el of elements) {
-      const name = el.dataset.draw;
-      const drawing = name !== undefined && isDrawingName(name) ? drawings[name] : undefined;
-      if (!drawing) continue;
-      const strokes = drawing.paths.map((d) => {
+      const { sketch: name, word } = el.dataset;
+      if (word !== undefined) {
+        this.items.push({
+          kind: "word",
+          el,
+          text: word,
+          ...progress,
+          start: 0,
+          doneAt: -1e9,
+          duration: 0.5 + word.length * 0.3,
+        });
+        continue;
+      }
+      if (name === undefined || !isSketchName(name)) continue;
+      const sketch = sketches[name];
+      const strokes = sketch.paths.map((d) => {
         const measure = document.createElementNS("http://www.w3.org/2000/svg", "path");
         measure.setAttribute("d", d);
         svg.appendChild(measure);
@@ -271,12 +247,12 @@ export class DrawingLayer {
       });
       const total = strokes.reduce((a, s) => a + s.len, 0);
       this.items.push({
+        kind: "sketch",
         el,
-        drawing,
+        sketch,
         strokes,
         total,
-        state: reduce ? "done" : "idle",
-        progress: reduce ? 1 : 0,
+        ...progress,
         start: 0,
         doneAt: -1e9,
         duration: 0.6 + total / 1400,
@@ -330,8 +306,9 @@ export class DrawingLayer {
       if (this.active) {
         const it = this.active;
         const raw = (now - it.start) / 1000 / it.duration;
-        it.progress = raw <= 0 ? 0 : raw >= 1 ? 1 : 1 - Math.pow(1 - raw, 2.2);
-        tip = this.tipOf(it);
+        if (it.kind === "word") it.progress = Math.min(1, Math.max(0, raw));
+        else it.progress = raw <= 0 ? 0 : raw >= 1 ? 1 : 1 - Math.pow(1 - raw, 2.2);
+        tip = it.kind === "word" ? this.wordTip(it) : this.sketchTip(it);
         if (raw >= 1) {
           it.state = "done";
           it.progress = 1;
@@ -352,7 +329,7 @@ export class DrawingLayer {
     return { changed, tip };
   }
 
-  private tipOf(it: Item): PenTip {
+  private sketchTip(it: SketchItem): PenTip {
     const r = it.el.getBoundingClientRect();
     let s = it.progress * it.total;
     const last = it.strokes.at(-1);
@@ -366,6 +343,57 @@ export class DrawingLayer {
     return { x: r.left, y: r.top };
   }
 
+  /** Where a word sits in its element, in CSS pixels, and how far the reveal has reached. */
+  private wordLayout(it: WordItem, r: DOMRect) {
+    const { ctx } = this;
+    const size = r.height * WORD_SIZE;
+    ctx.font = WORD_FONT;
+    const metrics = ctx.measureText(it.text);
+    const k = size / 100;
+    const inkWidth = (metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight) * k;
+    const lean = r.height * WORD_LEAN;
+    return {
+      size,
+      x: r.left + metrics.actualBoundingBoxLeft * k,
+      baseline: r.top + r.height * WORD_BASELINE,
+      lean,
+      /** The reveal edge at mid height. It starts a lean before the ink and ends a lean after. */
+      front: r.left - lean + it.progress * (inkWidth + 2 * lean),
+    };
+  }
+
+  private wordTip(it: WordItem): PenTip {
+    const { size, baseline, front } = this.wordLayout(it, it.el.getBoundingClientRect());
+    const stroke = Math.sin(it.progress * it.text.length * Math.PI * 2);
+    return { x: front, y: baseline - size * (0.24 + 0.2 * stroke) };
+  }
+
+  private renderWord(it: WordItem, r: DOMRect) {
+    const { ctx, scale } = this;
+    const { size, x, baseline, lean, front } = this.wordLayout(it, r);
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    ctx.font = `italic 300 ${size}px "Newsreader"`;
+    ctx.textBaseline = "alphabetic";
+    const band = (from: number, to: number, fill: string) => {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(from + lean, r.top);
+      ctx.lineTo(to + lean, r.top);
+      ctx.lineTo(to - lean, r.bottom);
+      ctx.lineTo(from - lean, r.bottom);
+      ctx.clip();
+      ctx.fillStyle = fill;
+      ctx.fillText(it.text, x, baseline);
+      ctx.restore();
+    };
+    ctx.globalCompositeOperation = "source-over";
+    band(r.left - 2 * lean, front, "rgb(255,0,0)");
+    if (it.state === "drawing") {
+      ctx.globalCompositeOperation = "lighter";
+      band(front - size * 0.5, front, "rgb(0,255,0)");
+    }
+  }
+
   private render() {
     const { ctx, canvas } = this;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -376,6 +404,10 @@ export class DrawingLayer {
       if (it.state === "idle" || it.progress <= 0) continue;
       const r = it.el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > innerHeight) continue;
+      if (it.kind === "word") {
+        this.renderWord(it, r);
+        continue;
+      }
       const { scale } = this;
       ctx.setTransform(
         (r.width * scale) / BOX_W,
@@ -385,7 +417,7 @@ export class DrawingLayer {
         r.left * scale,
         r.top * scale,
       );
-      ctx.lineWidth = it.drawing.width;
+      ctx.lineWidth = LINE_WIDTH;
       const revealed = it.progress * it.total;
       const wetFrom = revealed - it.total * 0.07;
       let cum = 0;
@@ -417,7 +449,7 @@ export class DrawingLayer {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, wash.width, wash.height);
     for (const it of this.items) {
-      if (it.state !== "done" || it.drawing.washes.length === 0) continue;
+      if (it.kind !== "sketch" || it.state !== "done") continue;
       const r = it.el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > innerHeight) continue;
       const bloom = this.reduce ? 1 : Math.min(1, Math.max(0, (now - it.doneAt) / WASH_BLOOM));
@@ -432,7 +464,7 @@ export class DrawingLayer {
         r.top * scale,
       );
       ctx.globalAlpha = 1 - Math.pow(1 - bloom, 2);
-      for (const w of it.drawing.washes) {
+      for (const w of it.sketch.washes) {
         ctx.fillStyle = w.color;
         ctx.fill(new Path2D(w.d));
       }

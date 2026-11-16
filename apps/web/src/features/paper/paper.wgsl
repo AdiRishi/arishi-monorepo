@@ -1,5 +1,7 @@
 // Paper and ink. Samples the name mask (static, placed in `box`) and the drawings mask
-// (viewport-sized, redrawn as the pen moves) and renders both as the same ink.
+// (viewport-sized, redrawn as the pen moves) and renders both as the same ink. The paper's
+// texture is looked up in sheet coordinates, which move with the page, so the sheet scrolls
+// with the writing on it. Only the vignette stays with the screen.
 
 struct P {
   res: vec2f,
@@ -9,6 +11,8 @@ struct P {
   bodyF: f32,
   headF: f32,
   tipOn: f32,
+  // How far the page has scrolled, in viewport heights.
+  scroll: f32,
 }
 @group(0) @binding(0) var<uniform> p: P;
 @group(0) @binding(1) var inkTex: texture_2d<f32>;
@@ -34,15 +38,15 @@ fn fbm(q0: vec2f) -> f32 {
   return v;
 }
 
-fn paper(uv: vec2f, asp: f32) -> vec3f {
-  let q = uv * vec2f(asp, 1.0);
+fn paper(uv: vec2f, sheet: vec2f, asp: f32) -> vec3f {
+  let q = sheet * vec2f(asp, 1.0);
   let blotch = fbm(q * 5.0);
   let fibreH = noise(q * vec2f(900.0, 110.0));
   let fibreV = noise(q * vec2f(130.0, 900.0));
-  let grain = hash(uv * p.res);
+  let grain = hash(floor(sheet * p.res + 0.5));
   var c = vec3f(0.945, 0.915, 0.855);
   c -= vec3f(0.06, 0.07, 0.09) * (blotch - 0.5);
-  c -= vec3f(0.04) * (fibreH - 0.5) + vec3f(0.03) * (fibreV - 0.5);
+  c -= vec3f(0.028) * (fibreH - 0.5) + vec3f(0.02) * (fibreV - 0.5);
   c -= vec3f(0.035) * (grain - 0.5);
   let vig = smoothstep(1.6, 0.5, length((uv - 0.5) * vec2f(1.2, 1.0)));
   return c * (0.9 + 0.1 * vig);
@@ -60,6 +64,7 @@ fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
 
 @fragment fn fs_main(@location(0) uv: vec2f) -> @location(0) vec4f {
   let asp = p.res.x / p.res.y;
+  let sheet = uv + vec2f(0.0, p.scroll);
 
   // the name
   let bs = p.box.zw - p.box.xy;
@@ -88,11 +93,11 @@ fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
   let wet = max(wetName, d0.g);
 
   // ink physics: fibrous edge, pooling at the rim, granulation, wet sheen
-  let fibre = fbm(uv * vec2f(asp, 1.0) * 240.0);
+  let fibre = fbm(sheet * vec2f(asp, 1.0) * 240.0);
   let cov = ab * 0.65 + a * 0.35;
   let ink = smoothstep(0.40 - 0.22 * fibre, 0.56, cov);
   let pool = smoothstep(0.08, 0.5, cov) * (1.0 - smoothstep(0.55, 1.0, cov));
-  let gran = noise(uv * p.res * 0.45);
+  let gran = noise(sheet * p.res * 0.45);
   var inkCol = vec3f(0.075, 0.075, 0.105) + vec3f(0.11) * gran;
   inkCol = mix(inkCol, vec3f(0.03, 0.03, 0.05), pool * 0.85);
   inkCol += vec3f(0.22, 0.28, 0.42) * wet * pool;
@@ -102,10 +107,10 @@ fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
   let wb = blur5(washTex, uv);
   let wcov = wb.a * 0.7 + w0.a * 0.3;
   let wedge = smoothstep(0.02, 0.35, wcov) * (1.0 - smoothstep(0.35, 0.9, wcov));
-  let settle = 0.8 + 0.4 * fbm(uv * vec2f(asp, 1.0) * 70.0);
+  let settle = 0.8 + 0.4 * fbm(sheet * vec2f(asp, 1.0) * 70.0);
   let wstr = clamp(smoothstep(0.03, 0.45, wcov) * settle * 0.9 + wedge * 0.35, 0.0, 1.0);
   let tint = mix(vec3f(1.0), w0.rgb * 1.12, clamp(wstr, 0.0, 1.0));
-  var col = mix(paper(uv, asp) * tint, inkCol, ink * 0.97);
+  var col = mix(paper(uv, sheet, asp) * tint, inkCol, ink * 0.97);
 
   let td = length((uv - p.tip) * p.res);
   col = mix(col, vec3f(0.05, 0.05, 0.08), smoothstep(5.0, 2.0, td) * p.tipOn);

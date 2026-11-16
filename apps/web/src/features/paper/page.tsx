@@ -1,234 +1,135 @@
 import { useEffect, useRef } from "react";
 
 import { ContactList } from "./contact";
-import { email, pastimes, profiles, projects } from "./content";
+import { email, name, place, projects, starters, written } from "./content";
 import { SectionNav } from "./nav";
-import { Drawing, Hindi, Section, label, prose, wrap } from "./section";
+import { Section, columns, inlineLink, label, ledgerRow, meta, wrap } from "./section";
 import { startPaper } from "./start-paper";
 import { WorkHistory } from "./work";
 
-const rule = "border-b border-line";
+function Header() {
+  return (
+    <header className="veil fixed inset-x-0 top-0 z-6 pt-[env(safe-area-inset-top,0px)] pb-5">
+      <div className={`flex h-14 items-center justify-between gap-8 md:h-16 ${wrap}`}>
+        <a href="#top" className="hidden font-mono text-label text-ink uppercase md:block">
+          {name.latin}
+        </a>
+        <SectionNav />
+      </div>
+    </header>
+  );
+}
 
 function Letterhead() {
   return (
     <section
       id="top"
-      className={`relative grid content-center pt-[16vh] pb-[10vh] md:min-h-[92vh] md:pt-[14vh] md:pb-[8vh] ${wrap}`}
+      className={`relative pt-[calc(92px+env(safe-area-inset-top,0px))] md:pt-[clamp(104px,15vh,144px)] ${wrap}`}
     >
-      <p className="mb-[18px] font-mono text-caption tracking-[0.2em] text-mute uppercase">
-        Senior software engineer · Airwallex · Sydney
-      </p>
-      <div id="inkbox" className="relative w-[min(100%,1120px)]">
-        <h1>Adishwar Rishi</h1>
-      </div>
-      <div className="mt-3.5 grid grid-cols-1 items-end gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,1fr)_auto]">
-        <p className="max-w-[38ch] text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.45] font-light">
-          I&apos;ve written payments software for nine years. Five of those were at Escrow.com, and
-          I&apos;ve been at Airwallex since 2024.
-        </p>
-        <p className="flex flex-wrap items-baseline gap-x-[22px] gap-y-2.5 font-mono text-caption tracking-[0.14em] text-mute uppercase lg:flex-col lg:items-end lg:gap-2 lg:text-right">
-          <a
-            href={`mailto:${email}`}
-            className="basis-full border-b border-line pb-0.5 text-[13px] tracking-[0.04em] text-ink normal-case hover:text-accent lg:mb-1.5 lg:basis-auto"
-          >
-            {email}
-          </a>
-          {profiles.map((profile) => (
-            <a
-              key={profile.name}
-              href={profile.href}
-              target="_blank"
-              rel="noopener"
-              className="hover:text-accent"
-            >
-              {profile.name}
+      <div className={columns}>
+        <div className="md:col-start-2">
+          <address className={`${meta} not-italic md:text-right`}>
+            {place}
+            <br />
+            <a href={`mailto:${email}`} className={`text-ink ${inlineLink}`}>
+              {email}
             </a>
-          ))}
-        </p>
+            <br />
+            <time dateTime={written.dateTime}>{written.label}</time>
+          </address>
+          <div id="inkbox" className="relative mt-9 w-full md:mt-7">
+            <h1>{name.latin}</h1>
+          </div>
+        </div>
       </div>
-      <p className="mt-12 mb-[1em] flex animate-cue items-center gap-3.5 font-mono text-caption tracking-[0.18em] text-mute uppercase motion-reduce:animate-none">
-        <span aria-hidden="true" className="block h-px w-[34px] bg-strong" />
-        Scroll for the rest
-      </p>
     </section>
   );
 }
 
-function About() {
-  const facts = [
-    { term: "Based in", detail: "Sydney, Australia" },
-    { term: "Studied", detail: "Software Engineering, UNSW", note: "2014 – 2017" },
-    { term: "Working on", detail: "Yield, at Airwallex" },
-  ];
-  return (
-    <Section
-      id="about"
-      hindi="परिचय"
-      heading={
-        <>
-          Hi, I&apos;m <em>Adi.</em>
-        </>
-      }
-      drawing="mountains"
-    >
-      <div className={`space-y-[1.1em] ${prose}`}>
-        <p>
-          I&apos;m a senior engineer at Airwallex. I spent my first year on the Cards and spend
-          management team and now work on Yield. Before that I was at Freelancer for eight years. I
-          started there as an intern, and for my last five years I led engineering for Escrow.com,
-          which holds a buyer&apos;s money until the seller delivers.
-        </p>
-        <p>In my spare time I build a lot of things with AI.</p>
-      </div>
-      <dl className="mt-10 max-w-[62ch] border-t border-line font-mono text-[12.5px] tracking-[0.06em]">
-        {facts.map((fact) => (
-          <div
-            key={fact.term}
-            className={`grid grid-cols-1 items-baseline gap-1 py-3.5 xs:grid-cols-[150px_1fr] xs:gap-4 ${rule}`}
-          >
-            <dt className={label}>{fact.term}</dt>
-            <dd className="font-display text-[1.1rem] font-light tracking-normal">
-              {fact.detail}
-              {fact.note && (
-                <small className="ml-2.5 font-mono text-label tracking-[0.14em] text-mute uppercase">
-                  {fact.note}
-                </small>
-              )}
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </Section>
-  );
-}
+const projectLink = "py-1 whitespace-nowrap transition-colors hover:text-accent";
 
 function Projects() {
   return (
-    <Section
-      id="projects"
-      hindi="रचना"
-      heading={
-        <>
-          Side projects, <em>all on GitHub.</em>
-        </>
-      }
-      drawing="cube"
-    >
-      <ol className="border-t border-line">
-        {projects.map((project, index) => (
-          <li
-            key={project.name}
-            className={`group grid grid-cols-1 items-baseline gap-1 py-[22px] sm:grid-cols-[60px_minmax(0,1fr)_auto] sm:gap-5 ${rule}`}
-          >
-            <span aria-hidden="true" className={label}>
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <div>
-              <h3 className="text-[clamp(1.3rem,2.2vw,1.8rem)] leading-[1.1] font-normal tracking-[-0.01em] group-hover:text-accent">
-                <a href={project.href} target="_blank" rel="noopener">
-                  {project.name}
-                </a>
-              </h3>
-              <p className="mt-1 max-w-[46ch] text-base font-light text-mute">
-                {project.description}
-              </p>
-            </div>
-            <a
-              href={project.source}
-              target="_blank"
-              rel="noopener"
-              aria-label={`Source for ${project.name}`}
-              className="font-mono text-label tracking-label whitespace-nowrap uppercase"
-            >
-              Source →
-            </a>
-          </li>
-        ))}
-      </ol>
-    </Section>
-  );
-}
-
-function OffTheClock() {
-  return (
-    <Section
-      id="offclock"
-      hindi="शौक"
-      heading={
-        <>
-          Games, anime <em>and the beach.</em>
-        </>
-      }
-      wide
-    >
-      <div className="mt-2 grid grid-cols-1 gap-11 xl:grid-cols-3 xl:gap-9">
-        {pastimes.map((pastime) => (
-          <div
-            key={pastime.name}
-            className="grid grid-cols-1 items-start xs:grid-cols-[200px_minmax(0,1fr)] xs:gap-x-7 xl:block"
-          >
-            <Drawing name={pastime.drawing} className="mb-4 max-w-[260px] xs:row-span-4" />
-            <h3 className="mb-1.5 text-[1.35rem] font-normal tracking-[-0.01em]">
-              {pastime.name}
-              <Hindi className="ml-2.5 text-[0.95em] text-accent">{pastime.hindi}</Hindi>
+    <ul className="border-t border-line">
+      {projects.map((project) => (
+        <li key={project.name} className={ledgerRow}>
+          <div>
+            <h3 className="text-title">
+              <a href={project.href} target="_blank" rel="noopener" className={inlineLink}>
+                {project.name}
+              </a>
             </h3>
-            <p className="mb-4 text-base font-light text-mute">{pastime.lead}</p>
-            {pastime.favourites.length > 0 && (
-              <ol className="border-t border-line">
-                {pastime.favourites.map((favourite, index) => (
-                  <li
-                    key={favourite.title}
-                    className={`grid grid-cols-[28px_1fr] items-baseline gap-2.5 py-3 text-[1.02rem] font-light ${rule}`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="font-mono text-label tracking-[0.1em] text-mute"
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span>
-                      {favourite.title}
-                      <small className="mt-[3px] block font-mono text-label tracking-[0.12em] text-mute uppercase">
-                        {favourite.credit}
-                      </small>
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            )}
+            <p className={`${label} mt-1.5 flex gap-5`}>
+              {project.href !== project.source && (
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Visit ${project.name}`}
+                  className={projectLink}
+                >
+                  Visit ↗
+                </a>
+              )}
+              <a
+                href={project.source}
+                target="_blank"
+                rel="noopener"
+                aria-label={`Source for ${project.name}`}
+                className={projectLink}
+              >
+                Source ↗
+              </a>
+            </p>
           </div>
-        ))}
-      </div>
-    </Section>
+          <p className="max-w-[60ch]">{project.description}</p>
+        </li>
+      ))}
+      <li className={ledgerRow}>
+        <h3 className="text-title">Starter repos</h3>
+        <p className="max-w-[60ch]">
+          I start a lot of projects, so I keep the setups I&apos;d otherwise rebuild each time.
+          There&apos;s one for{" "}
+          {starters.map((starter, index) => (
+            <span key={starter.href}>
+              {index > 0 && (index === starters.length - 1 ? " and " : ", ")}
+              <a href={starter.href} target="_blank" rel="noopener" className={inlineLink}>
+                {starter.name}
+              </a>
+            </span>
+          ))}
+          .
+        </p>
+      </li>
+    </ul>
   );
 }
 
-function Contact() {
+function SignOff() {
   return (
-    <Section
-      id="contact"
-      hindi="संपर्क"
-      heading={
-        <>
-          Get in <em>touch.</em>
-        </>
-      }
-      drawing="plane"
-      large
-    >
-      <p className={`mb-7 ${prose}`}>Any of these will reach me.</p>
-      <ContactList />
-      <div className="mt-16 max-w-[62ch]">
-        <p className="text-xl font-light italic">Yours,</p>
-        <Drawing name="signature" className="-mt-3 -mb-6 -ml-4 max-w-[300px]" />
-        <p className={label}>
-          Adishwar Rishi · Sydney ·{" "}
-          <a href="#top" className="hover:text-accent">
+    <div className="mt-14">
+      <p className="text-title font-light italic">Yours,</p>
+      <p className="signed draw mt-1 h-[88px] w-[168px]" data-word="Adi">
+        <span>Adi</span>
+      </p>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className={`pt-6 pb-[calc(40px+env(safe-area-inset-bottom,0px))] ${wrap}`}>
+      <div className={columns}>
+        <p
+          className={`${label} flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-line pt-5 md:col-start-2`}
+        >
+          <span>Set in Newsreader and Geist Mono</span>
+          <a href="#top" className="whitespace-nowrap transition-colors hover:text-accent">
             Back to the top ↑
           </a>
         </p>
       </div>
-    </Section>
+    </footer>
   );
 }
 
@@ -268,35 +169,109 @@ export function PaperPage() {
   return (
     <div ref={rootRef} data-state="boot">
       <canvas id="scene" aria-hidden="true" className="fixed inset-0 z-0 block size-full" />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-y-0 left-[clamp(28px,6vw,72px)] z-1 w-px bg-accent opacity-35"
-      />
-      <p className="fixed top-[calc(26px+env(safe-area-inset-top,0px))] left-[30px] z-6 hidden font-mono text-caption tracking-label text-mute uppercase md:block">
-        <b className="font-medium text-ink">Adishwar Rishi</b>
-        <Hindi className="ml-2.5 text-[13px] tracking-[0.1em] text-accent normal-case">कलम</Hindi>
-      </p>
-      <SectionNav />
+      <Header />
       <Pen />
 
       <main className="relative z-2">
+        <div aria-hidden="true" className={`pointer-events-none absolute inset-0 ${wrap}`}>
+          <div className="relative h-full">
+            <div className="absolute inset-y-0 -left-5 w-px bg-accent/40 md:left-36" />
+          </div>
+        </div>
+
         <Letterhead />
-        <About />
         <Section
-          id="work"
-          hindi="कार्य"
+          id="about"
           heading={
             <>
-              Work, <em>newest first.</em>
+              Hi, I&apos;m <em>Adi.</em>
             </>
           }
-          drawing="scales"
+          intro={
+            <>
+              <p>
+                I&apos;m a product engineer in Sydney, currently at Airwallex. I like to own a whole
+                product, so I work on the backend, the web app and the mobile app, and I stay to
+                look after it once it ships. I enjoy the looking after as much as the building.
+              </p>
+              <p>
+                Lately a lot of my time goes to coding agents, at work and at home. I&apos;m slowly
+                teaching them to write code I&apos;d approve in review.
+              </p>
+            </>
+          }
+          sketch="sydney"
+        />
+        <Section
+          id="work"
+          heading={
+            <>
+              I&apos;ve worked at <em>two companies.</em>
+            </>
+          }
+          intro={
+            <p>
+              Both of them move other people&apos;s money, and I&apos;ve been a product engineer at
+              both. The newest is first.
+            </p>
+          }
+          sketch="payments"
         >
           <WorkHistory />
+          <p className="mt-5 text-note text-mute">
+            Before all that I studied software engineering at UNSW, from 2014 to 2017.
+          </p>
         </Section>
-        <Projects />
-        <OffTheClock />
-        <Contact />
+        <Section
+          id="projects"
+          heading={
+            <>
+              I&apos;m always <em>building something.</em>
+            </>
+          }
+          intro={
+            <p>
+              Outside work I build software for myself, usually because I wanted the thing and
+              didn&apos;t like what was already out there. All of it is on GitHub.
+            </p>
+          }
+          sketch="laptop"
+        >
+          <Projects />
+        </Section>
+        <Section
+          id="contact"
+          heading={
+            <>
+              Write <em>back.</em>
+            </>
+          }
+          intro={<p>Any of these will reach me.</p>}
+          sketch="plane"
+        >
+          <ContactList />
+          <SignOff />
+        </Section>
+        <Section
+          id="ps"
+          heading={<em>P.S.</em>}
+          intro={
+            <>
+              <p>
+                When I&apos;m not building something I&apos;m usually out walking in the park, or
+                deep in a long single-player game. <cite>The Witcher 3</cite>,{" "}
+                <cite>Red Dead Redemption 2</cite> and <cite>God of War</cite> are the three
+                I&apos;d start again tomorrow.
+              </p>
+              <p>
+                I watch anime too. If you only watch two, make them <cite>Vinland Saga</cite> and{" "}
+                <cite>Attack on Titan</cite>.
+              </p>
+            </>
+          }
+          sketch="park"
+        />
+        <Footer />
       </main>
     </div>
   );

@@ -6,44 +6,40 @@ import {
   TimelineTitle,
 } from "@ui-sdk/react/timeline";
 
-import { roles } from "./content";
+import { employers } from "./content";
+import { inlineLink, ledgerRow, meta } from "./section";
 
 export function WorkHistory() {
   return (
     <Timeline aria-label="Work history" className="border-t border-line">
-      {roles.map((role) => (
-        <TimelineItem
-          key={`${role.company} ${role.dateTime}`}
-          className="grid grid-cols-1 gap-2 border-b border-line py-[30px] sm:grid-cols-[150px_minmax(0,1fr)] sm:gap-6"
-        >
-          <p className="pt-1.5 font-mono text-[11.5px] leading-[1.9] tracking-[0.14em] text-mute uppercase tabular-nums">
-            <TimelineTime dateTime={role.dateTime} className="block font-medium text-ink">
-              {role.when}
-            </TimelineTime>
-            {role.where}
-          </p>
+      {employers.map((employer) => (
+        <TimelineItem key={employer.company} className={ledgerRow}>
           <div>
             <TimelineTitle
               render={({ children, ...props }) => <h3 {...props}>{children}</h3>}
-              className="text-[clamp(1.4rem,2.3vw,1.9rem)] leading-[1.15] font-normal tracking-[-0.01em]"
+              className="text-title"
             >
-              {role.title}{" "}
-              <span className="font-light text-mute italic">
-                at{" "}
-                <a href={role.companyHref} target="_blank" rel="noopener">
-                  {role.company}
-                </a>
-              </span>
+              <a href={employer.href} target="_blank" rel="noopener" className={inlineLink}>
+                {employer.company}
+              </a>
             </TimelineTitle>
-            <TimelineDescription className="mt-2.5 max-w-[60ch] text-[1.05rem] font-light">
-              {role.description}
-            </TimelineDescription>
-            <ul className="mt-3.5 flex flex-wrap gap-x-[18px] gap-y-2 font-mono text-label tracking-[0.14em] text-mute uppercase">
-              {role.tags.map((tag) => (
-                <li key={tag}>{tag}</li>
-              ))}
-            </ul>
+            <p className={`${meta} mt-1.5`}>
+              <TimelineTime dateTime={employer.dateTime}>{employer.when}</TimelineTime>
+              {" · "}
+              {employer.where}
+            </p>
           </div>
+          <TimelineDescription className="max-w-[60ch] lg:row-span-2">
+            {employer.story}
+          </TimelineDescription>
+          <ol className="space-y-2.5 lg:mt-2">
+            {employer.roles.map((role) => (
+              <li key={role.title} className="text-note leading-[1.35]">
+                {role.title}
+                <span className={`${meta} block`}>{role.when}</span>
+              </li>
+            ))}
+          </ol>
         </TimelineItem>
       ))}
     </Timeline>

@@ -1,8 +1,17 @@
 import { sections } from "./content";
+import type { SketchName } from "./drawings";
 
-export const wrap = "mx-auto max-w-[1240px] px-[clamp(28px,6vw,80px)]";
-export const label = "font-mono text-label tracking-label text-mute uppercase";
-export const prose = "max-w-[62ch] text-[clamp(1.05rem,1.35vw,1.25rem)] leading-[1.55] font-light";
+export const wrap = "mx-auto max-w-[1240px] pr-6 pl-9 md:px-[clamp(40px,6vw,80px)]";
+/** The margin column and the body column. The margin rule runs down the gap between them. */
+export const columns = "grid grid-cols-1 md:grid-cols-[120px_minmax(0,1fr)] md:gap-x-12";
+export const label = "font-mono text-label text-mute uppercase";
+export const meta = "font-mono text-meta text-mute tabular-nums";
+export const prose = "max-w-[60ch] space-y-[1em]";
+/** A list row: a name column, then the text about it. Work and Projects share it. */
+export const ledgerRow =
+  "grid grid-cols-1 items-baseline gap-x-12 gap-y-3 border-b border-line py-7 lg:grid-cols-[272px_minmax(0,1fr)]";
+export const inlineLink =
+  "underline decoration-line decoration-1 underline-offset-[0.2em] transition-colors hover:text-accent hover:decoration-accent";
 
 export function Hindi({ className, children }: { className: string; children: string }) {
   return (
@@ -12,11 +21,11 @@ export function Hindi({ className, children }: { className: string; children: st
   );
 }
 
-export function Drawing({ name, className = "" }: { name: string; className?: string }) {
+export function Sketch({ name, className = "" }: { name: SketchName; className?: string }) {
   return (
     <div
-      className={`draw relative aspect-4/3 w-full ${className}`}
-      data-draw={name}
+      className={`draw relative aspect-4/3 ${className}`}
+      data-sketch={name}
       aria-hidden="true"
     />
   );
@@ -24,44 +33,35 @@ export function Drawing({ name, className = "" }: { name: string; className?: st
 
 export function Section({
   id,
-  hindi,
   heading,
-  drawing,
-  wide = false,
-  large = false,
+  intro,
+  sketch,
   children,
 }: {
   id: keyof typeof sections;
-  hindi: string;
   heading: React.ReactNode;
-  drawing?: string;
-  wide?: boolean;
-  large?: boolean;
-  children: React.ReactNode;
+  intro: React.ReactNode;
+  sketch: SketchName;
+  children?: React.ReactNode;
 }) {
+  const { name, hindi } = sections[id];
   return (
-    <section id={id} className={`rv relative py-[clamp(80px,14vh,160px)] ${wrap}`}>
-      <div className="grid grid-cols-1 items-start gap-x-8 gap-y-6 md:grid-cols-[120px_minmax(0,1fr)] xl:grid-cols-[120px_minmax(0,1fr)_340px]">
-        <div className="mb-[18px] flex items-baseline gap-3.5 md:mb-0 md:block">
-          <Hindi className="block text-2xl leading-[1.2] text-accent">{hindi}</Hindi>
-          <p className="font-mono text-[10px] tracking-label text-mute uppercase md:mt-2">
-            {sections[id]}
-          </p>
+    <section id={id} className={`relative scroll-mt-20 py-11 md:scroll-mt-24 md:py-14 ${wrap}`}>
+      <div className={`${columns} gap-y-4`}>
+        <p className="flex items-baseline gap-3 md:block md:pt-2 md:text-right">
+          <Hindi className="block text-[1.375rem] leading-[1.2] text-accent">{hindi}</Hindi>
+          <span className={`${label} md:mt-1.5 md:block`}>{name}</span>
+        </p>
+        <div className="min-w-0">
+          <div className="grid grid-cols-1 items-start gap-x-12 gap-y-7 xl:grid-cols-[minmax(0,1fr)_300px]">
+            <div>
+              <h2 className="write mb-[0.55em] text-heading font-light text-balance">{heading}</h2>
+              <div className={prose}>{intro}</div>
+            </div>
+            <Sketch name={sketch} className="w-[min(64%,240px)] md:w-[260px] xl:-mt-2 xl:w-full" />
+          </div>
+          {children && <div className="mt-10 md:mt-12">{children}</div>}
         </div>
-        <div className={`min-w-0 ${wide ? "xl:col-span-2" : ""}`}>
-          <h2
-            className={`write mb-[0.6em] leading-[1.02] font-light tracking-[-0.015em] text-balance [font-variation-settings:'opsz'_72] ${large ? "text-[clamp(2.4rem,6.5vw,5.5rem)]" : "text-[clamp(2rem,4.6vw,4rem)]"}`}
-          >
-            {heading}
-          </h2>
-          {children}
-        </div>
-        {drawing && (
-          <Drawing
-            name={drawing}
-            className="mt-2 max-w-[340px] md:col-start-2 xl:col-start-3 xl:max-w-none"
-          />
-        )}
       </div>
     </section>
   );

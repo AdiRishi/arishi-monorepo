@@ -7,17 +7,21 @@ import { Toasts } from "@/components/toasts";
 
 import appCss from "@/global-styles/tailwind.css?url";
 
+const title = "Adishwar Rishi";
+const description =
+  "Adishwar Rishi is a product engineer at Airwallex in Sydney. His site is a letter about his work, his side projects and how to write back.";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Adishwar Rishi" },
-      {
-        name: "description",
-        content:
-          "Adishwar Rishi is a senior software engineer at Airwallex in Sydney. He has worked on payments software since 2017.",
-      },
+      { name: "theme-color", content: "#efe6d6" },
+      { title },
+      { name: "description", content: description },
+      { property: "og:type", content: "website" },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -37,15 +41,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function NotFound() {
   return (
     <main className="grid min-h-[80vh] content-center px-[clamp(28px,8vw,96px)]">
-      <p className="mb-[18px] font-mono text-caption tracking-[0.2em] text-mute uppercase">404</p>
-      <h1 className="mb-[0.6em] text-[clamp(2rem,5vw,4rem)] font-light tracking-[-0.015em]">
-        There&apos;s no page at this address.
-      </h1>
+      <p className="mb-[18px] font-mono text-label text-mute uppercase">404</p>
+      <h1 className="mb-[0.6em] text-heading font-light">There&apos;s no page at this address.</h1>
       <p>
-        <a
-          href="/"
-          className="font-mono text-caption tracking-label text-mute uppercase hover:text-accent"
-        >
+        <a href="/" className="font-mono text-label text-mute uppercase hover:text-accent">
           Go to the home page
         </a>
       </p>

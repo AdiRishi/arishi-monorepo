@@ -2,11 +2,10 @@ import { Button } from "@ui-sdk/react/button";
 import { toast } from "@ui-sdk/react/toast";
 
 import { email, profiles } from "./content";
+import { label } from "./section";
 
-const row =
-  "col-span-full grid grid-cols-subgrid items-baseline gap-y-1 border-b border-line py-[18px]";
-const name = "text-[clamp(1.3rem,2.2vw,1.8rem)] leading-[1.1] tracking-[-0.01em]";
-const handle = "font-light wrap-anywhere text-mute xs:text-right";
+const row = "flex items-baseline justify-between gap-x-6 border-b border-line";
+const value = "text-title wrap-anywhere transition-colors group-hover:text-accent";
 
 async function copyEmail() {
   try {
@@ -22,36 +21,38 @@ async function copyEmail() {
 
 export function ContactList() {
   return (
-    <ul className="grid grid-cols-1 gap-x-5 border-t border-line xs:grid-cols-[minmax(0,1fr)_auto_auto]">
-      {profiles.map((profile) => (
-        <li key={profile.name} className={row}>
-          <a
-            href={profile.href}
-            target="_blank"
-            rel="noopener"
-            className="group col-span-2 grid grid-cols-subgrid items-baseline gap-y-1"
-          >
-            <span className={`${name} group-hover:text-accent`}>{profile.name}</span>
-            <span className={handle}>{profile.handle}</span>
-          </a>
-        </li>
-      ))}
+    <ul className="max-w-[680px] border-t border-line">
       <li className={row}>
         <a
           href={`mailto:${email}`}
-          className="group col-span-2 grid grid-cols-subgrid items-baseline gap-y-1"
+          aria-label={`Email ${email}`}
+          className={`group flex-1 py-4 ${value}`}
         >
-          <span className={`${name} group-hover:text-accent`}>Email</span>
-          <span className={handle}>{email}</span>
+          {email}
         </a>
-        <Button
-          aria-label="Copy email address"
-          onClick={copyEmail}
-          className="justify-self-start py-1 font-mono text-label tracking-label text-mute uppercase hover:text-accent data-pending:cursor-progress xs:justify-self-end"
-        >
-          Copy
-        </Button>
+        <span className={`${label} flex items-baseline gap-4`}>
+          <span className="hidden xs:inline">Email</span>
+          <Button
+            aria-label="Copy email address"
+            onClick={copyEmail}
+            className="-mr-2 px-2 py-2 text-ink uppercase transition-colors hover:text-accent data-pending:cursor-progress"
+          >
+            Copy
+          </Button>
+        </span>
       </li>
+      {profiles.map((profile) => (
+        <li key={profile.name}>
+          <a href={profile.href} target="_blank" rel="noopener" className={`group py-4 ${row}`}>
+            <span className={value}>{profile.handle}</span>
+            <span
+              className={`${label} whitespace-nowrap transition-colors group-hover:text-accent`}
+            >
+              {profile.name} ↗
+            </span>
+          </a>
+        </li>
+      ))}
     </ul>
   );
 }

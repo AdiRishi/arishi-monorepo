@@ -1,3 +1,4 @@
+import { name } from "./content";
 import { DrawingLayer } from "./drawings";
 import { buildInkMask } from "./ink";
 import type { Renderer, RendererPreference, SceneState } from "./renderer";
@@ -42,7 +43,6 @@ export function startPaper(root: HTMLElement): () => void {
     (es) => {
       for (const en of es) {
         if (!en.isIntersecting) continue;
-        en.target.classList.remove("wait");
         en.target.classList.add("on");
         io.unobserve(en.target);
       }
@@ -50,10 +50,6 @@ export function startPaper(root: HTMLElement): () => void {
     { rootMargin: "0px 0px -12% 0px" },
   );
   if (!reduce) {
-    for (const el of root.querySelectorAll(".rv")) {
-      if (el.getBoundingClientRect().top > innerHeight * 0.92) el.classList.add("wait");
-      io.observe(el);
-    }
     for (const el of root.querySelectorAll(".write")) io.observe(el);
   } else {
     for (const el of root.querySelectorAll(".write")) el.classList.add("on");
@@ -71,16 +67,9 @@ export function startPaper(root: HTMLElement): () => void {
   /* ---------- the writing ---------- */
   async function start() {
     if (disposed) return;
-    const twoLines = innerWidth < 640;
-    inkbox.style.aspectRatio = twoLines ? "1.25 / 1" : "2.4 / 1";
-    const mask = await buildInkMask(
-      "Adishwar Rishi",
-      "अदिश्वर ऋषि",
-      2048,
-      twoLines ? 1.25 : 2.4,
-      twoLines,
-    );
+    const mask = await buildInkMask(name.latin, name.devanagari, 2048, innerWidth < 640);
     if (disposed) return;
+    inkbox.style.aspectRatio = `${mask.width} / ${mask.height}`;
     // Device pixels per CSS pixel, capped where a third pixel per side adds nothing.
     const scale = Math.min(devicePixelRatio, 2);
     const drawingLayer = new DrawingLayer(
@@ -153,6 +142,8 @@ export function startPaper(root: HTMLElement): () => void {
         tip[1] = draw.tip.y / innerHeight;
       } else penUp();
 
+      // Whole device pixels, so the paper's grain does not shimmer as the page moves.
+      const scroll = Math.round(scrollY * scale) / canvas.height;
       const state: SceneState = {
         box,
         tip,
@@ -160,10 +151,21 @@ export function startPaper(root: HTMLElement): () => void {
         latinF,
         bodyF,
         headF,
+        scroll,
         drawChanged: draw.changed,
       };
       // The scene is still between animations and scrolls, so only a change gets a frame.
-      const key = [canvas.width, canvas.height, box, tip, state.tipOn, latinF, bodyF, headF].join();
+      const key = [
+        canvas.width,
+        canvas.height,
+        box,
+        tip,
+        state.tipOn,
+        latinF,
+        bodyF,
+        headF,
+        scroll,
+      ].join();
       if (draw.changed || key !== lastKey) {
         lastKey = key;
         active.render(state);

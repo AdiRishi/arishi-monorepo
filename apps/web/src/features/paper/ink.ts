@@ -34,14 +34,19 @@ interface LatinLine extends Line {
 
 const SHEAR = 0.09;
 
+/** Blank border around the ink, as a fraction of the Latin size, so the shader's blur has room. */
+const PAD = 0.02;
+
+/**
+ * Lays the name out to fill `width` and returns a mask exactly as tall as the ink needs, so the
+ * caller can size the name's box from the mask and leave no dead space around it.
+ */
 export async function buildInkMask(
   latin: string,
   devanagari: string,
   width: number,
-  aspect: number,
   twoLines: boolean,
 ): Promise<InkMask> {
-  const height = Math.round(width / aspect);
   const latFamily = `italic 300 100px "Newsreader"`;
   const devFamily = `400 100px "Tiro Devanagari Sanskrit"`;
   await Promise.all([
@@ -50,28 +55,42 @@ export async function buildInkMask(
   ]);
 
   const glyphs = document.createElement("canvas");
-  glyphs.width = width;
-  glyphs.height = height;
   const g = glyphs.getContext("2d", { willReadFrequently: true });
   if (!g) throw new Error("A 2D canvas context is unavailable");
+
+  // Metrics at 100px, as fractions of the font size.
+  const lines = twoLines ? latin.split(" ") : [latin];
+  g.font = latFamily;
+  const latMetrics = lines.map((text) => g.measureText(text));
+  const overhang = Math.max(...latMetrics.map((m) => m.actualBoundingBoxLeft)) / 100;
+  const reach = Math.max(...latMetrics.map((m) => m.actualBoundingBoxRight)) / 100;
+  const ascent = Math.max(...latMetrics.map((m) => m.actualBoundingBoxAscent)) / 100;
+  g.font = devFamily;
+  const devMetrics = g.measureText(devanagari);
+
+  const latSize = width / (overhang + reach + 2 * PAD);
+  const pad = latSize * PAD;
+  const devSize = latSize * (twoLines ? 0.34 : 0.3);
+  const latBase = lines.map((_, index) => pad + latSize * (ascent + index * 0.92));
+  const devBase =
+    (latBase.at(-1) ?? 0) + latSize * 0.24 + (devSize * devMetrics.actualBoundingBoxAscent) / 100;
+  const height = Math.ceil(devBase + (devSize * devMetrics.actualBoundingBoxDescent) / 100 + pad);
+
+  glyphs.width = width;
+  glyphs.height = height;
   g.fillStyle = "#fff";
   g.textBaseline = "alphabetic";
 
-  // Latin, one or two lines, as large as fits
-  const lines = twoLines ? latin.split(" ") : [latin];
-  g.font = latFamily;
-  const widest = Math.max(...lines.map((l) => g.measureText(l).width));
-  const latSize = Math.min(twoLines ? height * 0.3 : height * 0.62, (100 * width * 0.93) / widest);
-  g.font = `italic 300 ${Math.round(latSize)}px "Newsreader"`;
-  const latBase = twoLines ? [height * 0.3, height * 0.58] : [height * 0.56];
+  g.font = `italic 300 ${latSize}px "Newsreader"`;
+  const latX = pad + latSize * overhang;
   const latLines: LatinLine[] = lines.map((text, index) => {
     const base = latBase[index] ?? 0;
-    g.fillText(text, width * 0.035, base);
+    g.fillText(text, latX, base);
     const w = g.measureText(text).width;
     return {
       index,
-      x0: width * 0.035,
-      x1: width * 0.035 + w,
+      x0: latX,
+      x1: latX + w,
       top: base - latSize * 0.78,
       bottom: base + latSize * 0.28,
       tipY: new Float32Array(width),
@@ -85,10 +104,8 @@ export async function buildInkMask(
   const lat = g.getImageData(0, 0, width, height);
 
   g.clearRect(0, 0, width, height);
-  const devSize = twoLines ? height * 0.1 : height * 0.17;
-  g.font = `400 ${Math.round(devSize)}px "Tiro Devanagari Sanskrit"`;
-  const devBase = twoLines ? height * 0.8 : height * 0.905;
-  g.fillText(devanagari, width * 0.045, devBase);
+  g.font = `400 ${devSize}px "Tiro Devanagari Sanskrit"`;
+  g.fillText(devanagari, pad + (devSize * devMetrics.actualBoundingBoxLeft) / 100, devBase);
   const dev = g.getImageData(0, 0, width, height);
 
   // Devanagari glyph bounds and the headline band: the densest rows in the upper half

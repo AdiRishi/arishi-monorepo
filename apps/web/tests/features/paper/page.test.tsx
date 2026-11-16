@@ -39,10 +39,10 @@ it("lets an agent read the page and copy the email address", async () => {
     "About",
     "Work",
     "Projects",
-    "Off the clock",
     "Contact",
+    "P.S.",
   ]);
-  expect(onPage[1]?.text).toContain("Engineering Team Lead at Freelancer");
+  expect(onPage[1]?.text).toContain("Freelancer");
 
   const result = await agent.act({ steps: [{ ref: "Copy email address", action: "press" }] });
 
@@ -66,17 +66,17 @@ it("tells the reader where to write when the browser refuses the clipboard", asy
     .toHaveTextContent("Couldn't copy the addressWrite to adishwar.rishi@gmail.com.");
 });
 
-it("names each role by its title and describes it by its dates and summary", async () => {
+it("names each employer and describes it by its dates and story", async () => {
   await renderPage();
 
-  const role = page
+  const employer = page
     .getByRole("list", { name: "Work history" })
-    .getByRole("listitem", { name: "Engineering Team Lead at Freelancer" });
+    .getByRole("listitem", { name: "Airwallex" });
 
   await expect
-    .element(role)
+    .element(employer)
     .toHaveAccessibleDescription(
-      "2019 Managed ten engineers across two regions and took first call on production incidents.",
+      "2024–now I started on the cards team, which builds card issuing and spend management. I'm now on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. On both teams I've worked across the backend, the web app and the mobile app. I also set up the coding agents in our codebases and build the tooling around them.",
     );
 });
 

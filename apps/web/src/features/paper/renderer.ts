@@ -22,6 +22,8 @@ export interface SceneState {
   latinF: number;
   bodyF: number;
   headF: number;
+  /** How far the page has scrolled, in viewport heights. */
+  scroll: number;
   /** True when the drawings canvas changed since the last frame. */
   drawChanged: boolean;
 }
@@ -132,6 +134,7 @@ async function createWebGpu(
         bodyF: 0,
         headF: 0,
         tipOn: 0,
+        scroll: 0,
       },
       inkTex,
       drawTex,
@@ -164,6 +167,7 @@ async function createWebGpu(
             bodyF: s.bodyF,
             headF: s.headF,
             tipOn: s.tipOn,
+            scroll: s.scroll,
           },
         });
         fr.pass(surf, paperFx);
@@ -227,6 +231,7 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
     bodyF: u("uBodyF"),
     headF: u("uHeadF"),
     tipOn: u("uTipOn"),
+    scroll: u("uScroll"),
     ink: u("uInk"),
     draw: u("uDraw"),
     wash: u("uWash"),
@@ -292,6 +297,7 @@ void main(){ vec2 p = vec2(gl_VertexID==1?3.0:-1.0, gl_VertexID==2?3.0:-1.0); gl
       gl.uniform1f(U.bodyF, s.bodyF);
       gl.uniform1f(U.headF, s.headF);
       gl.uniform1f(U.tipOn, s.tipOn);
+      gl.uniform1f(U.scroll, s.scroll);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     },
     dispose() {

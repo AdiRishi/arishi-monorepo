@@ -12,10 +12,17 @@
     opacity: 1;
   }
 
+  /* Reserves the name's space before the pen measures it. start-paper.ts then sets the exact ratio. */
   #inkbox {
-    aspect-ratio: 2.4 / 1;
+    aspect-ratio: 4.73 / 1;
   }
-  #inkbox h1 {
+  @media (max-width: 639px) {
+    #inkbox {
+      aspect-ratio: 1.75 / 1;
+    }
+  }
+  #inkbox h1,
+  .signed span {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -24,16 +31,12 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
-  @media (max-width: 639px) {
-    #inkbox {
-      aspect-ratio: 1.25 / 1;
-    }
-  }
+  /* The pen writes the name and the signature. Without a renderer both are set in type instead. */
   [data-state="plain"] #inkbox {
     aspect-ratio: auto !important;
   }
-  /* The pen writes the name. Without a renderer the name is set in type instead. */
-  [data-state="plain"] #inkbox h1 {
+  [data-state="plain"] #inkbox h1,
+  [data-state="plain"] .signed span {
     position: static;
     width: auto;
     height: auto;
@@ -42,10 +45,22 @@
     white-space: normal;
     font-style: italic;
     font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+  [data-state="plain"] #inkbox h1 {
     font-size: clamp(3.2rem, 11vw, 9rem);
     line-height: 0.95;
-    letter-spacing: -0.02em;
-    padding-top: 0.3em;
+  }
+  [data-state="plain"] .signed span {
+    font-size: 3.5rem;
+    line-height: 1;
+  }
+
+  /* Paper that the page scrolls under: blurred so the fibre still reads, fading out below. */
+  .veil {
+    background: color-mix(in srgb, var(--color-paper) 80%, transparent);
+    backdrop-filter: blur(12px);
+    mask-image: linear-gradient(#000 68%, transparent);
   }
 
   .write {
@@ -58,24 +73,7 @@
     mask-size: 130% 100%;
   }
 
-  .rv {
-    transition:
-      opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
-      transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-  .rv.wait {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .rv {
-      transition: none;
-    }
-    .rv.wait {
-      opacity: 1;
-      transform: none;
-    }
     .write {
       mask-image: none;
     }
