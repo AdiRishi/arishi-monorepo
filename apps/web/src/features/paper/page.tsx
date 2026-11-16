@@ -1,60 +1,261 @@
 import { useEffect, useRef } from "react";
 
+import { ContactList } from "./contact";
+import { email, pastimes, profiles, projects } from "./content";
+import { SectionNav } from "./nav";
+import { Drawing, Hindi, Section, label, prose, wrap } from "./section";
 import { startPaper } from "./start-paper";
+import { WorkHistory } from "./work";
 
-const projects = [
-  {
-    number: "01",
-    name: "Moss",
-    href: "https://github.com/AdiRishi/moss-meditation",
-    source: "https://github.com/AdiRishi/moss-meditation",
-    description:
-      "A meditation timer for iOS and Android, in development. Sessions end with a soft sound instead of an alarm, and your history stays on the phone.",
-  },
-  {
-    number: "02",
-    name: "turborepo-remote-cache-cloudflare",
-    href: "https://adirishi.github.io/turborepo-remote-cache-cloudflare/",
-    source: "https://github.com/AdiRishi/turborepo-remote-cache-cloudflare",
-    description:
-      "A Turborepo remote cache you deploy to your own Cloudflare account. It stores artefacts in R2 or KV. This is my most-used project, with about 250 stars.",
-  },
-  {
-    number: "03",
-    name: "cachified-adapter-cloudflare-kv",
-    href: "https://www.npmjs.com/package/cachified-adapter-cloudflare-kv",
-    source: "https://github.com/AdiRishi/cachified-adapter-cloudflare-kv",
-    description:
-      "The official Cloudflare KV adapter for @epic-web/cachified. It gets about 1,600 npm downloads a month.",
-  },
-  {
-    number: "04",
-    name: "RenderMD",
-    href: "https://www.render-md.com",
-    source: "https://github.com/AdiRishi/render-md",
-    description:
-      "Paste markdown or a GitHub link and read it typeset, with math, Mermaid diagrams and code highlighting. Your documents never leave the browser.",
-  },
-  {
-    number: "05",
-    name: "promptrc",
-    href: "https://promptrc.app",
-    source: "https://github.com/AdiRishi/promptrc",
-    description:
-      "A library for the AI prompts that worked, driven from the keyboard like a terminal app. Prompts can have fill-in blanks, and benchmarks record which models pass.",
-  },
-] as const;
+const rule = "border-b border-line";
 
-const channels = [
-  {
-    name: "LinkedIn",
-    handle: "Adishwar Rishi",
-    href: "https://www.linkedin.com/in/adishwar-rishi-8a832498",
-  },
-  { name: "X", handle: "@AdishwarR", href: "https://x.com/AdishwarR" },
-  { name: "GitHub", handle: "AdiRishi", href: "https://github.com/AdiRishi" },
-  { name: "Email", handle: "adishwar.rishi@gmail.com", href: "mailto:adishwar.rishi@gmail.com" },
-] as const;
+function Letterhead() {
+  return (
+    <section
+      id="top"
+      className={`relative grid content-center pt-[16vh] pb-[10vh] md:min-h-[92vh] md:pt-[14vh] md:pb-[8vh] ${wrap}`}
+    >
+      <p className="mb-[18px] font-mono text-caption tracking-[0.2em] text-mute uppercase">
+        Senior software engineer · Airwallex · Sydney
+      </p>
+      <div id="inkbox" className="relative w-[min(100%,1120px)]">
+        <h1>Adishwar Rishi</h1>
+      </div>
+      <div className="mt-3.5 grid grid-cols-1 items-end gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,1fr)_auto]">
+        <p className="max-w-[38ch] text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.45] font-light">
+          I&apos;ve written payments software for nine years. Five of those were at Escrow.com, and
+          I&apos;ve been at Airwallex since 2024.
+        </p>
+        <p className="flex flex-wrap items-baseline gap-x-[22px] gap-y-2.5 font-mono text-caption tracking-[0.14em] text-mute uppercase lg:flex-col lg:items-end lg:gap-2 lg:text-right">
+          <a
+            href={`mailto:${email}`}
+            className="basis-full border-b border-line pb-0.5 text-[13px] tracking-[0.04em] text-ink normal-case hover:text-accent lg:mb-1.5 lg:basis-auto"
+          >
+            {email}
+          </a>
+          {profiles.map((profile) => (
+            <a
+              key={profile.name}
+              href={profile.href}
+              target="_blank"
+              rel="noopener"
+              className="hover:text-accent"
+            >
+              {profile.name}
+            </a>
+          ))}
+        </p>
+      </div>
+      <p className="mt-12 mb-[1em] flex animate-cue items-center gap-3.5 font-mono text-caption tracking-[0.18em] text-mute uppercase motion-reduce:animate-none">
+        <span aria-hidden="true" className="block h-px w-[34px] bg-strong" />
+        Scroll for the rest
+      </p>
+    </section>
+  );
+}
+
+function About() {
+  const facts = [
+    { term: "Based in", detail: "Sydney, Australia" },
+    { term: "Studied", detail: "Software Engineering, UNSW", note: "2014 – 2017" },
+    { term: "Working on", detail: "Yield, at Airwallex" },
+  ];
+  return (
+    <Section
+      id="about"
+      hindi="परिचय"
+      heading={
+        <>
+          Hi, I&apos;m <em>Adi.</em>
+        </>
+      }
+      drawing="mountains"
+    >
+      <div className={`space-y-[1.1em] ${prose}`}>
+        <p>
+          I&apos;m a senior engineer at Airwallex. I spent my first year on the Cards and spend
+          management team and now work on Yield. Before that I was at Freelancer for eight years. I
+          started there as an intern, and for my last five years I led engineering for Escrow.com,
+          which holds a buyer&apos;s money until the seller delivers.
+        </p>
+        <p>In my spare time I build a lot of things with AI.</p>
+      </div>
+      <dl className="mt-10 max-w-[62ch] border-t border-line font-mono text-[12.5px] tracking-[0.06em]">
+        {facts.map((fact) => (
+          <div
+            key={fact.term}
+            className={`grid grid-cols-1 items-baseline gap-1 py-3.5 xs:grid-cols-[150px_1fr] xs:gap-4 ${rule}`}
+          >
+            <dt className={label}>{fact.term}</dt>
+            <dd className="font-display text-[1.1rem] font-light tracking-normal">
+              {fact.detail}
+              {fact.note && (
+                <small className="ml-2.5 font-mono text-label tracking-[0.14em] text-mute uppercase">
+                  {fact.note}
+                </small>
+              )}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Section>
+  );
+}
+
+function Projects() {
+  return (
+    <Section
+      id="projects"
+      hindi="रचना"
+      heading={
+        <>
+          Side projects, <em>all on GitHub.</em>
+        </>
+      }
+      drawing="cube"
+    >
+      <ol className="border-t border-line">
+        {projects.map((project, index) => (
+          <li
+            key={project.name}
+            className={`group grid grid-cols-1 items-baseline gap-1 py-[22px] sm:grid-cols-[60px_minmax(0,1fr)_auto] sm:gap-5 ${rule}`}
+          >
+            <span aria-hidden="true" className={label}>
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <div>
+              <h3 className="text-[clamp(1.3rem,2.2vw,1.8rem)] leading-[1.1] font-normal tracking-[-0.01em] group-hover:text-accent">
+                <a href={project.href} target="_blank" rel="noopener">
+                  {project.name}
+                </a>
+              </h3>
+              <p className="mt-1 max-w-[46ch] text-base font-light text-mute">
+                {project.description}
+              </p>
+            </div>
+            <a
+              href={project.source}
+              target="_blank"
+              rel="noopener"
+              aria-label={`Source for ${project.name}`}
+              className="font-mono text-label tracking-label whitespace-nowrap uppercase"
+            >
+              Source →
+            </a>
+          </li>
+        ))}
+      </ol>
+    </Section>
+  );
+}
+
+function OffTheClock() {
+  return (
+    <Section
+      id="offclock"
+      hindi="शौक"
+      heading={
+        <>
+          Games, anime <em>and the beach.</em>
+        </>
+      }
+      wide
+    >
+      <div className="mt-2 grid grid-cols-1 gap-11 xl:grid-cols-3 xl:gap-9">
+        {pastimes.map((pastime) => (
+          <div
+            key={pastime.name}
+            className="grid grid-cols-1 items-start xs:grid-cols-[200px_minmax(0,1fr)] xs:gap-x-7 xl:block"
+          >
+            <Drawing name={pastime.drawing} className="mb-4 max-w-[260px] xs:row-span-4" />
+            <h3 className="mb-1.5 text-[1.35rem] font-normal tracking-[-0.01em]">
+              {pastime.name}
+              <Hindi className="ml-2.5 text-[0.95em] text-accent">{pastime.hindi}</Hindi>
+            </h3>
+            <p className="mb-4 text-base font-light text-mute">{pastime.lead}</p>
+            {pastime.favourites.length > 0 && (
+              <ol className="border-t border-line">
+                {pastime.favourites.map((favourite, index) => (
+                  <li
+                    key={favourite.title}
+                    className={`grid grid-cols-[28px_1fr] items-baseline gap-2.5 py-3 text-[1.02rem] font-light ${rule}`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="font-mono text-label tracking-[0.1em] text-mute"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span>
+                      {favourite.title}
+                      <small className="mt-[3px] block font-mono text-label tracking-[0.12em] text-mute uppercase">
+                        {favourite.credit}
+                      </small>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Contact() {
+  return (
+    <Section
+      id="contact"
+      hindi="संपर्क"
+      heading={
+        <>
+          Get in <em>touch.</em>
+        </>
+      }
+      drawing="plane"
+      large
+    >
+      <p className={`mb-7 ${prose}`}>Any of these will reach me.</p>
+      <ContactList />
+      <div className="mt-16 max-w-[62ch]">
+        <p className="text-xl font-light italic">Yours,</p>
+        <Drawing name="signature" className="-mt-3 -mb-6 -ml-4 max-w-[300px]" />
+        <p className={label}>
+          Adishwar Rishi · Sydney ·{" "}
+          <a href="#top" className="hover:text-accent">
+            Back to the top ↑
+          </a>
+        </p>
+      </div>
+    </Section>
+  );
+}
+
+function Pen() {
+  return (
+    <svg
+      id="nib"
+      viewBox="0 0 120 120"
+      aria-hidden="true"
+      className="pointer-events-none fixed top-0 left-0 z-7 size-[120px]"
+    >
+      <defs>
+        <filter id="nibShadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="2" dy="4" stdDeviation="2.5" floodColor="#17161c" floodOpacity=".35" />
+        </filter>
+      </defs>
+      <g filter="url(#nibShadow)">
+        <path d="M46.5 82.1 L38.7 74.3 L108.2 8.1 L113.8 13.9 Z" fill="#2a2320" />
+        <path d="M42.5 77 L109 11" stroke="#6a584c" strokeWidth="1.2" strokeLinecap="round" />
+        <path d="M41 88.1 L32.6 79.5 L38.4 73.9 L46.8 82.5 Z" fill="#b9b2a6" />
+        <path d="M4 116 L31 101 L40 94 L30 84 L21 91 Z" fill="#d8c38a" />
+        <path d="M4 116 L24 96.4" stroke="#6b5a2e" strokeWidth="1" strokeLinecap="round" />
+        <circle cx="25.5" cy="94.5" r="1.8" fill="#6b5a2e" />
+      </g>
+    </svg>
+  );
+}
 
 export function PaperPage() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -66,371 +267,36 @@ export function PaperPage() {
 
   return (
     <div ref={rootRef} data-state="boot">
-      <canvas id="scene" aria-hidden="true"></canvas>
-      <div className="rule" aria-hidden="true"></div>
-      <div className="brand">
-        <b>Adishwar Rishi</b>
-        <span className="dv">कलम</span>
-      </div>
-      <nav className="top" aria-label="Sections">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#projects">Projects</a>
-        <a href="#offclock">Off the clock</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <svg id="nib" viewBox="0 0 120 120" aria-hidden="true">
-        <defs>
-          <filter id="nibShadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow
-              dx="2"
-              dy="4"
-              stdDeviation="2.5"
-              floodColor="#17161c"
-              floodOpacity=".35"
-            />
-          </filter>
-        </defs>
-        <g filter="url(#nibShadow)">
-          <path d="M46.5 82.1 L38.7 74.3 L108.2 8.1 L113.8 13.9 Z" fill="#2a2320" />
-          <path d="M42.5 77 L109 11" stroke="#6a584c" strokeWidth="1.2" strokeLinecap="round" />
-          <path d="M41 88.1 L32.6 79.5 L38.4 73.9 L46.8 82.5 Z" fill="#b9b2a6" />
-          <path d="M4 116 L31 101 L40 94 L30 84 L21 91 Z" fill="#d8c38a" />
-          <path d="M4 116 L24 96.4" stroke="#6b5a2e" strokeWidth="1" strokeLinecap="round" />
-          <circle cx="25.5" cy="94.5" r="1.8" fill="#6b5a2e" />
-        </g>
-      </svg>
+      <canvas id="scene" aria-hidden="true" className="fixed inset-0 z-0 block size-full" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-y-0 left-[clamp(28px,6vw,72px)] z-1 w-px bg-accent opacity-35"
+      />
+      <p className="fixed top-[calc(26px+env(safe-area-inset-top,0px))] left-[30px] z-6 hidden font-mono text-caption tracking-label text-mute uppercase md:block">
+        <b className="font-medium text-ink">Adishwar Rishi</b>
+        <Hindi className="ml-2.5 text-[13px] tracking-[0.1em] text-accent normal-case">कलम</Hindi>
+      </p>
+      <SectionNav />
+      <Pen />
 
-      <main>
-        <section className="hero wrap" id="top">
-          <p className="eyebrow">Senior software engineer · Airwallex · Sydney</p>
-          <div id="inkbox">
-            <h1>Adishwar Rishi</h1>
-          </div>
-          <div className="letterhead">
-            <p className="lede">
-              I&apos;ve written payments software for nine years. Five of those were at Escrow.com,
-              and I&apos;ve been at Airwallex since 2024.
-            </p>
-            <p className="from">
-              <a href="mailto:adishwar.rishi@gmail.com">adishwar.rishi@gmail.com</a>
-              <a href="https://github.com/AdiRishi" target="_blank" rel="noopener">
-                GitHub
-              </a>
-              <a
-                href="https://www.linkedin.com/in/adishwar-rishi-8a832498"
-                target="_blank"
-                rel="noopener"
-              >
-                LinkedIn
-              </a>
-              <a href="https://x.com/AdishwarR" target="_blank" rel="noopener">
-                X
-              </a>
-            </p>
-          </div>
-          <p className="cue">
-            <i></i>
-            <span>Scroll for the rest</span>
-          </p>
-        </section>
-
-        <section className="sec wrap rv" id="about">
-          <div className="grid">
-            <div className="side">
-              <p className="vj">परिचय</p>
-              <p className="k">About</p>
-            </div>
-            <div className="body">
-              <h2 className="write">
-                Hi, I&apos;m <em>Adi.</em>
-              </h2>
-              <div className="prose">
-                <p>
-                  I&apos;m a senior engineer at Airwallex. I spent my first year on the Cards and
-                  spend management team and now work on Yield. Before that I was at Freelancer for
-                  eight years. I started there as an intern, and for my last five years I led
-                  engineering for Escrow.com, which holds a buyer&apos;s money until the seller
-                  delivers.
-                </p>
-                <p>In my spare time I build a lot of things with AI.</p>
-              </div>
-              <dl className="ledger">
-                <div>
-                  <dt>Based in</dt>
-                  <dd>Sydney, Australia</dd>
-                </div>
-                <div>
-                  <dt>Studied</dt>
-                  <dd>
-                    Software Engineering, UNSW<small>2014 – 2017</small>
-                  </dd>
-                </div>
-                <div>
-                  <dt>Working on</dt>
-                  <dd>Yield, at Airwallex</dd>
-                </div>
-              </dl>
-            </div>
-            <div className="draw" data-draw="mountains" aria-hidden="true"></div>
-          </div>
-        </section>
-
-        <section className="sec wrap rv" id="work">
-          <div className="grid">
-            <div className="side">
-              <p className="vj">कार्य</p>
-              <p className="k">Work</p>
-            </div>
-            <div className="body">
-              <h2 className="write">
-                Work, <em>newest first.</em>
-              </h2>
-              <ul className="roles">
-                <li className="role">
-                  <div className="when">
-                    <b>2024 — now</b>Sydney
-                  </div>
-                  <div>
-                    <h3>
-                      Senior Software Engineer{" "}
-                      <span>
-                        at{" "}
-                        <a href="https://www.airwallex.com" target="_blank" rel="noopener">
-                          Airwallex
-                        </a>
-                      </span>
-                    </h3>
-                    <p>One year on Cards and spend management, then Yield.</p>
-                    <ul className="tags">
-                      <li>Cards</li>
-                      <li>Yield</li>
-                    </ul>
-                  </div>
-                </li>
-                <li className="role">
-                  <div className="when">
-                    <b>2019 — 2024</b>Sydney
-                  </div>
-                  <div>
-                    <h3>
-                      Senior Software Engineer, Tech Lead for Escrow.com{" "}
-                      <span>
-                        at{" "}
-                        <a href="https://www.freelancer.com" target="_blank" rel="noopener">
-                          Freelancer
-                        </a>
-                      </span>
-                    </h3>
-                    <p>
-                      Led the engineering team for Escrow.com. I owned the backend services, the
-                      React front end and the AWS infrastructure.
-                    </p>
-                    <ul className="tags">
-                      <li>Python</li>
-                      <li>React</li>
-                      <li>AWS</li>
-                      <li>Postgres</li>
-                    </ul>
-                  </div>
-                </li>
-                <li className="role">
-                  <div className="when">
-                    <b>2019</b>Feb — Sep
-                  </div>
-                  <div>
-                    <h3>
-                      Engineering Team Lead{" "}
-                      <span>
-                        at{" "}
-                        <a href="https://www.freelancer.com" target="_blank" rel="noopener">
-                          Freelancer
-                        </a>
-                      </span>
-                    </h3>
-                    <p>
-                      Managed ten engineers across two regions and took first call on production
-                      incidents.
-                    </p>
-                    <ul className="tags">
-                      <li>Leadership</li>
-                      <li>On-call</li>
-                    </ul>
-                  </div>
-                </li>
-                <li className="role">
-                  <div className="when">
-                    <b>2017 — 2019</b>Sydney
-                  </div>
-                  <div>
-                    <h3>
-                      Software Engineer{" "}
-                      <span>
-                        at{" "}
-                        <a href="https://www.freelancer.com" target="_blank" rel="noopener">
-                          Freelancer
-                        </a>
-                      </span>
-                    </h3>
-                    <p>
-                      Rebuilt the internal escalation system end to end. I&apos;d joined as an
-                      intern the year before.
-                    </p>
-                    <ul className="tags">
-                      <li>Python</li>
-                      <li>SQL</li>
-                      <li>React</li>
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div className="draw" data-draw="scales" aria-hidden="true"></div>
-          </div>
-        </section>
-
-        <section className="sec wrap rv" id="projects">
-          <div className="grid">
-            <div className="side">
-              <p className="vj">रचना</p>
-              <p className="k">Projects</p>
-            </div>
-            <div className="body">
-              <h2 className="write">
-                Side projects, <em>all on GitHub.</em>
-              </h2>
-              <ul className="projects">
-                {projects.map((project) => (
-                  <li className="proj" key={project.name}>
-                    <span className="k">{project.number}</span>
-                    <div>
-                      <h3>
-                        <a href={project.href} target="_blank" rel="noopener">
-                          {project.name}
-                        </a>
-                      </h3>
-                      <p>{project.description}</p>
-                    </div>
-                    <a className="go" href={project.source} target="_blank" rel="noopener">
-                      Source →
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="draw" data-draw="cube" aria-hidden="true"></div>
-          </div>
-        </section>
-
-        <section className="sec wrap rv" id="offclock">
-          <div className="grid">
-            <div className="side">
-              <p className="vj">शौक</p>
-              <p className="k">Off the clock</p>
-            </div>
-            <div className="body wide">
-              <h2 className="write">
-                Games, anime <em>and the beach.</em>
-              </h2>
-              <div className="three">
-                <div>
-                  <div className="draw sm" data-draw="controller" aria-hidden="true"></div>
-                  <h3>
-                    Gaming<span className="dv">खेल</span>
-                  </h3>
-                  <p className="lead">Single-player games with a long story.</p>
-                  <ol>
-                    <li>
-                      <i>01</i>
-                      <span>
-                        The Witcher 3<small>CD Projekt Red, 2015</small>
-                      </span>
-                    </li>
-                    <li>
-                      <i>02</i>
-                      <span>
-                        Red Dead Redemption 2<small>Rockstar, 2018</small>
-                      </span>
-                    </li>
-                    <li>
-                      <i>03</i>
-                      <span>
-                        God of War<small>Santa Monica Studio, 2018</small>
-                      </span>
-                    </li>
-                  </ol>
-                </div>
-                <div>
-                  <div className="draw sm" data-draw="cat" aria-hidden="true"></div>
-                  <h3>
-                    Anime<span className="dv">कथा</span>
-                  </h3>
-                  <p className="lead">Two I&apos;d recommend.</p>
-                  <ol>
-                    <li>
-                      <i>01</i>
-                      <span>
-                        Vinland Saga<small>Wit Studio and MAPPA, 2019</small>
-                      </span>
-                    </li>
-                    <li>
-                      <i>02</i>
-                      <span>
-                        Attack on Titan<small>Wit Studio and MAPPA, 2013</small>
-                      </span>
-                    </li>
-                  </ol>
-                </div>
-                <div>
-                  <div className="draw sm" data-draw="beach" aria-hidden="true"></div>
-                  <h3>
-                    The beach<span className="dv">तट</span>
-                  </h3>
-                  <p className="lead">Most weekends I&apos;m at a beach.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="sec wrap rv contact" id="contact">
-          <div className="grid">
-            <div className="side">
-              <p className="vj">संपर्क</p>
-              <p className="k">Contact</p>
-            </div>
-            <div className="body">
-              <h2 className="write">
-                Get in <em>touch.</em>
-              </h2>
-              <p className="prose" style={{ margin: "0 0 28px" }}>
-                Any of these will reach me.
-              </p>
-              <ul className="reach">
-                {channels.map((channel) => (
-                  <li key={channel.name}>
-                    <a
-                      href={channel.href}
-                      target={channel.href.startsWith("mailto:") ? undefined : "_blank"}
-                      rel="noopener"
-                    >
-                      <span className="name">{channel.name}</span>
-                      <span className="handle">{channel.handle}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <div className="signoff">
-                <p>Yours,</p>
-                <div className="draw sig" data-draw="signature" aria-hidden="true"></div>
-                <p className="k">
-                  Adishwar Rishi · Sydney · <a href="#top">Back to the top ↑</a>
-                </p>
-              </div>
-            </div>
-            <div className="draw" data-draw="plane" aria-hidden="true"></div>
-          </div>
-        </section>
+      <main className="relative z-2">
+        <Letterhead />
+        <About />
+        <Section
+          id="work"
+          hindi="कार्य"
+          heading={
+            <>
+              Work, <em>newest first.</em>
+            </>
+          }
+          drawing="scales"
+        >
+          <WorkHistory />
+        </Section>
+        <Projects />
+        <OffTheClock />
+        <Contact />
       </main>
     </div>
   );

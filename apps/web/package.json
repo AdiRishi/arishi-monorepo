@@ -12,8 +12,6 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p tests"
   },
   "dependencies": {
-    "@base-ui/react": "catalog:",
-    "@fontsource-variable/inter": "catalog:",
     "@repo/contracts": "workspace:*",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/react-devtools": "catalog:",
@@ -23,16 +21,13 @@
     "@tanstack/react-router-ssr-query": "catalog:",
     "@tanstack/react-start": "catalog:",
     "@tanstack/router-plugin": "catalog:",
+    "@ui-sdk/core": "catalog:",
+    "@ui-sdk/react": "catalog:",
     "@vgpu/wgsl": "catalog:",
-    "class-variance-authority": "catalog:",
-    "clsx": "catalog:",
     "effect": "catalog:",
-    "lucide-react": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "tailwind-merge": "catalog:",
     "tailwindcss": "catalog:",
-    "tw-animate-css": "catalog:",
     "vgpu": "catalog:"
   },
   "devDependencies": {
@@ -49,7 +44,6 @@
     "@vitest/browser-playwright": "catalog:",
     "@webgpu/types": "catalog:",
     "playwright": "catalog:",
-    "shadcn": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:",
