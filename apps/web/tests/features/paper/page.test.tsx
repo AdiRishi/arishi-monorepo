@@ -42,7 +42,7 @@ it("lets an agent read the page and copy the email address", async () => {
     "Contact",
     "P.S.",
   ]);
-  expect(onPage[1]?.text).toContain("Freelancer");
+  expect(onPage[1]?.text).toContain("Freelancer.com");
 
   const result = await agent.act({ steps: [{ ref: "Copy email address", action: "press" }] });
 
@@ -63,7 +63,7 @@ it("tells the reader where to write when the browser refuses the clipboard", asy
 
   await expect
     .element(page.getByRole("region", { name: "Notifications" }))
-    .toHaveTextContent("Couldn't copy the addressWrite to adishwar.rishi@gmail.com.");
+    .toHaveTextContent("Couldn’t copy the addressWrite to adishwar.rishi@gmail.com.");
 });
 
 it("names each employer and describes it by its dates and story", async () => {
@@ -76,7 +76,7 @@ it("names each employer and describes it by its dates and story", async () => {
   await expect
     .element(employer)
     .toHaveAccessibleDescription(
-      "2024–now I started on the cards team, which builds card issuing and spend management. Now I'm on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. Lately I also set up the coding agents in our codebases and build the tooling around them.",
+      "2024–now I started on the cards team, which builds card issuing and spend management. Now I’m on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. I’ve also been setting up coding agents in our codebases and building the tooling around them.",
     );
 });
 

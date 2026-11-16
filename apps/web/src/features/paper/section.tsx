@@ -6,7 +6,9 @@ export const wrap = "mx-auto max-w-[1240px] pr-6 pl-9 md:px-[clamp(40px,6vw,80px
 export const columns = "grid grid-cols-1 md:grid-cols-[120px_minmax(0,1fr)] md:gap-x-12";
 export const label = "font-mono text-label text-mute uppercase";
 export const meta = "font-mono text-meta text-mute tabular-nums";
-export const prose = "max-w-[60ch] space-y-[1em]";
+export const prose = "max-w-[60ch] space-y-[1em] text-pretty";
+/** The text column of a list row. */
+export const account = "max-w-[60ch] text-pretty";
 /** A list row: a name column, then the text about it. Work and Projects share it. */
 export const ledgerRow =
   "grid grid-cols-1 items-baseline gap-x-12 gap-y-4 border-b border-line py-7 lg:grid-cols-[272px_minmax(0,1fr)]";
@@ -29,7 +31,7 @@ export function Arrow({ glyph }: { glyph: "↗" | "↑" }) {
 export function Sketch({ name, className = "" }: { name: SketchName; className?: string }) {
   return (
     <div
-      className={`draw relative aspect-4/3 typeset:hidden ${className}`}
+      className={`draw relative aspect-4/3 ${className}`}
       data-sketch={name}
       aria-hidden="true"
     />
@@ -69,7 +71,7 @@ export function Section({
             </div>
             <Sketch
               name={sketch}
-              className="w-[min(64%,240px)] md:col-start-2 md:row-span-2 md:row-start-1 md:w-full xl:-mt-2"
+              className="w-[min(64%,240px)] md:col-start-2 md:row-span-2 md:row-start-1 md:w-full lg:-mb-6 xl:-mt-2"
             />
             {beside && <div className="min-w-0 md:col-start-1 md:row-start-2">{beside}</div>}
           </div>

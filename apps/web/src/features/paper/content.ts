@@ -32,16 +32,16 @@ export const employers = [
     dateTime: "2024",
     when: "2024–now",
     story:
-      "I started on the cards team, which builds card issuing and spend management. Now I'm on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. Lately I also set up the coding agents in our codebases and build the tooling around them.",
+      "I started on the cards team, which builds card issuing and spend management. Now I’m on Yield, where a business can put its spare cash into money market funds and take it out again when it needs it. I’ve also been setting up coding agents in our codebases and building the tooling around them.",
     roles: [{ title: "Senior Software Engineer", when: "2024–now" }],
   },
   {
-    company: "Freelancer",
+    company: "Freelancer.com",
     href: "https://www.freelancer.com",
     dateTime: "2016",
     when: "2016–2024",
     story:
-      "I joined as an intern and stayed eight years. As a software engineer I rebuilt the internal escalation system. In 2019 I spent eight months managing ten engineers across two regions and taking the first call when production broke. After that I spent five years as tech lead for Escrow.com, which holds a buyer's money until the seller delivers. I owned its backend services, its React front end and its AWS infrastructure.",
+      "I joined as an intern and stayed eight years. I rebuilt the internal escalation system, then spent eight months managing ten engineers across two regions and taking the first call when production broke. Most of my time went to Escrow.com, which holds a buyer’s money until the seller delivers. I owned its backend services, its React front end and its AWS infrastructure.",
     roles: [
       { title: "Senior Software Engineer, Tech Lead for Escrow.com", when: "2019–2024" },
       { title: "Engineering Team Lead", when: "2019" },
@@ -57,7 +57,7 @@ export const projects = [
     href: "https://turborepo-remote-cache.dev",
     source: "https://github.com/AdiRishi/turborepo-remote-cache-cloudflare",
     description:
-      "A Turborepo remote cache you host yourself, so your build artefacts stay in your own storage. It began on Cloudflare Workers and now also runs on Lambda, Vercel, Netlify, Node, Bun and Deno. It's my most used project, with about 250 stars, and every repository of my own builds with it.",
+      "A Turborepo remote cache you host yourself, so your build artefacts stay in your own storage. It began on Cloudflare Workers and now also runs on Lambda, Vercel, Netlify, Node, Bun and Deno. It’s my most used project, with about 250 stars, and every repository of my own builds with it.",
   },
   {
     name: "dotagents",
@@ -71,14 +71,14 @@ export const projects = [
     href: "https://github.com/AdiRishi/moss-meditation",
     source: "https://github.com/AdiRishi/moss-meditation",
     description:
-      "A meditation timer for iOS and Android. I wanted one that was simple and peaceful, didn't like anything on the market, and started making my own. It's still in development.",
+      "A meditation timer for iOS and Android. I wanted something simple and peaceful, so I’m making my own. It isn’t finished yet.",
   },
   {
     name: "RenderMD",
     href: "https://www.render-md.com",
     source: "https://github.com/AdiRishi/render-md",
     description:
-      'Paste markdown or a GitHub link and read it typeset, with maths, Mermaid diagrams and highlighted code. I built it because I disliked every result for "render markdown online". Your documents never leave the browser.',
+      "Paste markdown or a GitHub link and read it typeset, with maths, Mermaid diagrams and highlighted code. I built it because I disliked every result for “render markdown online”. Your documents never leave the browser.",
   },
   {
     name: "promptrc",
@@ -92,7 +92,7 @@ export const projects = [
     href: "https://www.npmjs.com/package/cachified-adapter-cloudflare-kv",
     source: "https://github.com/AdiRishi/cachified-adapter-cloudflare-kv",
     description:
-      "The Cloudflare KV adapter for @epic-web/cachified, and the one its README lists. There wasn't one, so I wrote it. It gets about 2,000 downloads a month on npm.",
+      "The Cloudflare KV adapter for @epic-web/cachified, and the one its README lists. There wasn’t one, so I wrote it. It gets about 2,000 downloads a month on npm.",
   },
 ] as const;
 

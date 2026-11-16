@@ -52,7 +52,7 @@ function NotFound() {
   return (
     <main className="grid min-h-[80vh] content-center px-[clamp(28px,8vw,96px)]">
       <p className="mb-[18px] font-mono text-label text-mute uppercase">404</p>
-      <h1 className="mb-[0.6em] text-heading font-light">There&apos;s no page at this address.</h1>
+      <h1 className="mb-[0.6em] text-heading font-light">There’s no page at this address.</h1>
       <p>
         <a href="/" className="font-mono text-label text-mute uppercase hover:text-accent">
           Go to the home page

@@ -7,7 +7,7 @@ import {
 } from "@ui-sdk/react/timeline";
 
 import { employers } from "./content";
-import { inlineLink, ledgerRow, meta } from "./section";
+import { account, inlineLink, ledgerRow, meta } from "./section";
 
 export function WorkHistory() {
   return (
@@ -28,14 +28,14 @@ export function WorkHistory() {
             </p>
             <ol className="mt-4 space-y-2.5">
               {roles.map((role) => (
-                <li key={role.title} className="text-note leading-[1.35]">
+                <li key={role.title} className="text-note leading-[1.35] text-balance">
                   {role.title}
                   {roles.length > 1 && <span className={`${meta} block`}>{role.when}</span>}
                 </li>
               ))}
             </ol>
           </div>
-          <TimelineDescription className="max-w-[60ch]">{story}</TimelineDescription>
+          <TimelineDescription className={account}>{story}</TimelineDescription>
         </TimelineItem>
       ))}
     </Timeline>

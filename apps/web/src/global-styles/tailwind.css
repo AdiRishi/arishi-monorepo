@@ -45,19 +45,6 @@
   --breakpoint-xl: 75rem;
 }
 
-/*
- * The pen writes the name and the signature. Where it cannot, because there is no renderer or no
- * scripting, the same words are set in type.
- */
-@custom-variant typeset {
-  [data-state="plain"] & {
-    @slot;
-  }
-  @media (scripting: none) {
-    @slot;
-  }
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;

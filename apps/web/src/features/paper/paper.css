@@ -21,10 +21,41 @@
     }
   }
 
-  /* Paper that the page scrolls under, fading out below. */
+  /*
+   * Words the pen writes are also real text, laid where the ink goes and invisible while the pen
+   * can write them. They show where it cannot: no renderer, no scripting, or scripts that have
+   * not started after five seconds.
+   */
+  .penned {
+    opacity: 0;
+  }
+  [data-state="boot"] .penned {
+    animation: penned-late 0.4s 5s both;
+  }
+  [data-state="plain"] .penned {
+    opacity: 1;
+  }
+  [data-state="plain"] [data-sketch] {
+    display: none;
+  }
+  @media (scripting: none) {
+    .penned {
+      opacity: 1;
+      animation: none;
+    }
+    [data-sketch] {
+      display: none;
+    }
+  }
+  @keyframes penned-late {
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Paper that the page scrolls under. Opaque, so nothing shows through it, and fading out below. */
   .veil {
-    background: color-mix(in srgb, var(--color-paper) 92%, transparent);
-    backdrop-filter: blur(6px);
-    mask-image: linear-gradient(#000 76%, transparent);
+    background: var(--color-paper);
+    mask-image: linear-gradient(#000 70%, transparent);
   }
 }

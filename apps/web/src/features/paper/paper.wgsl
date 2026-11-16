@@ -95,7 +95,11 @@ fn blur5(t: texture_2d<f32>, uv: vec2f) -> vec4f {
   // ink physics: fibrous edge, pooling at the rim, granulation, wet sheen
   let fibre = fbm(sheet * vec2f(asp, 1.0) * 240.0);
   let cov = ab * 0.65 + a * 0.35;
-  let ink = smoothstep(0.40 - 0.22 * fibre, 0.56, cov);
+  // The edge of the ink is never sharper than a pixel, or diagonals step on a 1x screen.
+  let inkLow = 0.40 - 0.22 * fibre;
+  let inkMid = (inkLow + 0.56) * 0.5;
+  let inkHalf = max((0.56 - inkLow) * 0.5, fwidth(cov) * 0.7);
+  let ink = smoothstep(inkMid - inkHalf, inkMid + inkHalf, cov);
   let pool = smoothstep(0.08, 0.5, cov) * (1.0 - smoothstep(0.55, 1.0, cov));
   let gran = noise(sheet * p.res * 0.45);
   var inkCol = vec3f(0.075, 0.075, 0.105) + vec3f(0.11) * gran;

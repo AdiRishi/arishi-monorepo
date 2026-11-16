@@ -7,6 +7,7 @@ import {
   Arrow,
   Hindi,
   Section,
+  account,
   columns,
   inlineLink,
   label,
@@ -67,11 +68,11 @@ function Letterhead() {
             <br />
             <time dateTime={written.dateTime}>{written.label}</time>
           </address>
-          <div id="inkbox" className="relative mt-9 w-full md:mt-7 typeset:aspect-auto!">
-            <h1 className="sr-only typeset:not-sr-only typeset:text-[clamp(3.2rem,11vw,9rem)] typeset:leading-[0.95] typeset:font-light typeset:tracking-[-0.02em] typeset:italic">
+          <div id="inkbox" className="@container relative mt-9 w-full md:mt-7">
+            <h1 className="penned pt-[0.05em] pl-[0.1em] text-[25.06cqw] leading-[0.92] font-light italic sm:text-[16.06cqw] sm:whitespace-nowrap">
               {name.latin}
             </h1>
-            <Hindi className="sr-only block typeset:not-sr-only typeset:mt-3 typeset:text-[clamp(1.5rem,3.4vw,2.75rem)]">
+            <Hindi className="penned block pl-[0.07em] text-[8.5cqw] leading-[1.2] sm:text-[4.82cqw]">
               {name.devanagari}
             </Hindi>
           </div>
@@ -107,14 +108,14 @@ function Projects() {
               </p>
             )}
           </div>
-          <p className="max-w-[60ch]">{project.description}</p>
+          <p className={account}>{project.description}</p>
         </li>
       ))}
       <li className={ledgerRow}>
         <h3 className="text-title">Starter repos</h3>
-        <p className="max-w-[60ch]">
-          I start a lot of projects, so I keep the setups I&apos;d otherwise rebuild each time.
-          There&apos;s one for{" "}
+        <p className={account}>
+          I start a lot of projects, so I keep the setups I’d otherwise rebuild each time. There’s
+          one for{" "}
           {starters.map((starter, index) => (
             <span key={starter.href}>
               {index > 0 && (index === starters.length - 1 ? " and " : ", ")}
@@ -135,7 +136,7 @@ function SignOff() {
     <div className="mt-12">
       <p className="text-title font-light italic">Yours,</p>
       <p className="draw mt-1 h-[88px] w-[168px]" data-word="Adi">
-        <span className="sr-only typeset:not-sr-only typeset:text-[3.5rem] typeset:leading-none typeset:font-light typeset:italic">
+        <span className="penned block pl-[0.08em] text-[70px] leading-[88px] font-light italic">
           Adi
         </span>
       </p>
@@ -212,19 +213,19 @@ export function PaperPage() {
           id="about"
           heading={
             <>
-              Hi, I&apos;m <em>Adi.</em>
+              Hi, I’m <em>Adi.</em>
             </>
           }
           intro={
             <>
               <p>
-                I&apos;m a product engineer in Sydney, currently at Airwallex. I like to own a whole
+                I’m a product engineer in Sydney, currently at Airwallex. I like to own a whole
                 product, so I work on the backend, the web app and the mobile app, and I stay to
                 look after it once it ships. I enjoy that part as much as building it.
               </p>
               <p>
-                Lately a lot of my time goes to coding agents, at work and at home. I&apos;m slowly
-                teaching them to write code I&apos;d approve in review.
+                Lately a lot of my time goes to coding agents, at work and at home. I’m slowly
+                teaching them to write code I’d approve in review.
               </p>
             </>
           }
@@ -234,10 +235,10 @@ export function PaperPage() {
           id="work"
           heading={
             <>
-              I&apos;ve worked at <em>two companies.</em>
+              I’ve worked at <em>two companies.</em>
             </>
           }
-          intro={<p>Both of them look after other people&apos;s money.</p>}
+          intro={<p>Both of them look after other people’s money.</p>}
           sketch="payments"
         >
           <WorkHistory />
@@ -249,13 +250,13 @@ export function PaperPage() {
           id="projects"
           heading={
             <>
-              I&apos;m always <em>building something.</em>
+              I’m always <em>building something.</em>
             </>
           }
           intro={
             <p>
               Outside work I build software for myself, usually because I wanted the thing and
-              didn&apos;t like what was already out there. All of it is on GitHub.
+              didn’t like what was already out there. All of it is on GitHub.
             </p>
           }
           sketch="laptop"
@@ -284,12 +285,12 @@ export function PaperPage() {
           intro={
             <>
               <p>
-                When I&apos;m not writing code, I&apos;m usually out for a walk in the park or deep
-                in a long single-player game. <cite>The Witcher 3</cite>,{" "}
-                <cite>Red Dead Redemption 2</cite> and <cite>God of War</cite> are my favourites.
+                When I’m not writing code, I’m usually out for a walk in the park or deep in a long
+                single-player game. <cite>The Witcher 3</cite>, <cite>Red Dead Redemption 2</cite>{" "}
+                and <cite>God of War</cite> are my favourites.
               </p>
               <p>
-                I watch anime too. The two I&apos;d recommend are <cite>Vinland Saga</cite> and{" "}
+                I watch anime too. The two I’d recommend are <cite>Vinland Saga</cite> and{" "}
                 <cite>Attack on Titan</cite>.
               </p>
             </>

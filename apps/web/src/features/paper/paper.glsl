@@ -50,7 +50,9 @@ void main(){
 
   float fibre=fbm(sheet*vec2(asp,1.0)*240.0);
   float cov=ab*0.65+a*0.35;
-  float ink=smoothstep(0.40-0.22*fibre,0.56,cov);
+  // The edge of the ink is never sharper than a pixel, or diagonals step on a 1x screen.
+  float inkLow=0.40-0.22*fibre, inkMid=(inkLow+0.56)*0.5, inkHalf=max((0.56-inkLow)*0.5,fwidth(cov)*0.7);
+  float ink=smoothstep(inkMid-inkHalf,inkMid+inkHalf,cov);
   float pool=smoothstep(0.08,0.5,cov)*(1.0-smoothstep(0.55,1.0,cov));
   float gran=noise(sheet*uRes*0.45);
   vec3 inkCol=vec3(0.075,0.075,0.105)+vec3(0.11)*gran;
