@@ -31,16 +31,47 @@ pnpm check
 The E2E project runs the built Worker in `dist/`, so the Turbo test task builds
 first.
 
+## Build the interface
+
+Every interactive component comes from ui-sdk (`@ui-sdk/react`), which ships
+behaviour and ARIA with no styles. Follow the ui-sdk skill: read
+`node_modules/@ui-sdk/react/docs/llms.txt`, then the page for each component
+you use. Style parts with Tailwind through their `data-*` state attributes.
+Links and text stay plain HTML.
+
+## Check the interface through the agent bridge
+
+`src/lib/agent.ts` creates ui-sdk's agent bridge and registers its WebMCP
+tools. In development the page also exposes it as `window.agent`. To check a
+change in the running app, open it with `pnpm dev:ui` and evaluate in the page:
+
+```js
+agent.snapshot(); // each ui-sdk component: name, state, actions
+await agent.act({ steps: [{ ref: "Copy email address", action: "press" }] });
+```
+
+Read names and state from the bridge. Take a screenshot for layout and colour.
+
+Section links have no bridge action, since a plain link has none. Reach a
+section through its URL hash, such as `/#work`.
+
+[Write tests](../../docs/testing.mdx#interface-tests) covers interface tests,
+which drive the page through the same bridge.
+
 ## Layout
 
 - `src/routes/`: file-based routes. The router plugin regenerates
   `src/routeTree.gen.ts`; leave that file to it.
-- `src/components/ui/`: shadcn/ui primitives in the Base Vega style with Lucide
-  icons. Add more with `pnpm exec shadcn add <component>` from `apps/web`.
+- `src/features/paper/`: the home page, written as a letter. `content.ts` holds
+  its copy and links. `start-paper.ts` drives the pen, the drawings and the
+  WebGPU paper, and finds its elements by the ids and classes in `page.tsx` and
+  `paper.css`.
+- `src/components/`: components every route shares, such as the toast region.
 - `src/lib/`: `AppProviders`, which the router's `Wrap` option puts around
-  every route, the query client, and `cn`.
+  every route, the agent bridge, and the query client.
 - `src/server/`: server-only calls to the API Worker.
-- `src/global-styles/tailwind.css`: theme tokens.
+- `src/global-styles/tailwind.css`: the paper theme's colours, fonts and
+  breakpoints, as Tailwind tokens.
 - `tests/`: mirrors `src/`. A `.test.ts` file runs in Node, a `.test.tsx` file
   renders in Chromium, and `tests/e2e/` requests pages from the built Worker.
 

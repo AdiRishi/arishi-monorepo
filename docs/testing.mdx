@@ -22,6 +22,17 @@ sidebar:
 
 `it.effect`'s `TestClock` starts at zero. E2E tests use `it.live`, because the Worker under test runs on the real clock. Both give each test a `Scope`, so a test can `yield*` an RPC client without `Effect.scoped`.
 
+## Interface tests
+
+[Interface](/adr/build-the-interface-with-ui-sdk) explains why interface tests drive the page through ui-sdk's agent bridge. `apps/web/tests/features/paper/page.test.tsx` is the model.
+
+- Render the whole page in a `.test.tsx` file, as people and agents meet it.
+- Create one bridge per file with `createAgent()` from `@ui-sdk/react/agent`. Assert the labels `snapshot()` lists, so a control without a name fails. Press, set and open controls with `act`, in the words a person would use.
+- Tab through the page once and assert every stop has an accessible name.
+- Replace only a true external seam, such as the clipboard in `tests/support/clipboard.ts`.
+- Test the wiring: names, values, callbacks and what a press changes. ui-sdk already tests its own components' keyboard and ARIA patterns. A primitive the repository builds itself also gets `mount`, `checkPattern`, `checkServer` and `checkDirection` from `@ui-sdk/core/testing`.
+- The browser setup sets `globalThis.__UI_SDK_STRICT__`, so a ui-sdk development warning fails the test.
+
 ## E2E tests
 
 The tests reach a Worker only as Cloudflare and its neighbours do: `exports.default.fetch`, `.queue`, and `.scheduled`, and its RPC entrypoints through `clientOverBinding(group, { binding: exports.Name })`. A refactor inside the Worker leaves them untouched. Set state up through the Worker where it offers a way, and otherwise in storage.
