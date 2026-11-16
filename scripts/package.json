@@ -1,20 +1,22 @@
 {
-  "name": "@repo/scripts",
-  "version": "0.0.0",
+  "name": "scripts",
   "private": true,
   "type": "module",
-  "scripts": {
-    "typecheck": "tsc --noEmit && tsc --noEmit -p tests",
-    "test": "node --test tests/*.test.ts"
-  },
+  "version": "0.0.0",
   "dependencies": {
-    "@effect/platform-node": "catalog:",
-    "effect": "catalog:",
-    "yaml": "catalog:"
-  },
-  "devDependencies": {
-    "@repo/tsconfig": "workspace:*",
-    "@types/node": "catalog:",
-    "typescript": "catalog:"
+    "effect": "workspace:*",
+    "@effect/platform-bun": "workspace:*",
+    "@effect/platform-node": "workspace:*",
+    "@effect/sql-clickhouse": "workspace:*",
+    "@effect/sql-d1": "workspace:*",
+    "@effect/sql-libsql": "workspace:*",
+    "@effect/sql-mysql2": "workspace:*",
+    "@effect/sql-mssql": "workspace:*",
+    "@effect/sql-pg": "workspace:*",
+    "@effect/sql-sqlite-bun": "workspace:*",
+    "@effect/sql-sqlite-do": "workspace:*",
+    "@effect/sql-sqlite-node": "workspace:*",
+    "@effect/sql-sqlite-react-native": "workspace:*",
+    "@effect/sql-sqlite-wasm": "workspace:*"
   }
 }
