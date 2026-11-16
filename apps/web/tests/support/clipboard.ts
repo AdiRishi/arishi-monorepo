@@ -1,6 +1,6 @@
 import { vi } from "vitest";
 
-/** Replaces the system clipboard, which a test page in an unfocused frame can't write to. */
+// A test page runs in an unfocused frame, which the system clipboard refuses to write from.
 export function fakeClipboard() {
   const clipboard = { text: "" };
   vi.spyOn(navigator.clipboard, "writeText").mockImplementation(async (text) => {

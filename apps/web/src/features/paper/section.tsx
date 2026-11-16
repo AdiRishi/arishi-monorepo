@@ -12,7 +12,6 @@ export function Hindi({ className, children }: { className: string; children: st
   );
 }
 
-/** A box the pen draws `name` into as it scrolls into view. */
 export function Drawing({ name, className = "" }: { name: string; className?: string }) {
   return (
     <div

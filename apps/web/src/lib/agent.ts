@@ -6,14 +6,10 @@ declare global {
   }
 }
 
-/**
- * Lets agents read and use the page's ui-sdk components: a browser's own agent through WebMCP,
- * and, in development, a coding agent through `window.agent` in the page.
- */
 export function connectAgents(): () => void {
   const agent = createAgent();
   if (import.meta.env.DEV) window.agent = agent;
-  // Nothing on the site needs a person's confirmation, so every step the browser's agent asks
-  // for may run. A control marked with data-agent-confirm would still be refused.
+  // Nothing on the site needs a person, so the browser's agent may run any step except one
+  // on a control marked with data-agent-confirm.
   return registerTools(agent, { allow: (step) => !step.confirm });
 }
