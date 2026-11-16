@@ -11,12 +11,17 @@ it.effect("accepts the supported deployment stages", () =>
     expect(stagePolicy("test-deadbeef").environment).toBe("test");
     expect(yield* decodeStage("prod")).toBe("prod");
     expect(yield* decodeStage("test-deadbeef")).toBe("test-deadbeef");
+    expect(yield* decodeStage("pr-42")).toBe("pr-42");
+    expect(stagePolicy("pr-42")).toEqual({
+      environment: "preview",
+      web: { workersDev: true, domain: null },
+    });
   }),
 );
 
 it.effect("rejects unsupported deployment stages", () =>
   Effect.gen(function* () {
-    for (const stage of ["production", "test", "test-local", "test-123"]) {
+    for (const stage of ["production", "test", "test-local", "test-123", "pr-", "pr-0", "pr-abc"]) {
       const invalid = yield* Effect.flip(decodeStage(stage));
       expect(invalid._tag).toBe("ConfigError");
     }
