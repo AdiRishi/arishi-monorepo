@@ -50,8 +50,10 @@ export function startPaper(root: HTMLElement): () => void {
   }
 
   /* ---------- the writing ---------- */
+  let laidNarrow = narrow.matches;
   async function layName() {
-    const mask = await buildInkMask(name.latin, name.devanagari, 2048, narrow.matches);
+    laidNarrow = narrow.matches;
+    const mask = await buildInkMask(name.latin, name.devanagari, 2048, laidNarrow);
     if (!disposed) inkbox.style.aspectRatio = `${mask.width} / ${mask.height}`;
     return mask;
   }
@@ -60,8 +62,12 @@ export function startPaper(root: HTMLElement): () => void {
     try {
       await write();
     } finally {
-      // Whatever stopped the pen, the name must still be on the page.
-      if (!disposed && root.dataset.state === "boot") root.dataset.state = "plain";
+      // Whatever stopped the pen, the name must still be on the page. Its box goes back to the
+      // stylesheet's ratio, which follows the viewport without the pen to lay it out again.
+      if (!disposed && root.dataset.state === "boot") {
+        root.dataset.state = "plain";
+        inkbox.style.aspectRatio = "";
+      }
     }
   }
 
@@ -114,6 +120,8 @@ export function startPaper(root: HTMLElement): () => void {
     };
     narrow.addEventListener("change", relay);
     stopRelaying = () => narrow.removeEventListener("change", relay);
+    // The viewport may have crossed the breakpoint while the renderer was loading.
+    if (narrow.matches !== laidNarrow) relay();
 
     function frame(now: number) {
       const t = reduce ? 99 : (now - t0) / 1000;
