@@ -72,7 +72,7 @@ function Letterhead() {
             <h1 className="penned pt-[0.05em] pl-[0.1em] text-[25.06cqw] leading-[0.92] font-light italic sm:relative sm:top-[0.02em] sm:text-[16.06cqw] sm:whitespace-nowrap">
               {name.latin}
             </h1>
-            <Hindi className="penned block pl-[0.07em] text-[8.5cqw] leading-[1.2] sm:relative sm:top-[0.18em] sm:text-[4.82cqw]">
+            <Hindi className="penned relative top-[0.2em] block pl-[0.07em] text-[8.5cqw] leading-[1.2] sm:top-[0.18em] sm:text-[4.82cqw]">
               {name.devanagari}
             </Hindi>
           </div>
@@ -151,7 +151,7 @@ function Footer() {
         <p
           className={`${label} flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-line pt-5 md:col-start-2`}
         >
-          <span className="text-balance">Set in Newsreader, Geist Mono and Tiro Devanagari</span>
+          <span className="text-balance">Set in Newsreader, Geist Mono and Tiro Devanagari</span>
           <a href="#top" className="whitespace-nowrap transition-colors hover:text-accent">
             Back to the top
             <Arrow glyph="↑" />
@@ -287,7 +287,7 @@ export function PaperPage() {
               <p>
                 When I’m not writing code, I’m usually out for a walk in the park or deep in a long
                 single-player game. <cite className="whitespace-nowrap">The Witcher 3</cite>,{" "}
-                <cite className="whitespace-nowrap">Red Dead Redemption 2</cite> and{" "}
+                <cite className="min-[340px]:whitespace-nowrap">Red Dead Redemption 2</cite> and{" "}
                 <cite className="whitespace-nowrap">God of War</cite> are my favourites.
               </p>
               <p>
