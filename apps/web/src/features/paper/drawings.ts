@@ -1,9 +1,9 @@
 /**
- * What the pen makes as the reader scrolls: line sketches with a watercolour wash, and words
- * written in the same italic as the name. Each sketch is a list of SVG paths in a 400 by 300 box,
- * in the order a hand would draw them. The layer strokes the revealed part of everything visible
- * into one viewport-sized mask that the paper shader renders as ink:
- * R = coverage, G = how recently the ink went down.
+ * What the pen draws as the reader scrolls: line sketches with a watercolour wash, and the
+ * signature. Each is a list of SVG paths in its own box, in the order a hand would draw them. The
+ * pen moves at one speed along every line, so a drawing takes as long as its lines are long. The
+ * layer strokes the revealed part of everything visible into one viewport-sized mask that the
+ * paper shader renders as ink: R = coverage, G = how recently the ink went down.
  */
 export interface Wash {
   readonly d: string;
@@ -11,6 +11,10 @@ export interface Wash {
 }
 
 export interface Sketch {
+  /** Width and height of the box the paths are drawn in. */
+  readonly box: readonly [number, number];
+  /** Line width in box units. */
+  readonly line: number;
   readonly paths: readonly string[];
   /** Watercolour under the ink, filled after the lines are down. */
   readonly washes: readonly Wash[];
@@ -23,12 +27,12 @@ const WASH = {
   brick: "rgba(178,58,42,.3)",
 };
 
-const BOX_W = 400,
-  BOX_H = 300;
-const LINE_WIDTH = 2;
+/** The box and line every section sketch shares. */
+const SCENE = { box: [400, 300], line: 2 } as const;
 
 export const sketches = {
   sydney: {
+    ...SCENE,
     paths: [
       "M8 238 L392 238",
       "M12 204 L160 204",
@@ -55,6 +59,7 @@ export const sketches = {
     ],
   },
   payments: {
+    ...SCENE,
     paths: [
       "M54 110 L228 82 Q240 81 242 92 L256 179 Q258 191 246 193 L72 221 Q60 222 58 211 L44 124 Q43 112 54 110 Z",
       "M70 142 Q69 138 73 137 L97 134 Q101 133 101 137 L104 155 Q105 159 101 159 L77 163 Q73 164 72 160 Z",
@@ -83,6 +88,7 @@ export const sketches = {
     ],
   },
   laptop: {
+    ...SCENE,
     paths: [
       "M110 190 L110 84 Q110 72 122 72 L278 72 Q290 72 290 84 L290 190",
       "M96 190 L304 190 L326 216 L74 216 Z",
@@ -101,6 +107,7 @@ export const sketches = {
     ],
   },
   plane: {
+    ...SCENE,
     paths: [
       "M30 262 C80 258 112 222 140 196 C176 162 196 112 160 108 C124 104 128 168 176 164 C204 162 216 140 226 126",
       "M350 64 L232 104 L274 114 Z",
@@ -113,6 +120,7 @@ export const sketches = {
     ],
   },
   park: {
+    ...SCENE,
     paths: [
       "M16 238 L384 238",
       "M112 238 C116 214 110 194 116 170 M136 238 C132 214 138 194 132 170",
@@ -140,45 +148,51 @@ export const sketches = {
 
 export type SketchName = keyof typeof sketches;
 
-function isSketchName(name: string): name is SketchName {
-  return Object.hasOwn(sketches, name);
+/** Adi, signed in three strokes: the A, then the d and i running into the swash, then the dot. */
+export const signature = {
+  box: [300, 165],
+  line: 2.5,
+  paths: [
+    "M16.5 118.5 C30 126 49.5 117 66 91.5 C82.5 66 96 39 109.5 21 C112.5 17.5 115.5 18 115 24 C112.5 52.5 111 87 114 112.5 C115 118.5 112.5 120 109.5 114 C102 99 84 82.5 69 81 C57 79.5 60 88.5 75 88.5 C97.5 88.5 126 81 147 78",
+    "M169.5 84 C159 73.5 139.5 78 135 94.5 C130.5 109.5 142.5 117 153 109.5 C162 102 169.5 88.5 174 73.5 C181.5 49.5 189 27 196.5 16.5 C201 10.5 205.5 13.5 201 25.5 C192 49.5 180 84 177 105 C175.5 117 183 118.5 192 109.5 C198 103.5 202.5 96 207 87 C204 99 201 109.5 204 115.5 C208.5 121.5 219 112.5 226.5 102 C247.5 75 264 90 247.5 112.5 C225 139.5 150 147 52.5 139.5 C34.5 138 30 133.5 45 132",
+    "M216.5 66 l4.5 -4",
+  ],
+  washes: [],
+} satisfies Sketch;
+
+const drawings: Record<SketchName | "signature", Sketch> = { ...sketches, signature };
+
+function isDrawingName(name: string): name is keyof typeof drawings {
+  return Object.hasOwn(drawings, name);
 }
 
 interface Stroke {
   readonly path: Path2D;
   readonly measure: SVGPathElement;
   readonly len: number;
+  /** Seconds into the drawing when the pen touches down to start this stroke. */
+  readonly at: number;
 }
 
-interface Progress {
+interface Item {
   readonly el: HTMLElement;
-  state: "idle" | "drawing" | "done";
-  progress: number;
-  start: number;
-  /** Seconds the pen takes. */
+  readonly sketch: Sketch;
+  readonly strokes: readonly Stroke[];
+  /** Seconds the pen takes, with its moves between strokes. */
   readonly duration: number;
+  state: "idle" | "drawing" | "done";
+  /** Seconds since the pen started this drawing. */
+  elapsed: number;
+  start: number;
   /** When the lines finished, so the wash can bloom in afterwards. */
   doneAt: number;
 }
 
-interface SketchItem extends Progress {
-  readonly kind: "sketch";
-  readonly sketch: Sketch;
-  readonly strokes: readonly Stroke[];
-  readonly total: number;
-}
-
-/** A word in the name's italic, sized to its element's height and revealed left to right. */
-interface WordItem extends Progress {
-  readonly kind: "word";
-  readonly text: string;
-}
-
-type Item = SketchItem | WordItem;
-
 export interface PenTip {
   x: number;
   y: number;
+  /** False while the pen moves between strokes. */
+  down: boolean;
 }
 
 export interface PenUpdate {
@@ -188,18 +202,20 @@ export interface PenUpdate {
   tip: PenTip | null;
 }
 
+/** Box units of line the pen draws each second. A sketch box is about 300 CSS px wide. */
+const PEN_SPEED = 700;
+/** How many times faster the pen moves between strokes than along them. */
+const HOP_SPEED = 4;
+/** Seconds the pen stays lifted after one drawing before it starts the next. */
+export const PEN_REST = 0.3;
+/** Box units behind the pen where the ink is still wet. */
+const WET = 140;
 /**
  * Mask pixels per CSS pixel. The shader thresholds the mask into ink, which hardens every pixel
  * edge, so the mask is always two pixels per CSS pixel and a 1x screen still gets smooth lines.
  */
 const MASK_SCALE = 2;
 const WASH_BLOOM = 1400;
-const WORD_FONT = 'italic 300 100px "Newsreader"';
-/** Font size and baseline of a written word, as fractions of its element's height. */
-const WORD_SIZE = 0.8,
-  WORD_BASELINE = 0.76;
-/** How far the reveal edge leans, as a fraction of the height, to follow the italic. */
-const WORD_LEAN = 0.1;
 
 function context2d(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
   const ctx = canvas.getContext("2d");
@@ -217,6 +233,8 @@ export class DrawingLayer {
   private readonly reduce: boolean;
   private readonly scale = MASK_SCALE;
   private active: Item | undefined;
+  /** The pen picks up no new drawing before this time. */
+  private restUntil = 0;
   private dirty = true;
 
   constructor(elements: Iterable<HTMLElement>, reduce: boolean) {
@@ -225,40 +243,41 @@ export class DrawingLayer {
     svg.setAttribute("aria-hidden", "true");
     svg.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
     document.body.appendChild(svg);
-    const progress = { state: reduce ? "done" : "idle", progress: reduce ? 1 : 0 } as const;
     for (const el of elements) {
-      const { sketch: name, word } = el.dataset;
-      if (word !== undefined) {
-        this.items.push({
-          kind: "word",
-          el,
-          text: word,
-          ...progress,
-          start: 0,
-          doneAt: -1e9,
-          duration: 0.5 + word.length * 0.3,
+      const name = el.dataset.sketch;
+      if (name === undefined || !isDrawingName(name)) continue;
+      const sketch = drawings[name];
+      // A canvas dash restarts on every subpath, so each subpath is its own stroke and the pen
+      // reveals them one at a time.
+      const measured = sketch.paths
+        .flatMap((d) => d.split(/(?=M)/))
+        .map((d) => {
+          const measure = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          measure.setAttribute("d", d);
+          svg.appendChild(measure);
+          return { path: new Path2D(d), measure, len: measure.getTotalLength() };
         });
-        continue;
-      }
-      if (name === undefined || !isSketchName(name)) continue;
-      const sketch = sketches[name];
-      const strokes = sketch.paths.map((d) => {
-        const measure = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        measure.setAttribute("d", d);
-        svg.appendChild(measure);
-        return { path: new Path2D(d), measure, len: measure.getTotalLength() };
+      let t = 0;
+      const strokes = measured.map((stroke, index) => {
+        const at = t;
+        t += stroke.len / PEN_SPEED;
+        const next = measured[index + 1];
+        if (next) {
+          const from = stroke.measure.getPointAtLength(stroke.len);
+          const to = next.measure.getPointAtLength(0);
+          t += Math.hypot(to.x - from.x, to.y - from.y) / (PEN_SPEED * HOP_SPEED);
+        }
+        return { ...stroke, at };
       });
-      const total = strokes.reduce((a, s) => a + s.len, 0);
       this.items.push({
-        kind: "sketch",
         el,
         sketch,
         strokes,
-        total,
-        ...progress,
+        duration: t,
+        state: reduce ? "done" : "idle",
+        elapsed: reduce ? t : 0,
         start: 0,
         doneAt: -1e9,
-        duration: 0.6 + total / 1400,
       });
     }
     this.resize();
@@ -282,20 +301,32 @@ export class DrawingLayer {
     this.dirty = true;
   };
 
+  private finish(it: Item, doneAt: number) {
+    it.state = "done";
+    it.elapsed = it.duration;
+    it.doneAt = doneAt;
+    this.dirty = true;
+  }
+
   /** Advances the pen. Returns the tip while a drawing is in progress, and whether the mask changed. */
   update(now: number): PenUpdate {
     let tip: PenTip | null = null;
     if (!this.reduce) {
-      if (!this.active) {
+      if (this.active) {
+        const r = this.active.el.getBoundingClientRect();
+        // The reader scrolled away mid-drawing, so it finishes unseen and frees the pen.
+        if (r.bottom < 0 || r.top > innerHeight) {
+          this.finish(this.active, -1e9);
+          this.active = undefined;
+        }
+      }
+      if (!this.active && now >= this.restUntil) {
         const vh = innerHeight;
         for (const it of this.items) {
           if (it.state !== "idle") continue;
           const r = it.el.getBoundingClientRect();
           if (r.bottom < 0) {
-            it.state = "done";
-            it.progress = 1;
-            it.doneAt = -1e9;
-            this.dirty = true;
+            this.finish(it, -1e9);
             continue;
           }
           if (r.top < vh * 0.78) {
@@ -308,15 +339,12 @@ export class DrawingLayer {
       }
       if (this.active) {
         const it = this.active;
-        const raw = (now - it.start) / 1000 / it.duration;
-        if (it.kind === "word") it.progress = Math.min(1, Math.max(0, raw));
-        else it.progress = raw <= 0 ? 0 : raw >= 1 ? 1 : 1 - Math.pow(1 - raw, 2.2);
-        tip = it.kind === "word" ? this.wordTip(it) : this.sketchTip(it);
-        if (raw >= 1) {
-          it.state = "done";
-          it.progress = 1;
-          it.doneAt = now;
+        it.elapsed = Math.min(it.duration, Math.max(0, (now - it.start) / 1000));
+        tip = this.tipOf(it);
+        if (it.elapsed >= it.duration) {
+          this.finish(it, now);
           this.active = undefined;
+          this.restUntil = now + PEN_REST * 1000;
         }
         this.dirty = true;
       }
@@ -332,69 +360,31 @@ export class DrawingLayer {
     return { changed, tip };
   }
 
-  private sketchTip(it: SketchItem): PenTip {
+  /** Length of each stroke the pen has drawn so far. */
+  private drawn(it: Item, stroke: Stroke) {
+    return Math.min(stroke.len, Math.max(0, (it.elapsed - stroke.at) * PEN_SPEED));
+  }
+
+  private tipOf(it: Item): PenTip {
     const r = it.el.getBoundingClientRect();
-    let s = it.progress * it.total;
-    const last = it.strokes.at(-1);
-    for (const stroke of it.strokes) {
-      if (s <= stroke.len || stroke === last) {
-        const pt = stroke.measure.getPointAtLength(Math.min(s, stroke.len));
-        return { x: r.left + (pt.x / BOX_W) * r.width, y: r.top + (pt.y / BOX_H) * r.height };
-      }
-      s -= stroke.len;
-    }
-    return { x: r.left, y: r.top };
-  }
-
-  /** Where a word sits in its element, in CSS pixels, and how far the reveal has reached. */
-  private wordLayout(it: WordItem, r: DOMRect) {
-    const { ctx } = this;
-    const size = r.height * WORD_SIZE;
-    ctx.font = WORD_FONT;
-    const metrics = ctx.measureText(it.text);
-    const k = size / 100;
-    const inkWidth = (metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight) * k;
-    const lean = r.height * WORD_LEAN;
-    return {
-      size,
-      x: r.left + metrics.actualBoundingBoxLeft * k,
-      baseline: r.top + r.height * WORD_BASELINE,
-      lean,
-      /** The reveal edge at mid height. It starts a lean before the ink and ends a lean after. */
-      front: r.left - lean + it.progress * (inkWidth + 2 * lean),
-    };
-  }
-
-  private wordTip(it: WordItem): PenTip {
-    const { size, baseline, front } = this.wordLayout(it, it.el.getBoundingClientRect());
-    const stroke = Math.sin(it.progress * it.text.length * Math.PI * 2);
-    return { x: front, y: baseline - size * (0.24 + 0.2 * stroke) };
-  }
-
-  private renderWord(it: WordItem, r: DOMRect) {
-    const { ctx, scale } = this;
-    const { size, x, baseline, lean, front } = this.wordLayout(it, r);
-    ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    ctx.font = `italic 300 ${size}px "Newsreader"`;
-    ctx.textBaseline = "alphabetic";
-    const band = (from: number, to: number, fill: string) => {
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(from + lean, r.top);
-      ctx.lineTo(to + lean, r.top);
-      ctx.lineTo(to - lean, r.bottom);
-      ctx.lineTo(from - lean, r.bottom);
-      ctx.clip();
-      ctx.fillStyle = fill;
-      ctx.fillText(it.text, x, baseline);
-      ctx.restore();
-    };
-    ctx.globalCompositeOperation = "source-over";
-    band(r.left - 2 * lean, front, "rgb(255,0,0)");
-    if (it.state === "drawing") {
-      ctx.globalCompositeOperation = "lighter";
-      band(front - size * 0.5, front, "rgb(0,255,0)");
-    }
+    const [w, h] = it.sketch.box;
+    const at = (pt: DOMPoint, down: boolean) => ({
+      x: r.left + (pt.x / w) * r.width,
+      y: r.top + (pt.y / h) * r.height,
+      down,
+    });
+    const index = it.strokes.findLastIndex((s) => s.at <= it.elapsed);
+    const stroke = it.strokes[index];
+    if (!stroke) return { x: r.left, y: r.top, down: false };
+    const len = this.drawn(it, stroke);
+    const next = it.strokes[index + 1];
+    if (len < stroke.len || !next) return at(stroke.measure.getPointAtLength(len), true);
+    // Between strokes the pen glides in the air from the end of one to the start of the next.
+    const lifted = it.elapsed - stroke.at - stroke.len / PEN_SPEED;
+    const u = Math.min(1, lifted / Math.max(1e-6, next.at - (stroke.at + stroke.len / PEN_SPEED)));
+    const from = stroke.measure.getPointAtLength(stroke.len);
+    const to = next.measure.getPointAtLength(0);
+    return at(new DOMPoint(from.x + (to.x - from.x) * u, from.y + (to.y - from.y) * u), false);
   }
 
   private render() {
@@ -404,43 +394,40 @@ export class DrawingLayer {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     for (const it of this.items) {
-      if (it.state === "idle" || it.progress <= 0) continue;
+      if (it.state === "idle" || it.elapsed <= 0) continue;
       const r = it.el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > innerHeight) continue;
-      if (it.kind === "word") {
-        this.renderWord(it, r);
-        continue;
-      }
       const { scale } = this;
+      const [w, h] = it.sketch.box;
       ctx.setTransform(
-        (r.width * scale) / BOX_W,
+        (r.width * scale) / w,
         0,
         0,
-        (r.height * scale) / BOX_H,
+        (r.height * scale) / h,
         r.left * scale,
         r.top * scale,
       );
-      ctx.lineWidth = LINE_WIDTH;
-      const revealed = it.progress * it.total;
-      const wetFrom = revealed - it.total * 0.07;
+      ctx.lineWidth = it.sketch.line;
+      const wet = it.strokes.reduce((a, s) => a + this.drawn(it, s), 0) - WET;
       let cum = 0;
-      for (const { path, len } of it.strokes) {
-        if (cum >= revealed) break;
-        const end = Math.min(len, revealed - cum);
+      for (const stroke of it.strokes) {
+        const { path, len } = stroke;
+        const end = this.drawn(it, stroke);
+        if (end <= 0) break;
         ctx.strokeStyle = "rgb(255,0,0)";
         ctx.globalCompositeOperation = "source-over";
         ctx.setLineDash(end >= len ? [] : [end, 1e6]);
         ctx.lineDashOffset = 0;
         ctx.stroke(path);
-        if (it.state === "drawing" && cum + end > wetFrom) {
-          const from = Math.max(0, wetFrom - cum);
+        if (it.state === "drawing" && cum + end > wet) {
+          const from = Math.max(0, wet - cum);
           ctx.strokeStyle = "rgb(0,255,0)";
           ctx.globalCompositeOperation = "lighter";
           ctx.setLineDash([end - from, 1e6]);
           ctx.lineDashOffset = -from;
           ctx.stroke(path);
         }
-        cum += len;
+        cum += end;
       }
     }
     ctx.globalCompositeOperation = "source-over";
@@ -452,24 +439,25 @@ export class DrawingLayer {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, wash.width, wash.height);
     for (const it of this.items) {
-      if (it.kind !== "sketch" || it.state !== "done") continue;
+      if (it.state !== "done" || it.sketch.washes.length === 0) continue;
       const r = it.el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > innerHeight) continue;
       const bloom = this.reduce ? 1 : Math.min(1, Math.max(0, (now - it.doneAt) / WASH_BLOOM));
       if (bloom <= 0) continue;
       const { scale } = this;
+      const [w, h] = it.sketch.box;
       ctx.setTransform(
-        (r.width * scale) / BOX_W,
+        (r.width * scale) / w,
         0,
         0,
-        (r.height * scale) / BOX_H,
+        (r.height * scale) / h,
         r.left * scale,
         r.top * scale,
       );
       ctx.globalAlpha = 1 - Math.pow(1 - bloom, 2);
-      for (const w of it.sketch.washes) {
-        ctx.fillStyle = w.color;
-        ctx.fill(new Path2D(w.d));
+      for (const wash of it.sketch.washes) {
+        ctx.fillStyle = wash.color;
+        ctx.fill(new Path2D(wash.d));
       }
     }
     ctx.globalAlpha = 1;

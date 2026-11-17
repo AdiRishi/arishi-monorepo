@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { ContactList } from "./contact";
 import { email, name, place, projects, starters, written } from "./content";
+import { signature } from "./drawings";
 import { SectionNav } from "./nav";
 import {
   Arrow,
@@ -135,10 +136,23 @@ function SignOff() {
   return (
     <div className="mt-12">
       <p className="text-title font-light italic">Yours,</p>
-      <p className="draw mt-1 h-[88px] w-[168px]" data-word="Adi">
-        <span className="penned block pl-[0.08em] text-[70px] leading-[88px] font-light italic">
-          Adi
-        </span>
+      <p className="relative mt-1 aspect-[300/165] w-[240px]">
+        <span className="sr-only">Adi</span>
+        <svg
+          className="penned absolute inset-0 size-full"
+          viewBox={`0 0 ${signature.box.join(" ")}`}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={signature.line}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          {signature.paths.map((d) => (
+            <path key={d} d={d} />
+          ))}
+        </svg>
+        <span className="draw absolute inset-0" data-sketch="signature" aria-hidden="true" />
       </p>
     </div>
   );
