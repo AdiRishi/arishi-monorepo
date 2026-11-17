@@ -28,6 +28,7 @@ interface Line {
 
 interface LatinLine extends Line {
   readonly index: number;
+  readonly ink: Uint8ClampedArray;
   readonly sum: Float32Array;
   readonly weight: Float32Array;
 }
@@ -83,12 +84,16 @@ export async function buildInkMask(
 
   g.font = `italic 300 ${latSize}px "Newsreader"`;
   const latX = pad + latSize * overhang;
+  // Each line is drawn on its own, so a pixel belongs to the line whose glyph inked it. The
+  // lines' boxes overlap, and the second line's capitals and ascenders reach into the first's.
   const latLines: LatinLine[] = lines.map((text, index) => {
     const base = latBase[index] ?? 0;
+    g.clearRect(0, 0, width, height);
     g.fillText(text, latX, base);
     const w = g.measureText(text).width;
     return {
       index,
+      ink: g.getImageData(0, 0, width, height).data,
       x0: latX,
       x1: latX + w,
       top: base - latSize * 0.78,
@@ -98,10 +103,8 @@ export async function buildInkMask(
       weight: new Float32Array(width),
     };
   });
-  const [firstLine] = latLines;
   const lastLine = latLines.at(-1);
-  if (!firstLine || !lastLine) throw new Error("The Latin name has no lines");
-  const lat = g.getImageData(0, 0, width, height);
+  if (!lastLine) throw new Error("The Latin name has no lines");
 
   g.clearRect(0, 0, width, height);
   g.font = `400 ${devSize}px "Tiro Devanagari Sanskrit"`;
@@ -160,13 +163,18 @@ export async function buildInkMask(
     const inBand = y >= b0 && y <= b1;
     for (let x = 0; x < width; x++) {
       const i = (y * width + x) * 4;
-      const l = lat.data[i + 3] ?? 0,
-        d = dev.data[i + 3] ?? 0;
+      let l = 0;
+      let r: LatinLine | undefined;
+      for (const line of latLines) {
+        const a = line.ink[i + 3] ?? 0;
+        if (a > l) {
+          l = a;
+          r = line;
+        }
+      }
+      const d = dev.data[i + 3] ?? 0;
       let order = 0;
-      if (l > 0) {
-        const r =
-          latLines.find((line) => y >= line.top && y <= line.bottom) ??
-          (y < firstLine.bottom ? firstLine : lastLine);
+      if (r) {
         const u = Math.min(
           1,
           Math.max(0, (x - r.x0) / (r.x1 - r.x0) + SHEAR * ((y - r.top) / (r.bottom - r.top))),
