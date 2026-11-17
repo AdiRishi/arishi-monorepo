@@ -1,10 +1,12 @@
 import { name } from "./content";
-import { DrawingLayer } from "./drawings";
+import { DrawingLayer, PEN_REST } from "./drawings";
 import { buildInkMask } from "./ink";
 import type { Renderer, RendererPreference, SceneState } from "./renderer";
 
 // seconds from the start of the sequence
-const W = { latin: [0.3, 1.7], body: [1.85, 2.45], head: [2.5, 2.8], lift: 3.0 } as const;
+const W = { latin: [0.3, 1.7], body: [1.85, 2.45], head: [2.5, 2.8] } as const;
+/** The pen rests after the name as it does between drawings, then the sketches may start. */
+const LIFT = W.head[1] + PEN_REST;
 const easeInOut = (t: number) => (t <= 0 ? 0 : t >= 1 ? 1 : (1 - Math.cos(t * Math.PI)) / 2);
 const easeOut = (t: number) => (t <= 0 ? 0 : t >= 1 ? 1 : 1 - Math.pow(1 - t, 3));
 const span = (t: number, [a, b]: readonly [number, number]) => (t - a) / (b - a);
@@ -131,8 +133,8 @@ export function startPaper(root: HTMLElement): () => void {
       const bodyF = 1.14 * easeInOut(span(t, W.body));
       const headF = 1.03 * easeOut(span(t, W.head));
       // The sketches wait their turn, so the pen never leaves the name half written.
-      const naming = t < W.lift;
-      const writing = naming && t > 0;
+      const naming = t < LIFT;
+      const writing = t > 0 && t < W.head[1];
 
       const r = inkbox.getBoundingClientRect();
       const box: [number, number, number, number] = [
@@ -165,7 +167,7 @@ export function startPaper(root: HTMLElement): () => void {
       const state: SceneState = {
         box,
         tip,
-        tipOn: writing || draw.tip ? 1 : 0,
+        tipOn: writing || draw.tip?.down ? 1 : 0,
         latinF,
         bodyF,
         headF,

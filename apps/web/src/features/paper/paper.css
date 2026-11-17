@@ -22,9 +22,9 @@
   }
 
   /*
-   * Words the pen writes are also real text, laid where the ink goes and invisible while the pen
-   * can write them. They show where it cannot: no renderer, no scripting, or scripts that have
-   * not started after five seconds.
+   * What the pen writes is also on the page, the name as text and the signature as an SVG, laid
+   * where the ink goes and invisible while the pen can write it. It shows where the pen cannot:
+   * no renderer, no scripting, or scripts that have not started after five seconds.
    */
   .penned {
     opacity: 0;
