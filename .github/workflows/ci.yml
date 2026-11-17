@@ -50,7 +50,15 @@ jobs:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: pnpm --filter @repo/infra exec alchemy provider check-env --provider Cloudflare
-      - run: pnpm --filter @repo/infra exec alchemy deploy --stage pr-${{ github.event.pull_request.number }} --yes
+      # The pull request can close while verify runs. This job can then start
+      # after destroy-preview, or replace it while it waits in the group, so it
+      # destroys the stage itself. The state is read while holding the group.
+      - run: |
+          if [ "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PULL_REQUEST" --jq .state)" = open ]; then
+            pnpm --filter @repo/infra exec alchemy deploy --stage "pr-$PULL_REQUEST" --yes
+          else
+            pnpm --filter @repo/infra exec alchemy destroy --stage "pr-$PULL_REQUEST" --yes
+          fi
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PULL_REQUEST: ${{ github.event.pull_request.number }}

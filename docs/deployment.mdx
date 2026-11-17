@@ -64,7 +64,7 @@ Each pull request gets its own `pr-<number>` stage:
 - `preview` runs when a pull request opens, reopens, or receives a push, after `verify` passes. It runs `alchemy deploy --stage pr-<number>`, which creates a separate copy of both Workers on `workers.dev`. The stack then posts the website URL as a comment on the pull request and updates that comment on later deploys.
 - `destroy-preview` runs when the pull request closes or merges. It runs `alchemy destroy --stage pr-<number>`, which deletes the stage's Workers and state. The comment stays on the pull request.
 
-Both jobs share the concurrency group `preview-<number>`, so a destroy waits for a deploy that is still running. Neither job runs for a pull request from a fork, because GitHub gives those runs no secrets.
+Both jobs share the concurrency group `preview-<number>`, so a destroy waits for a deploy that is still running. A pull request can also close while `verify` runs. GitHub then may start `preview` after `destroy-preview`, or let it replace a `destroy-preview` that is waiting in the group. So `preview` reads the pull request's state once it holds the group, and destroys the stage instead of deploying it when the pull request is closed. Neither job runs for a pull request from a fork, because GitHub gives those runs no secrets.
 
 A preview is a full Alchemy stage, not a [Cloudflare Worker Preview](https://alchemy.run/cloudflare/compute/previews). A Worker Preview's service bindings call the bound Worker's production deployment, so a preview of the website would call the production API. A stage deploys its own API Worker.
 
