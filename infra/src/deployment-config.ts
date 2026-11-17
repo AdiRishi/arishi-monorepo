@@ -12,7 +12,7 @@ export interface WebsiteDomain {
 }
 
 interface StagePolicy {
-  readonly environment: "local" | "staging" | "production" | "test";
+  readonly environment: "local" | "staging" | "production" | "preview" | "test";
   readonly web: { readonly workersDev: boolean; readonly domain: WebsiteDomain | null };
 }
 
@@ -28,11 +28,15 @@ const stages = {
   },
 } as const;
 
+const PreviewStage = Schema.TemplateLiteral([
+  "pr-",
+  Schema.String.check(Schema.isPattern(/^[1-9][0-9]*$/u)),
+]);
 const TestStage = Schema.TemplateLiteral([
   "test-",
   Schema.String.check(Schema.isPattern(/^[a-f0-9]{8}$/u)),
 ]);
-export const Stage = Schema.Union([Schema.Literals(Record.keys(stages)), TestStage]);
+export const Stage = Schema.Union([Schema.Literals(Record.keys(stages)), PreviewStage, TestStage]);
 export type Stage = typeof Stage.Type;
 
 export const decodeStage = Function.flow(
@@ -42,7 +46,7 @@ export const decodeStage = Function.flow(
 
 export const stagePolicy = (stage: Stage): StagePolicy =>
   Object.entries(stages).find(([name]) => name === stage)?.[1] ?? {
-    environment: "test",
+    environment: Schema.is(PreviewStage)(stage) ? "preview" : "test",
     web: { workersDev: true, domain: null },
   };
 

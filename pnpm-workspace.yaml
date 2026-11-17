@@ -13,6 +13,7 @@ nodeOptions: "${NODE_OPTIONS:- } --network-family-autoselection-attempt-timeout=
 
 catalog:
   "@alchemy.run/cloudflare": 2.0.0-beta.87
+  "@alchemy.run/github": 2.0.0-beta.87
   "@alchemy.run/test": 2.0.0-beta.87
   "@cloudflare/vitest-plugin": 1.8.2
   "@cloudflare/workers-types": 5.20261115.1

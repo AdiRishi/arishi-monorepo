@@ -2,14 +2,21 @@ name: CI
 
 on:
   pull_request:
+    types: [opened, reopened, synchronize, closed]
   push:
     branches: [main]
 
 permissions:
   contents: read
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_REMOTE_CACHE_SIGNATURE_KEY: ${{ secrets.TURBO_REMOTE_CACHE_SIGNATURE_KEY }}
+
 jobs:
   verify:
+    name: Verify
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -20,7 +27,63 @@ jobs:
       - run: pnpm test
       - run: pnpm build
 
+  # Pull requests from forks get no secrets, so they get no preview.
+  preview:
+    name: Preview
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: preview
+    permissions:
+      contents: read
+      pull-requests: write
+    # Shared with destroy-preview, so closing a pull request waits for its
+    # deploy. Cancelling a deploy midway would leave the stage's state behind
+    # its resources.
+    concurrency:
+      group: preview-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: pnpm --filter @repo/infra exec alchemy provider check-env --provider Cloudflare
+      # The pull request can close while verify runs. This job can then start
+      # after destroy-preview, or replace it while it waits in the group, so it
+      # destroys the stage itself. The state is read while holding the group.
+      - run: |
+          state=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PULL_REQUEST" --jq .state)
+          if [ "$state" = open ]; then
+            pnpm --filter @repo/infra exec alchemy deploy --stage "pr-$PULL_REQUEST" --yes
+          else
+            pnpm --filter @repo/infra exec alchemy destroy --stage "pr-$PULL_REQUEST" --yes
+          fi
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PULL_REQUEST: ${{ github.event.pull_request.number }}
+
+  destroy-preview:
+    name: Destroy preview
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    environment: preview
+    concurrency:
+      group: preview-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: ./.github/actions/setup
+      - run: pnpm --filter @repo/infra exec alchemy destroy --stage pr-${{ github.event.pull_request.number }} --yes
+
   deploy:
+    name: Deploy
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: verify
     runs-on: ubuntu-latest
