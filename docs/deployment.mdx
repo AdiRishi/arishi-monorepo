@@ -45,29 +45,30 @@ To add another persistent environment, extend the stage policy and configure its
 
 ## Deploy from GitHub Actions
 
-`.github/workflows/ci.yml` runs two jobs:
+`.github/workflows/ci.yml` is one workflow with four jobs:
 
-- `verify` runs on every pull request and every push to `main`. It runs `pnpm check`, `pnpm typecheck`, `pnpm test`, and `pnpm build`.
+- `verify` runs on every pull request and every push to `main`, but not when a pull request closes. It runs `pnpm check`, `pnpm typecheck`, `pnpm test`, and `pnpm build`.
+- `preview` and `destroy-preview` deploy and remove pull request previews, described in [Preview pull requests](#preview-pull-requests).
 - `deploy` runs only on a push to `main`, after `verify` passes. It checks the Cloudflare environment variables with `alchemy provider check-env`, prints the production plan with `pnpm plan`, and then deploys with `pnpm prod`.
 
 Alchemy keeps state in a Cloudflare Worker whose bearer token is in the account Secrets Store. To read that token, Alchemy uploads a short-lived preview Worker that binds the secret, so a plan needs Workers Scripts Write and Secrets Store Write. That is the same token a deploy uses. The plan runs on `main` immediately before the deploy, and its output is in the `deploy` job log.
 
 The `deploy` job uses the `production` GitHub environment, which scopes the Cloudflare credentials to that job. The job's concurrency group is `deploy-production`, so a second deploy waits until the first one finishes. If more pushes arrive while a deploy runs, GitHub keeps only the newest one waiting.
 
-Both jobs read `TURBO_TOKEN` and `TURBO_REMOTE_CACHE_SIGNATURE_KEY` from repository secrets, so `verify` replays tasks that already ran on `main`, in another pull request, or on a developer machine. Pull requests from forks get no secrets and run without the remote cache.
+Every job reads `TURBO_TOKEN` and `TURBO_REMOTE_CACHE_SIGNATURE_KEY` from repository secrets, so `verify` replays tasks that already ran on `main`, in another pull request, or on a developer machine. Pull requests from forks get no secrets and run without the remote cache.
 
 ### Preview pull requests
 
-`.github/workflows/preview.yml` deploys each pull request to its own `pr-<number>` stage:
+Each pull request gets its own `pr-<number>` stage:
 
-- `deploy` runs when a pull request opens, reopens, or receives a push. It runs `alchemy deploy --stage pr-<number>`, which creates a separate copy of both Workers on `workers.dev`. The stack then posts the website URL as a comment on the pull request and updates that comment on later deploys.
-- `destroy` runs when the pull request closes or merges. It runs `alchemy destroy --stage pr-<number>`, which deletes the stage's Workers and state. The comment stays on the pull request.
+- `preview` runs when a pull request opens, reopens, or receives a push, after `verify` passes. It runs `alchemy deploy --stage pr-<number>`, which creates a separate copy of both Workers on `workers.dev`. The stack then posts the website URL as a comment on the pull request and updates that comment on later deploys.
+- `destroy-preview` runs when the pull request closes or merges. It runs `alchemy destroy --stage pr-<number>`, which deletes the stage's Workers and state. The comment stays on the pull request.
 
 Both jobs share the concurrency group `preview-<number>`, so a destroy waits for a deploy that is still running. Neither job runs for a pull request from a fork, because GitHub gives those runs no secrets.
 
 A preview is a full Alchemy stage, not a [Cloudflare Worker Preview](https://alchemy.run/cloudflare/compute/previews). A Worker Preview's service bindings call the bound Worker's production deployment, so a preview of the website would call the production API. A stage deploys its own API Worker.
 
-The stack posts the comment with `GitHub.Comment` from `@alchemy.run/github`. The `deploy` job passes the workflow's `GITHUB_TOKEN`, with `pull-requests: write`, and the pull request number as `PULL_REQUEST`. Other stages declare no GitHub resources and need no GitHub token.
+The stack posts the comment with `GitHub.Comment` from `@alchemy.run/github`. The `preview` job passes the workflow's `GITHUB_TOKEN`, with `pull-requests: write`, and the pull request number as `PULL_REQUEST`. Other stages declare no GitHub resources and need no GitHub token.
 
 If a destroy fails, the stage stays deployed. Remove it from your machine with the same command:
 
