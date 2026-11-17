@@ -75,6 +75,25 @@ which drive the page through the same bridge.
 - `tests/`: mirrors `src/`. A `.test.ts` file runs in Node, a `.test.tsx` file
   renders in Chromium, and `tests/e2e/` requests pages from the built Worker.
 
+## Icons
+
+`public/favicon.svg` is the source: the A from the signature in
+`src/features/paper/drawings.ts`, in ink on paper beside the margin rule. The
+stroke under the crossbar runs into the crossbar, where the signature leaves a
+narrow loop, because that loop fills unevenly at this line weight. The line
+repeats along a slanted edge to get a broad nib's thick and thin strokes. The
+root `t3.json` also names this file as the project's icon in T3 Code.
+
+After changing the SVG, regenerate the two rasters from `apps/web/public`:
+
+```bash
+rsvg-convert -w 180 -h 180 favicon.svg | magick - -background '#f1e9da' \
+  -alpha remove -strip apple-touch-icon.png
+rsvg-convert -w 16 -h 16 favicon.svg -o /tmp/16.png
+rsvg-convert -w 32 -h 32 favicon.svg -o /tmp/32.png
+magick /tmp/16.png /tmp/32.png favicon.ico
+```
+
 ## Environment variables
 
 Vite exposes only `VITE_*` variables to the client, and they are public. Keep
