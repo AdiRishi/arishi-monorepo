@@ -202,7 +202,7 @@ export interface PenUpdate {
   tip: PenTip | null;
 }
 
-/** Box units of line the pen draws each second. A sketch box is about 300 CSS px wide. */
+/** Box units of line the pen draws each second. A sketch box is 176 to 300 CSS px wide. */
 const PEN_SPEED = 700;
 /** How many times faster the pen moves between strokes than along them. */
 const HOP_SPEED = 4;
@@ -360,7 +360,7 @@ export class DrawingLayer {
     return { changed, tip };
   }
 
-  /** Length of each stroke the pen has drawn so far. */
+  /** Length of this stroke the pen has drawn so far. */
   private drawn(it: Item, stroke: Stroke) {
     return Math.min(stroke.len, Math.max(0, (it.elapsed - stroke.at) * PEN_SPEED));
   }
