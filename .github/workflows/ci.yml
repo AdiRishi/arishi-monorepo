@@ -54,7 +54,8 @@ jobs:
       # after destroy-preview, or replace it while it waits in the group, so it
       # destroys the stage itself. The state is read while holding the group.
       - run: |
-          if [ "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PULL_REQUEST" --jq .state)" = open ]; then
+          state=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PULL_REQUEST" --jq .state)
+          if [ "$state" = open ]; then
             pnpm --filter @repo/infra exec alchemy deploy --stage "pr-$PULL_REQUEST" --yes
           else
             pnpm --filter @repo/infra exec alchemy destroy --stage "pr-$PULL_REQUEST" --yes
