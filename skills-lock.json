@@ -5,7 +5,8 @@
       "source": "vercel-labs/ui",
       "sourceType": "github",
       "skillPath": "packages/core/skills/ui-sdk/SKILL.md",
-      "computedHash": "7353586d36e12a3895bcec7d6d589ad26a18e7acff95b014ea63ccb12cfafc38"
+      "computedHash": "9a60caf01da3d47beedf627bf1505d922dccc93b04f294c6aa64edf01c46b3ba",
+      "commit": "ab55044caee66cc8228fa7ed3525088a1b7b5af7"
     }
   }
 }
