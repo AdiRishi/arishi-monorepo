@@ -16,14 +16,16 @@ test("someone's browser agent reads the home page and copies the email address",
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.addInitScript({ content: browserWithWebMcp });
   await page.goto("/");
-  // The page registers its tools once it hydrates.
+  // The page registers its tools once it hydrates. Its components can bind a few frames later.
   await page.waitForFunction(`registeredTools.size === 3`);
 
-  expect(await page.evaluate(`callTool("snapshot", {})`)).toEqual([
-    expect.objectContaining({ component: "navigation-menu", label: "Sections" }),
-    expect.objectContaining({ component: "timeline", label: "Work history" }),
-    expect.objectContaining({ component: "button", label: "Copy email address" }),
-  ]);
+  await expect
+    .poll(() => page.evaluate(`callTool("snapshot", {})`))
+    .toEqual([
+      expect.objectContaining({ component: "navigation-menu", label: "Sections" }),
+      expect.objectContaining({ component: "timeline", label: "Work history" }),
+      expect.objectContaining({ component: "button", label: "Copy email address" }),
+    ]);
   expect(
     await page.evaluate(
       `callTool("act", { steps: [{ ref: "Copy email address", action: "press" }] })`,
